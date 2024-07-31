@@ -27,8 +27,7 @@ public class Donee {
         this.doneeName = doneeName;
     }
     
-    //hello wroororor
-
+  
     public void setDoneeType(String doneeType) {
         this.doneeType = doneeType;
     }
