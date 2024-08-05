@@ -12,30 +12,27 @@ import java.time.format.DateTimeFormatter;
  * @author Asus
  */
 public class Donation {
+
     private String donationId;
     private String donationDate;
     private String donationType;
     private String donationDetails;
-    
-    private String distributionId;
-    private String distributionDate;
-    private String distributionDetails;
-    
-    private String donorName;
-    private String doneeId;
 
-    public Donation(String donationId, String donationType, String donationDetails, String donorName) {
+    private String donorName;
+
+    public Donation(String donationId, String donationType, String donationDetails, String donorName, String donationDate) {
         this.donationId = donationId;
         this.donationType = donationType;
         this.donationDetails = donationDetails;
         this.donorName = donorName;
-        this.donationDate = formatDate(java.time.LocalDate.now());
+        this.donationDate = donationDate;
+//        this.donationDate = formatDate(java.time.LocalDate.now());
     }
-    
-    private String formatDate(LocalDate date){
-        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-mm-yyyy");
-        return date.format(f);
-    }
+
+//    private String formatDate(LocalDate date) {
+//        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+//        return date.format(f);
+//    }
 
     public String getDonationId() {
         return donationId;
@@ -69,30 +66,6 @@ public class Donation {
         this.donationDetails = donationDetails;
     }
 
-    public String getDistributionId() {
-        return distributionId;
-    }
-
-    public void setDistributionId(String distributionId) {
-        this.distributionId = distributionId;
-    }
-
-    public String getDistributionDate() {
-        return distributionDate;
-    }
-
-    public void setDistributionDate(String distributionDate) {
-        this.distributionDate = distributionDate;
-    }
-
-    public String getDistributionDetails() {
-        return distributionDetails;
-    }
-
-    public void setDistributionDetails(String distributionDetails) {
-        this.distributionDetails = distributionDetails;
-    }
-
     public String getDonorName() {
         return donorName;
     }
@@ -101,15 +74,4 @@ public class Donation {
         this.donorName = donorName;
     }
 
-    public String getDoneeId() {
-        return doneeId;
-    }
-
-    public void setDoneeId(String doneeId) {
-        this.doneeId = doneeId;
-    }
-    
-    
-    
-    
 }
