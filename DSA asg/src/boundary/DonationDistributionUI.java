@@ -4,6 +4,8 @@
  */
 package boundary;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -29,27 +31,47 @@ public class DonationDistributionUI {
         return opt;
     }
 
-    public String addDistribution() {
+    public String addDistributionId() {
         System.out.println("\nEnter distribution ID: ");
         String distributionId = s.nextLine();
         return distributionId.toUpperCase();
     }
 
-    public String DistributionDate() {
-        System.out.println("\nEnter distribution date(dd-mm-yyyy): ");
+    public String addDistributionDate() {
+        System.out.println("\nEnter distribution date(YYYY-MM-DD): ");
         String distributionDate = s.nextLine();
         return distributionDate;
     }
 
-    public String DistributionDetails() {
+    public String addDistributionDetails() {
         String cont = "y";
         int i = 0;
-        ArrayList<String> disDet = 
+        List<String> detailList = new ArrayList<>();
         while (cont == "y") {
             System.out.println("Enter distribution details: ");
-            String distributionDetails[] = ;
-            return distributionDetails;
+            String details = s.nextLine();
+            detailList.add(details);
+            System.out.println("\nAdd more items?(y/n) > ");
+            String cInput = s.nextLine();
+            cont = cInput.toLowerCase();    
         }
+
+        return disDetList(detailList);
+    }
+    
+    private String disDetList(List<String> detailList){
+        String outputStr = "";
+        for(int i = 0; i < detailList.size(); i++){
+            outputStr += detailList.get(i) + "\n" ;
+        }
+        return outputStr;
+    }
+    
+    public String addDistributionDoneeId(){
+        System.out.println("\nEnter donee ID: ");
+        String disDoneeId = s.nextLine();
+        return disDoneeId.toUpperCase();
     }
 
+    
 }
