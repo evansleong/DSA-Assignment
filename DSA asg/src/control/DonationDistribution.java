@@ -44,7 +44,7 @@ public class DonationDistribution {
                     generateDistributionReports();
                     break;
                 case 0:
-                    running = false;
+                    system = false;
                     break;
                 default:
                     System.out.println("Error, invalid option!");
@@ -58,23 +58,42 @@ public class DonationDistribution {
         String dDate = d.addDistributionDate();
         String dDetails = d.addDistributionDetails();
         String dDoneeId = d.addDistributionDoneeId();
-
-        Distribution distribution = new Distribution(
-                dId,
-                dDate,
-                dDetails,
-                dDoneeId
-        );
-        distributionList.add(distribution);
-        distributionMap.put(dId, distribution);
-        System.out.println("Distribution successfully added");
+//
+//        Distribution distribution = new Distribution(
+//                dId,
+//                dDate,
+//                dDetails,
+//                dDoneeId
+//        );
+//        distributionList.add(distribution);
+//        distributionMap.put(dId, distribution);
+//        System.out.println("Distribution successfully added");
     }
     
     private void removeDistribution(){
-        String Id = d.addDistributionId();
-        distributionMap.remove(Id);
-        System.out.println("Distribution removed successfully");
+//        String Id = d.addDistributionId();
+//        distributionMap.remove(Id);
+//        System.out.println("Distribution removed successfully");
     }
     
-//    private void updateDistribution()
+    private void updateDistribution(){
+        String dId = d.addDistributionId();
+//        String dDate = d.addDistributionDate();
+//        String dDetails = d.addDistributionDetails();
+//        String dDoneeId = d.addDistributionDoneeId();
+    }
+    
+    private void trackDistribution(){
+        String dId = d.addDistributionId();
+    }
+    
+    private void generateDistributionReports(){
+        
+    }
+    
+    public static void main(String[] args) {
+        DonationDistribution dd = new DonationDistribution();
+        dd.runSystem();
+    }
+    
 }

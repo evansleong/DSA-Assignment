@@ -73,5 +73,7 @@ public class DonationDistributionUI {
         return disDoneeId.toUpperCase();
     }
 
-    
+//    public static void main(String[] args) {
+//        
+//    }
 }
