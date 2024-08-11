@@ -5,112 +5,120 @@
 package adt;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 /**
  *
  * @author evansleong
  */
-public class HashMap<K, V> implements HashMapInterface<K, V>{
+public class HashMap<K, V> implements HashMapInterface<K, V> {
+
     private static class Node<K, V> {
+
         K key;
         V value;
+        Node<K, V> prev;
         Node<K, V> next;
 
-        Node(K key, V value, Node<K, V> next) {
+        Node(K key, V value) {
             this.key = key;
             this.value = value;
-            this.next = next;
         }
     }
 
-    private LinkedList<Node<K, V>>[] table;
+    private Node<K, V> head;
+    private Node<K, V> tail;
     private int size;
-    private static final int DEFAULT_CAPACITY = 16;
-    private static final float LOAD_FACTOR_THRESHOLD = 0.75f;
 
-    @SuppressWarnings("unchecked")
     public HashMap() {
-        table = (LinkedList<Node<K, V>>[]) new LinkedList[DEFAULT_CAPACITY];
+        head = null;
+        tail = null;
         size = 0;
     }
 
+    @Override
     public void put(K key, V value) {
-        int index = getIndex(key);
-        if (table[index] == null) {
-            table[index] = new LinkedList<>();
+        Node<K, V> newNode = new Node<>(key, value);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
         }
-
-        for (Node<K, V> node : table[index]) {
-            if (node.key.equals(key)) {
-                node.value = value; // Replace value if key exists
-                return;
-            }
-        }
-
-        table[index].add(new Node<>(key, value, null));
         size++;
-
-        if ((float) size / table.length >= LOAD_FACTOR_THRESHOLD) {
-            resize();
-        }
     }
 
-    public V get(K key) {
-        int index = getIndex(key);
-        if (table[index] != null) {
-            for (Node<K, V> node : table[index]) {
-                if (node.key.equals(key)) {
-                    return node.value;
-                }
+    public void replace(K key, V newValue) {
+        Node<K, V> current = head;
+        while (current != null) {
+            if (current.key.equals(key)) {
+                current.value = newValue; // Replace the value with the new value
+                return;
             }
+            current = current.next;
+        }
+        throw new NoSuchElementException("Key not found: " + key);
+    }
+
+    @Override
+    public V get(K key) {
+        Node<K, V> current = head;
+        while (current != null) {
+            if (current.key.equals(key)) {
+                return current.value;
+            }
+            current = current.next;
         }
         return null; // Key not found
     }
 
+    @Override
     public boolean containsKey(K key) {
         return get(key) != null;
     }
 
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void remove(K key) {
-        int index = getIndex(key);
-        if (table[index] != null) {
-            Iterator<Node<K, V>> iterator = table[index].iterator();
-            while (iterator.hasNext()) {
-                Node<K, V> node = iterator.next();
-                if (node.key.equals(key)) {
-                    iterator.remove();
-                    size--;
-                    return;
+        Node<K, V> current = head;
+        while (current != null) {
+            if (current.key.equals(key)) {
+                if (current.prev != null) {
+                    current.prev.next = current.next;
+                } else {
+                    head = current.next;
                 }
+                if (current.next != null) {
+                    current.next.prev = current.prev;
+                } else {
+                    tail = current.prev;
+                }
+                size--;
+                return;
             }
+            current = current.next;
         }
     }
 
+    @Override
     public Iterator<K> iterator() {
         return new Iterator<K>() {
-            private int bucketIndex = 0;
-            private Iterator<Node<K, V>> bucketIterator = (table[bucketIndex] != null) ? table[bucketIndex].iterator() : null;
+            private Node<K, V> current = head;
 
             @Override
             public boolean hasNext() {
-                while (bucketIndex < table.length) {
-                    if (bucketIterator != null && bucketIterator.hasNext()) {
-                        return true;
-                    }
-                    bucketIndex++;
-                    bucketIterator = (bucketIndex < table.length && table[bucketIndex] != null) ? table[bucketIndex].iterator() : null;
-                }
-                return false;
+                return current != null;
             }
 
             @Override
@@ -118,27 +126,11 @@ public class HashMap<K, V> implements HashMapInterface<K, V>{
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return bucketIterator.next().key;
+                K key = current.key;
+                current = current.next;
+                return key;
             }
         };
     }
 
-    private int getIndex(K key) {
-        return (key == null) ? 0 : Math.abs(key.hashCode()) % table.length;
-    }
-
-    @SuppressWarnings("unchecked")
-    private void resize() {
-        LinkedList<Node<K, V>>[] oldTable = table;
-        table = (LinkedList<Node<K, V>>[]) new LinkedList[oldTable.length * 2];
-        size = 0;
-
-        for (LinkedList<Node<K, V>> bucket : oldTable) {
-            if (bucket != null) {
-                for (Node<K, V> node : bucket) {
-                    put(node.key, node.value);
-                }
-            }
-        }
-    }
 }

@@ -16,11 +16,9 @@ import java.util.Iterator;
 public class DoneeManagement {
 
     DoneeManagementUI ui = new DoneeManagementUI();
-    ListInterface<Donee> doneeList;
     HashMapInterface<String, Donee> doneeMap;
     
     public DoneeManagement() {
-        doneeList = new LinkedList<>();
         doneeMap = new HashMap<>();
     }
 
@@ -66,9 +64,12 @@ public class DoneeManagement {
         String type = ui.inputDoneeType();
 
         Donee donee = new Donee(id, name, contactInfo, type);
-        doneeList.add(donee);
-        doneeMap.put(id, donee);
-        System.out.println("Donee added successfully.");
+        if (confirmAction()) {
+            doneeMap.put(id, donee);
+            System.out.println("Donee added successfully.");
+        } else {
+            System.out.println("Action cancelled.");
+        }
     }
 
     private void removeDonee() {
@@ -136,6 +137,11 @@ public class DoneeManagement {
 
     private void generateReports() {
         // Implement report generation logic
+    }
+    
+    private boolean confirmAction() {
+        char confirmation = ui.confirmAction();
+        return confirmation == 'Y';
     }
 
     public static void main(String[] args) {
