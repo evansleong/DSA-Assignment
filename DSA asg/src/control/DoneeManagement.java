@@ -17,9 +17,23 @@ public class DoneeManagement {
 
     DoneeManagementUI ui = new DoneeManagementUI();
     HashMapInterface<String, Donee> doneeMap;
-    
+
     public DoneeManagement() {
         doneeMap = new HashMap<>();
+        seedData();
+    }
+
+    private void seedData() {
+        doneeMap.put("DNE-001", new Donee("DNE-001", "John Doe", "555-1234", "Individual"));
+        doneeMap.put("DNE-002", new Donee("DNE-002", "Jane Smith", "555-5678", "Individual"));
+        doneeMap.put("DNE-003", new Donee("DNE-003", "Charity Org A", "555-9876", "Organization"));
+        doneeMap.put("DNE-004", new Donee("DNE-004", "Family B", "555-4321", "Family"));
+        doneeMap.put("DNE-005", new Donee("DNE-005", "John's Bakery", "555-7654", "Organization"));
+        doneeMap.put("DNE-006", new Donee("DNE-006", "Doe Family", "555-2468", "Family"));
+        doneeMap.put("DNE-007", new Donee("DNE-007", "Helping Hands", "555-1357", "Organization"));
+        doneeMap.put("DNE-008", new Donee("DNE-008", "Maria Green", "555-2468", "Individual"));
+        doneeMap.put("DNE-009", new Donee("DNE-009", "Smith Family", "555-3579", "Family"));
+        doneeMap.put("DNE-010", new Donee("DNE-010", "Community Aid", "555-0987", "Organization"));
     }
 
     public void start() {
@@ -58,11 +72,11 @@ public class DoneeManagement {
     }
 
     private void addDonee() {
+        String type = ui.inputDoneeType();
         String id = ui.inputDoneeID();
         String fullId = "DNE-" + id;
         String name = ui.inputDoneeName();
         String contactInfo = ui.inputContactInfo();
-        String type = ui.inputDoneeType();
 
         Donee donee = new Donee(fullId, name, contactInfo, type);
         if (confirmAction()) {
@@ -80,7 +94,7 @@ public class DoneeManagement {
         System.out.println("Donee removed successfully.");
     }
 
-      private void updateDonee() {
+    private void updateDonee() {
         String id = ui.inputDoneeID();
         String fullId = "DNE-" + id;
         Donee donee = doneeMap.get(fullId);
@@ -121,12 +135,15 @@ public class DoneeManagement {
         String id = ui.inputDoneeID();
         String fullId = "DNE-" + id;
         Donee donee = doneeMap.get(fullId);
+
         if (donee != null) {
             System.out.println("Donee Details:");
-            System.out.println("ID: " + donee.getDoneeId());
-            System.out.println("Name: " + donee.getDoneeName());
-            System.out.println("Contact: " + donee.getDoneeContact());
-            System.out.println("Type: " + donee.getDoneeType());
+            // Print the details in a formatted way
+            System.out.printf("%-15s: %s\n", "ID", donee.getDoneeId());
+            System.out.printf("%-15s: %s\n", "Name", donee.getDoneeName());
+            System.out.printf("%-15s: %s\n", "Contact", donee.getDoneeContact());
+            System.out.printf("%-15s: %s\n", "Type", donee.getDoneeType());
+            System.out.println();
         } else {
             System.out.println("Donee not found.");
         }
@@ -137,48 +154,93 @@ public class DoneeManagement {
             System.out.println("No donees available.");
         } else {
             System.out.println("Donee List:");
+            // Print table header
+            System.out.printf("%-15s %-20s %-25s %-15s\n", "ID", "Name", "Contact Info", "Type");
+            System.out.println("-----------------------------------------------------------------------------------");
+
+            // Print each donee's details in a formatted way
             Iterator<String> iterator = doneeMap.iterator();
             while (iterator.hasNext()) {
                 String fullId = iterator.next();
                 Donee donee = doneeMap.get(fullId);
                 if (donee != null) {
-                    System.out.println("ID: " + donee.getDoneeId());
-                    System.out.println("Name: " + donee.getDoneeName());
-                    System.out.println("Contact: " + donee.getDoneeContact());
-                    System.out.println("Type: " + donee.getDoneeType());
-                    System.out.println("----------------------------");
+                    System.out.printf("%-15s %-20s %-25s %-15s\n",
+                            donee.getDoneeId(),
+                            donee.getDoneeName(),
+                            donee.getDoneeContact(),
+                            donee.getDoneeType());
                 }
             }
         }
     }
 
-private void filterDonees() {
-    int filterType = ui.inputFilterCriteria();
-    switch (filterType) {
-        case 1:
-            String type = ui.inputDoneeType();
-            System.out.println("Donees of type: " + type);
-            Iterator<String> iterator = doneeMap.iterator();
-            while (iterator.hasNext()) {
-                String fullId = iterator.next();
-                Donee donee = doneeMap.get(fullId);
-                if (donee != null && donee.getDoneeType().equalsIgnoreCase(type)) {
-                    System.out.println("ID: " + donee.getDoneeId());
-                    System.out.println("Name: " + donee.getDoneeName());
-                    System.out.println("Contact: " + donee.getDoneeContact());
-                    System.out.println("----------------------------");
+    private void filterDonees() {
+        int filterType = ui.inputFilterCriteria();
+        switch (filterType) {
+            case 1:
+                String type = ui.inputDoneeType();
+                System.out.println("Donees of type: " + type);
+                // Print table header
+                System.out.printf("%-15s %-20s %-25s %-15s\n", "ID", "Name", "Contact Info", "Type");
+                System.out.println("-----------------------------------------------------------------------------------");
+
+                // Print each donee's details in a formatted way
+                Iterator<String> iterator = doneeMap.iterator();
+                while (iterator.hasNext()) {
+                    String fullId = iterator.next();
+                    Donee donee = doneeMap.get(fullId);
+                    if (donee != null && donee.getDoneeType().equalsIgnoreCase(type)) {
+                        System.out.printf("%-15s %-20s %-25s %-15s\n",
+                                donee.getDoneeId(),
+                                donee.getDoneeName(),
+                                donee.getDoneeContact(),
+                                donee.getDoneeType());
+                    }
                 }
-            }
-            break;
-        default:
-            System.out.println("Invalid filter type. Please try again.");
+                break;
+            default:
+                System.out.println("Invalid filter type. Please try again.");
+        }
     }
-}
 
     private void generateReports() {
-        // Implement report generation logic
+        System.out.println("Summary Report:");
+
+        // Total number of donees
+        int totalDonees = doneeMap.size();
+        System.out.println("Total Number of Donees: " + totalDonees);
+
+        // Breakdown by type
+        int individualCount = 0;
+        int organizationCount = 0;
+        int familyCount = 0;
+
+        Iterator<String> iterator = doneeMap.iterator();
+        while (iterator.hasNext()) {
+            String fullId = iterator.next();
+            Donee donee = doneeMap.get(fullId);
+            if (donee != null) {
+                switch (donee.getDoneeType().toLowerCase()) {
+                    case "individual":
+                        individualCount++;
+                        break;
+                    case "organization":
+                        organizationCount++;
+                        break;
+                    case "family":
+                        familyCount++;
+                        break;
+                }
+            }
+        }
+
+        System.out.println("Individual Donees: " + individualCount);
+        System.out.println("Organization Donees: " + organizationCount);
+        System.out.println("Family Donees: " + familyCount);
+
+        // More detailed summaries can be added here
     }
-    
+
     private boolean confirmAction() {
         char confirmation = ui.confirmAction();
         return confirmation == 'Y';
