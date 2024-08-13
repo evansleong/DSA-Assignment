@@ -59,13 +59,14 @@ public class DoneeManagement {
 
     private void addDonee() {
         String id = ui.inputDoneeID();
+        String fullId = "DNE-" + id;
         String name = ui.inputDoneeName();
         String contactInfo = ui.inputContactInfo();
         String type = ui.inputDoneeType();
 
-        Donee donee = new Donee(id, name, contactInfo, type);
+        Donee donee = new Donee(fullId, name, contactInfo, type);
         if (confirmAction()) {
-            doneeMap.put(id, donee);
+            doneeMap.put(fullId, donee);
             System.out.println("Donee added successfully.");
         } else {
             System.out.println("Action cancelled.");
@@ -74,23 +75,43 @@ public class DoneeManagement {
 
     private void removeDonee() {
         String id = ui.inputDoneeID();
-        doneeMap.remove(id);
+        String fullId = "DNE-" + id;
+        doneeMap.remove(fullId);
         System.out.println("Donee removed successfully.");
     }
 
-    private void updateDonee() {
+      private void updateDonee() {
         String id = ui.inputDoneeID();
-        Donee donee = doneeMap.get(id);
+        String fullId = "DNE-" + id;
+        Donee donee = doneeMap.get(fullId);
+
         if (donee != null) {
-            String name = ui.inputDoneeName();
-            String contactInfo = ui.inputContactInfo();
-            String type = ui.inputDoneeType();
-
-            donee.setDoneeName(name);
-            donee.setDoneeContact(contactInfo);
-            donee.setDoneeType(type);
-
-            System.out.println("Donee updated successfully.");
+            boolean updating = true;
+            while (updating) {
+                int updateChoice = ui.getUpdateFieldChoice();
+                switch (updateChoice) {
+                    case 1:
+                        String name = ui.inputDoneeName();
+                        donee.setDoneeName(name);
+                        System.out.println("Name updated successfully.");
+                        break;
+                    case 2:
+                        String contactInfo = ui.inputContactInfo();
+                        donee.setDoneeContact(contactInfo);
+                        System.out.println("Contact info updated successfully.");
+                        break;
+                    case 3:
+                        String type = ui.inputDoneeType();
+                        donee.setDoneeType(type);
+                        System.out.println("Type updated successfully.");
+                        break;
+                    case 0:
+                        updating = false;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            }
         } else {
             System.out.println("Donee not found.");
         }
@@ -98,7 +119,8 @@ public class DoneeManagement {
 
     private void searchDonee() {
         String id = ui.inputDoneeID();
-        Donee donee = doneeMap.get(id);
+        String fullId = "DNE-" + id;
+        Donee donee = doneeMap.get(fullId);
         if (donee != null) {
             System.out.println("Donee Details:");
             System.out.println("ID: " + donee.getDoneeId());
@@ -117,8 +139,8 @@ public class DoneeManagement {
             System.out.println("Donee List:");
             Iterator<String> iterator = doneeMap.iterator();
             while (iterator.hasNext()) {
-                String id = iterator.next();
-                Donee donee = doneeMap.get(id);
+                String fullId = iterator.next();
+                Donee donee = doneeMap.get(fullId);
                 if (donee != null) {
                     System.out.println("ID: " + donee.getDoneeId());
                     System.out.println("Name: " + donee.getDoneeName());
@@ -130,10 +152,28 @@ public class DoneeManagement {
         }
     }
 
-    private void filterDonees() {
-        int filterType = ui.inputFilterCriteria();
-        // Implement filtering logic based on the criteria
+private void filterDonees() {
+    int filterType = ui.inputFilterCriteria();
+    switch (filterType) {
+        case 1:
+            String type = ui.inputDoneeType();
+            System.out.println("Donees of type: " + type);
+            Iterator<String> iterator = doneeMap.iterator();
+            while (iterator.hasNext()) {
+                String fullId = iterator.next();
+                Donee donee = doneeMap.get(fullId);
+                if (donee != null && donee.getDoneeType().equalsIgnoreCase(type)) {
+                    System.out.println("ID: " + donee.getDoneeId());
+                    System.out.println("Name: " + donee.getDoneeName());
+                    System.out.println("Contact: " + donee.getDoneeContact());
+                    System.out.println("----------------------------");
+                }
+            }
+            break;
+        default:
+            System.out.println("Invalid filter type. Please try again.");
     }
+}
 
     private void generateReports() {
         // Implement report generation logic

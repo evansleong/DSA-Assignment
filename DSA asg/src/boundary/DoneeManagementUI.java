@@ -32,7 +32,7 @@ public class DoneeManagementUI {
     }
 
     public String inputDoneeID() {
-        System.out.print("\nEnter donee ID > ");
+        System.out.print("\nEnter donee ID > DNE-");
         String doneeID = scanner.nextLine();
         return doneeID.toUpperCase();
     }
@@ -44,9 +44,26 @@ public class DoneeManagementUI {
     }
 
     public String inputDoneeType() {
-        System.out.print("\nEnter donee type (Individual/Organization/Family) > ");
-        String doneeType = scanner.nextLine();
-        return doneeType.toUpperCase();
+        System.out.println("Select donee type:");
+        System.out.println("a. Individual");
+        System.out.println("b. Organization");
+        System.out.println("c. Family");
+        System.out.print("Enter your choice (a/b/c) > ");
+        String choice = scanner.nextLine().toLowerCase();
+
+        String doneeType;
+        if (choice.equals("a")) {
+            doneeType = "Individual";
+        } else if (choice.equals("b")) {
+            doneeType = "Organization";
+        } else if (choice.equals("c")) {
+            doneeType = "Family";
+        } else {
+            System.out.println("Invalid choice. Defaulting to 'Individual'.");
+            doneeType = "Individual"; // Default type if input is invalid
+        }
+
+        return doneeType;
     }
 
     public String inputContactInfo() {
@@ -54,14 +71,26 @@ public class DoneeManagementUI {
         String contactInfo = scanner.nextLine();
         return contactInfo;
     }
+    
+    public int getUpdateFieldChoice() {
+        System.out.println("Select the field you want to update:");
+        System.out.println("1. Name");
+        System.out.println("2. Contact Info");
+        System.out.println("3. Type");
+        System.out.println("0. Exit");
+        System.out.print("Enter your choice: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); 
+        return choice;
+    }
 
     public int inputFilterCriteria() {
         System.out.println("\nFilter donees by:");
         System.out.println("1. Donee type");
-        System.out.println("2. Donation amount");
+        System.out.println("2. Donee name");
         System.out.print("\nEnter choice > ");
         int choice = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+        scanner.nextLine(); 
         return choice;
     }
 

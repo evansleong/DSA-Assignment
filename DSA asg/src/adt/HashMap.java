@@ -14,57 +14,72 @@ import java.util.NoSuchElementException;
 public class HashMap<K, V> implements HashMapInterface<K, V> {
 
     private static class Node<K, V> {
-
         K key;
         V value;
-        Node<K, V> prev;
         Node<K, V> next;
 
         Node(K key, V value) {
             this.key = key;
             this.value = value;
+            this.next = null;
         }
     }
 
-    private Node<K, V> head;
-    private Node<K, V> tail;
+    private Node<K, V>[] buckets;
     private int size;
+    private static final int DEFAULT_CAPACITY = 16;
+    private static final double LOAD_FACTOR = 0.75;
 
     public HashMap() {
-        head = null;
-        tail = null;
+        buckets = new Node[DEFAULT_CAPACITY];
         size = 0;
+    }
+
+    private int hash(K key) {
+        return Math.abs(key.hashCode()) % buckets.length;
     }
 
     @Override
     public void put(K key, V value) {
-        Node<K, V> newNode = new Node<>(key, value);
-        if (head == null) {
-            head = newNode;
-            tail = newNode;
-        } else {
-            tail.next = newNode;
-            newNode.prev = tail;
-            tail = newNode;
-        }
-        size++;
-    }
+        int index = hash(key);
+        Node<K, V> current = buckets[index];
 
-    public void replace(K key, V newValue) {
-        Node<K, V> current = head;
         while (current != null) {
             if (current.key.equals(key)) {
-                current.value = newValue; // Replace the value with the new value
+                current.value = value; // Update value if key exists
                 return;
             }
             current = current.next;
         }
-        throw new NoSuchElementException("Key not found: " + key);
+
+        // Prepend the new node to the list (O(1) operation)
+        Node<K, V> newNode = new Node<>(key, value);
+        newNode.next = buckets[index];
+        buckets[index] = newNode;
+        size++;
+
+        if (size >= LOAD_FACTOR * buckets.length) {
+            resize();
+        }
+    }
+
+    private void resize() {
+        Node<K, V>[] oldBuckets = buckets;
+        buckets = new Node[oldBuckets.length * 2];
+        size = 0;
+
+        for (Node<K, V> node : oldBuckets) {
+            while (node != null) {
+                put(node.key, node.value);
+                node = node.next;
+            }
+        }
     }
 
     @Override
     public V get(K key) {
-        Node<K, V> current = head;
+        int index = hash(key);
+        Node<K, V> current = buckets[index];
         while (current != null) {
             if (current.key.equals(key)) {
                 return current.value;
@@ -91,22 +106,21 @@ public class HashMap<K, V> implements HashMapInterface<K, V> {
 
     @Override
     public void remove(K key) {
-        Node<K, V> current = head;
+        int index = hash(key);
+        Node<K, V> current = buckets[index];
+        Node<K, V> previous = null;
+
         while (current != null) {
             if (current.key.equals(key)) {
-                if (current.prev != null) {
-                    current.prev.next = current.next;
+                if (previous == null) {
+                    buckets[index] = current.next;
                 } else {
-                    head = current.next;
-                }
-                if (current.next != null) {
-                    current.next.prev = current.prev;
-                } else {
-                    tail = current.prev;
+                    previous.next = current.next;
                 }
                 size--;
                 return;
             }
+            previous = current;
             current = current.next;
         }
     }
@@ -114,11 +128,21 @@ public class HashMap<K, V> implements HashMapInterface<K, V> {
     @Override
     public Iterator<K> iterator() {
         return new Iterator<K>() {
-            private Node<K, V> current = head;
+            private int currentBucket = 0;
+            private Node<K, V> currentNode = buckets[currentBucket];
 
             @Override
             public boolean hasNext() {
-                return current != null;
+                while (currentBucket < buckets.length) {
+                    if (currentNode != null) {
+                        return true;
+                    }
+                    currentBucket++;
+                    if (currentBucket < buckets.length) {
+                        currentNode = buckets[currentBucket];
+                    }
+                }
+                return false;
             }
 
             @Override
@@ -126,11 +150,10 @@ public class HashMap<K, V> implements HashMapInterface<K, V> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                K key = current.key;
-                current = current.next;
+                K key = currentNode.key;
+                currentNode = currentNode.next;
                 return key;
             }
         };
     }
-
 }
