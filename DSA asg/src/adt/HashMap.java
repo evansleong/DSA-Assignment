@@ -4,6 +4,7 @@
  */
 package adt;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -255,6 +256,21 @@ public class HashMap<K, V> implements HashMapInterface<K, V> {
                 return key; // Return the key
             }
         };
+    }
+
+    @Override
+    public <T> void bubbleSort(T[] array, Comparator<T> comparator) {
+        int n = array.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (comparator.compare(array[j], array[j + 1]) > 0) {
+                    // Swap array[j] and array[j + 1]
+                    T temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
+            }
+        }
     }
 
     private void checkKeyIsNull(K key) throws IllegalArgumentException {

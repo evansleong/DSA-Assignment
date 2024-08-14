@@ -7,6 +7,7 @@ package control;
 import adt.*;
 import boundary.*;
 import entity.*;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
@@ -60,6 +61,9 @@ public class DoneeManagement {
                     filterDonees();
                     break;
                 case 7:
+                    sortDoneesByName();
+                    break;
+                case 8:
                     generateReports();
                     break;
                 case 0:
@@ -174,6 +178,38 @@ public class DoneeManagement {
         }
     }
 
+    private void sortDoneesByName() {
+        // Step 1: Extract donees into an array
+        Donee[] doneeArray = new Donee[doneeMap.size()];
+        Iterator<String> iterator = doneeMap.iterator();
+        int index = 0;
+
+        while (iterator.hasNext()) {
+            String fullId = iterator.next();
+            Donee donee = doneeMap.get(fullId);
+            if (donee != null) {
+                doneeArray[index++] = donee;
+            }
+        }
+
+        // Step 2: Sort the array using the bubbleSort method from HashMap
+        // Assume that bubbleSort is a static method or accessible directly
+        HashMap<String, Donee> hashMap = new HashMap<>(); // or use the existing doneeMap instance if necessary
+        hashMap.bubbleSort(doneeArray, doneeNameComparator);
+
+        // Step 3: Display the sorted donees
+        System.out.println("Sorted Donee List:");
+        System.out.printf("%-15s %-20s %-25s %-15s\n", "ID", "Name", "Contact Info", "Type");
+        System.out.println("-----------------------------------------------------------------------------------");
+        for (Donee donee : doneeArray) {
+            System.out.printf("%-15s %-20s %-25s %-15s\n",
+                    donee.getDoneeId(),
+                    donee.getDoneeName(),
+                    donee.getDoneeContact(),
+                    donee.getDoneeType());
+        }
+    }
+
     private void filterDonees() {
         int filterType = ui.inputFilterCriteria();
         switch (filterType) {
@@ -245,6 +281,13 @@ public class DoneeManagement {
         char confirmation = ui.confirmAction();
         return confirmation == 'Y';
     }
+
+    private Comparator<Donee> doneeNameComparator = new Comparator<Donee>() {
+        @Override
+        public int compare(Donee d1, Donee d2) {
+            return d1.getDoneeName().compareTo(d2.getDoneeName());
+        }
+    };
 
     public static void main(String[] args) {
         DoneeManagement app = new DoneeManagement();

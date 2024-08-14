@@ -22,7 +22,8 @@ public class DoneeManagementUI {
         System.out.println("\t4. Search donee details");
         System.out.println("\t5. List donee with all the donations made");
         System.out.println("\t6. Filer donee based on criteria");
-        System.out.println("\t7. Generate summary reports");
+        System.out.println("\t7. Sort donee by name");
+        System.out.println("\t8. Generate summary reports");
         System.out.println("\t0. Exit program");
         System.out.printf("\nEnter choice > ");
         int choice = scanner.nextInt();
