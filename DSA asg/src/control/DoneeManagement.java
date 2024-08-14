@@ -17,10 +17,10 @@ import java.util.Iterator;
 public class DoneeManagement {
 
     DoneeManagementUI ui = new DoneeManagementUI();
-    HashMapInterface<String, Donee> doneeMap;
+    LinkedHashMapInterface<String, Donee> doneeMap;
 
     public DoneeManagement() {
-        doneeMap = new HashMap<>();
+        doneeMap = new LinkedHashMap<>();
         seedData();
     }
 
@@ -194,7 +194,7 @@ public class DoneeManagement {
 
         // Step 2: Sort the array using the bubbleSort method from HashMap
         // Assume that bubbleSort is a static method or accessible directly
-        HashMap<String, Donee> hashMap = new HashMap<>(); // or use the existing doneeMap instance if necessary
+        LinkedHashMap<String, Donee> hashMap = new LinkedHashMap<>(); // or use the existing doneeMap instance if necessary
         hashMap.bubbleSort(doneeArray, doneeNameComparator);
 
         // Step 3: Display the sorted donees

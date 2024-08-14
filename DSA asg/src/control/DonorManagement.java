@@ -16,10 +16,10 @@ import java.util.Iterator;
 public class DonorManagement {
 
     DonorManagementUI ui = new DonorManagementUI();
-    HashMapInterface<String, Donor> donorMap;
+    LinkedHashMapInterface<String, Donor> donorMap;
 
     public DonorManagement() {
-        donorMap = new HashMap<>();
+        donorMap = new LinkedHashMap<>();
     }
 
     public void runSystem() {

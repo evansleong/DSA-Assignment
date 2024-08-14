@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author evansleong
  */
-public interface HashMapInterface<K, V> {
+public interface LinkedHashMapInterface<K, V> {
 
     /**
      * Inserts a key-value pair into the map. If the key already exists, the

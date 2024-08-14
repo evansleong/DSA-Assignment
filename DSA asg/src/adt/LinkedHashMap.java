@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
  *
  * @author evansleong
  */
-public class HashMap<K, V> implements HashMapInterface<K, V> {
+public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
 
     // Threshold to trigger a resize operation when the load factor exceeds this value
     private static final float LOAD_FACTOR_THRESHOLD = 0.75f;
@@ -47,7 +47,7 @@ public class HashMap<K, V> implements HashMapInterface<K, V> {
     }
 
     // Constructor to initialize the hash map with a minimal capacity
-    public HashMap() {
+    public LinkedHashMap() {
         this.capacity = 1; // Start with a minimal capacity
         this.table = new Node[capacity]; // Initialize the hash table with the given capacity
         this.size = 0; // Initially, the map is empty
