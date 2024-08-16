@@ -108,14 +108,50 @@ public class DonorManagement {
     }
 
     private void listDonorsWithDonations() {
-        if(donorMap.isEmpty()){
-            
+        if (donorMap.isEmpty()) {
+            System.out.println("No existing donors");
+        } else {
+            System.out.println("Donor List: \n");
+            System.out.printf("%-15s %-20s \t%s\n", "ID", "Donor Name", "Donations");
+            System.out.println("------------------------------------------------------------");
+
+            Iterator<String> iterator = donorMap.iterator();
+            while (iterator.hasNext()) {
+                String dId = iterator.next();
+                Donor donor = donorMap.get(dId);
+                if (donor != null) {
+                    System.out.printf("%-15s %-20s \t%s\n",
+                            donor.getDonorId(),
+                            donor.getDonorName(),
+                            donor.getDonation()
+                    );
+                }
+            }
         }
     }
 
     private void filterDonors() {
         int filterType = ui.inputFilterCriteria();
-        // Implement filtering logic based on the criteria
+        switch (filterType) {
+            case 1:
+                String type = ui.inputDonorType();
+                System.out.println("Donor type: " + type);
+                Iterator<String> iterator = donorMap.iterator();
+                while (iterator.hasNext()) {
+                    String dId = iterator.next();
+                    Donor donor = donorMap.get(dId);
+                    String dType = donor.getDonorType();
+                    if (donor != null) {
+                        if (dType.equals(type)) {
+                            System.out.printf("%-15s %-20s \t%s\n",
+                                    donor.getDonorId(),
+                                    donor.getDonorName(),
+                                    donor.getDonorType()
+                            );
+                        }
+                    }
+                }
+        }
     }
 
     private void generateSummaryReports() {
