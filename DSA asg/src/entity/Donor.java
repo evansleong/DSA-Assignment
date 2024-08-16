@@ -50,6 +50,10 @@ public class Donor {
     public String getDonorContact() {
         return donorContact;
     }
+    
+    public List<Donation> getDonation(){
+        return donationsMade;
+    }
 
     public void addDonation(Donation donation) {
         donationsMade.add(donation);
