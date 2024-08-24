@@ -6,6 +6,7 @@ package entity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  *
@@ -17,18 +18,21 @@ public class Donation {
     private String donationDate;
     private String donationType;
     private String donationDetails;
+    private List<DonationItem> items;
 
-    private String donorName;
 
-    public Donation(String donationId, String donationType, String donationDetails, String donorName, String donationDate) {
+
+    public Donation(String donationId, String donationType, String donationDetails, String donationDate) {
         this.donationId = donationId;
         this.donationType = donationType;
         this.donationDetails = donationDetails;
-        this.donorName = donorName;
         this.donationDate = donationDate;
 //        this.donationDate = formatDate(java.time.LocalDate.now());
     }
 
+    public void addItem(DonationItem item) {
+        items.add(item);
+    }
 //    private String formatDate(LocalDate date) {
 //        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-mm-yyyy");
 //        return date.format(f);
@@ -66,12 +70,8 @@ public class Donation {
         this.donationDetails = donationDetails;
     }
 
-    public String getDonorName() {
-        return donorName;
+@Override
+    public String toString() {
+        return "Donor{" + "donationId=" + donationId + ", donationType=" + donationType + ", donationDetail=" + donationDetails + ", donationDate=" + donationDate + '}';
     }
-
-    public void setDonorName(String donorName) {
-        this.donorName = donorName;
-    }
-
 }
