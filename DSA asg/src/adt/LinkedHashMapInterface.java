@@ -10,6 +10,8 @@ import java.util.Iterator;
 /**
  *
  * @author evansleong
+ * @param <K>
+ * @param <V>
  */
 public interface LinkedHashMapInterface<K, V> {
 
@@ -72,6 +74,16 @@ public interface LinkedHashMapInterface<K, V> {
      * @param key the key whose mapping is to be removed from the map
      */
     void remove(K key);
+
+    /**
+     * Removes all key-value mappings from the map.
+     *
+     * <p>
+     * ADT Spec: <br>
+     * pre-condition: The map may contain zero or more key-value pairs.<br>
+     * post-condition: The map is empty after this method is called.
+     */
+    void clear();
 
     /**
      * Checks if the map contains a mapping for the specified key.
@@ -139,5 +151,5 @@ public interface LinkedHashMapInterface<K, V> {
      * @param comparator the comparator used to compare array elements
      * @param <T> the type of elements in the array
      */
-    <T> void bubbleSort(T[] array, Comparator<T> comparator);
+    <T> void mergeSort(T[] array, Comparator<T> comparator);
 }

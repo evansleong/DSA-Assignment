@@ -49,21 +49,24 @@ public class DoneeManagement {
                     removeDonee();
                     break;
                 case 3:
-                    updateDonee();
+                    clearDonees();
                     break;
                 case 4:
-                    searchDonee();
+                    updateDonee();
                     break;
                 case 5:
-                    listDonees();
+                    searchDonee();
                     break;
                 case 6:
-                    filterDonees();
+                    listDonees();
                     break;
                 case 7:
-                    sortDoneesByName();
+                    filterDonees();
                     break;
                 case 8:
+                    sortDoneesByName();
+                    break;
+                case 9:
                     generateReports();
                     break;
                 case 0:
@@ -96,6 +99,15 @@ public class DoneeManagement {
         String fullId = "DNE-" + id;
         doneeMap.remove(fullId);
         System.out.println("Donee removed successfully.");
+    }
+
+    private void clearDonees() {
+        if (confirmAction()) {
+            doneeMap.clear();
+            System.out.println("All donees have been cleared.");
+        } else {
+            System.out.println("Action cancelled.");
+        }
     }
 
     private void updateDonee() {
@@ -157,33 +169,24 @@ public class DoneeManagement {
         if (doneeMap.isEmpty()) {
             System.out.println("No donees available.");
         } else {
-            System.out.println("Donee List:");
-            // Print table header
-            System.out.printf("%-15s %-20s %-25s %-15s\n", "ID", "Name", "Contact Info", "Type");
-            System.out.println("-----------------------------------------------------------------------------------");
-
-            // Print each donee's details in a formatted way
+            Donee[] doneeArray = new Donee[doneeMap.size()];
             Iterator<String> iterator = doneeMap.iterator();
+            int index = 0;
             while (iterator.hasNext()) {
                 String fullId = iterator.next();
                 Donee donee = doneeMap.get(fullId);
                 if (donee != null) {
-                    System.out.printf("%-15s %-20s %-25s %-15s\n",
-                            donee.getDoneeId(),
-                            donee.getDoneeName(),
-                            donee.getDoneeContact(),
-                            donee.getDoneeType());
+                    doneeArray[index++] = donee;
                 }
             }
+            ui.displayDoneeList(doneeArray);
         }
     }
 
     private void sortDoneesByName() {
-        // Step 1: Extract donees into an array
         Donee[] doneeArray = new Donee[doneeMap.size()];
         Iterator<String> iterator = doneeMap.iterator();
         int index = 0;
-
         while (iterator.hasNext()) {
             String fullId = iterator.next();
             Donee donee = doneeMap.get(fullId);
@@ -191,23 +194,8 @@ public class DoneeManagement {
                 doneeArray[index++] = donee;
             }
         }
-
-        // Step 2: Sort the array using the bubbleSort method from HashMap
-        // Assume that bubbleSort is a static method or accessible directly
-        LinkedHashMap<String, Donee> hashMap = new LinkedHashMap<>(); // or use the existing doneeMap instance if necessary
-        hashMap.bubbleSort(doneeArray, doneeNameComparator);
-
-        // Step 3: Display the sorted donees
-        System.out.println("Sorted Donee List:");
-        System.out.printf("%-15s %-20s %-25s %-15s\n", "ID", "Name", "Contact Info", "Type");
-        System.out.println("-----------------------------------------------------------------------------------");
-        for (Donee donee : doneeArray) {
-            System.out.printf("%-15s %-20s %-25s %-15s\n",
-                    donee.getDoneeId(),
-                    donee.getDoneeName(),
-                    donee.getDoneeContact(),
-                    donee.getDoneeType());
-        }
+        doneeMap.mergeSort(doneeArray, doneeNameComparator);
+        ui.displaySortedDoneeList(doneeArray);
     }
 
     private void filterDonees() {
@@ -240,13 +228,7 @@ public class DoneeManagement {
     }
 
     private void generateReports() {
-        System.out.println("Summary Report:");
-
-        // Total number of donees
         int totalDonees = doneeMap.size();
-        System.out.println("Total Number of Donees: " + totalDonees);
-
-        // Breakdown by type
         int individualCount = 0;
         int organizationCount = 0;
         int familyCount = 0;
@@ -270,13 +252,8 @@ public class DoneeManagement {
             }
         }
 
-        System.out.println("Individual Donees: " + individualCount);
-        System.out.println("Organization Donees: " + organizationCount);
-        System.out.println("Family Donees: " + familyCount);
-
-        // More detailed summaries can be added here
+        ui.displaySummaryReport(individualCount, organizationCount, familyCount, totalDonees);
     }
-
     private boolean confirmAction() {
         char confirmation = ui.confirmAction();
         return confirmation == 'Y';

@@ -55,7 +55,12 @@ public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
 
     // Hash function to calculate the index for a given key
     private int hash(K key) {
-        return key == null ? 0 : Math.abs(key.hashCode()) % capacity;
+        if (key == null) {
+            return 0;
+        } else {
+            return Math.abs(key.hashCode() % capacity);
+        }
+//        return key == null ? 0 : Math.abs(key.hashCode()) % capacity;
     }
 
     // Method to insert or update a key-value pair in the map
@@ -235,6 +240,21 @@ public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
         }
     }
 
+    @Override
+    public void clear() {
+        // Set all buckets to null
+        for (int i = 0; i < table.length; i++) {
+            table[i] = null;
+        }
+
+        // Reset the head and tail of the linked list
+        head = null;
+        tail = null;
+
+        // Reset the size of the map
+        size = 0;
+    }
+
     // Method to provide an iterator over the keys in the map
     @Override
     public Iterator<K> iterator() {
@@ -259,17 +279,59 @@ public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
     }
 
     @Override
-    public <T> void bubbleSort(T[] array, Comparator<T> comparator) {
-        int n = array.length;
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - 1 - i; j++) {
-                if (comparator.compare(array[j], array[j + 1]) > 0) {
-                    // Swap array[j] and array[j + 1]
-                    T temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
-                }
+    public <T> void mergeSort(T[] array, Comparator<T> comparator) {
+        mergeSort(array, 0, array.length - 1, comparator);
+    }
+
+    private <T> void mergeSort(T[] array, int left, int right, Comparator<T> comparator) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+
+            mergeSort(array, left, mid, comparator); // Sort the first half
+            mergeSort(array, mid + 1, right, comparator); // Sort the second half
+
+            merge(array, left, mid, right, comparator); // Merge the sorted halves
+        }
+    }
+
+    private <T> void merge(T[] array, int left, int mid, int right, Comparator<T> comparator) {
+        int n1 = mid - left + 1; // Size of the left half
+        int n2 = right - mid; // Size of the right half
+
+        // Create temporary arrays
+        T[] leftArray = (T[]) new Object[n1];
+        T[] rightArray = (T[]) new Object[n2];
+
+        // Copy data to temporary arrays
+        System.arraycopy(array, left, leftArray, 0, n1);
+        System.arraycopy(array, mid + 1, rightArray, 0, n2);
+
+        // Merge the temporary arrays back into the original array
+        int i = 0, j = 0;
+        int k = left;
+        while (i < n1 && j < n2) {
+            if (comparator.compare(leftArray[i], rightArray[j]) <= 0) {
+                array[k] = leftArray[i];
+                i++;
+            } else {
+                array[k] = rightArray[j];
+                j++;
             }
+            k++;
+        }
+
+        // Copy remaining elements of leftArray[], if any
+        while (i < n1) {
+            array[k] = leftArray[i];
+            i++;
+            k++;
+        }
+
+        // Copy remaining elements of rightArray[], if any
+        while (j < n2) {
+            array[k] = rightArray[j];
+            j++;
+            k++;
         }
     }
 
