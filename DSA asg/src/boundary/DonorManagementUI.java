@@ -20,6 +20,7 @@ public class DonorManagementUI {
 
     // Display menu options for donor management
     public int menuOpt() {
+        System.out.println("\n\n");
         System.out.println("Donor Management Menu:");
         System.out.println("1. Add Donor");
         System.out.println("2. Remove Donor");
@@ -30,7 +31,9 @@ public class DonorManagementUI {
         System.out.println("7. Generate Summary Reports");
         System.out.println("0. Exit");
         System.out.print("Enter your choice: ");
-        return scanner.nextInt();
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+        return choice; 
     }
 
     // Collect information to add a new donor
@@ -88,10 +91,11 @@ public class DonorManagementUI {
     public int inputFilterCriteria() {
         System.out.println("Filter Donors by:");
         System.out.println("1. Donor Type");
-        System.out.println("2. Donation Amount");
-        System.out.println("3. Date of Donation");
+        System.out.println("2. Date of Donation");
         System.out.print("Enter your filter choice: ");
-        return scanner.nextInt();
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        return choice;
     }
 
     // Method to display messages
