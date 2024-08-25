@@ -13,9 +13,7 @@ import java.util.NoSuchElementException;
  *
  * @author evansleong
  */
-public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V>, Serializable {
-
-    private static final long serialVersionUID = 1L; // Add a serial version UID
+public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
     
     // Threshold to trigger a resize operation when the load factor exceeds this value
     private static final float LOAD_FACTOR_THRESHOLD = 0.75f;
@@ -34,8 +32,7 @@ public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V>, Serial
     private int capacity;
 
     // Inner class representing a node in the hash table and the linked list
-    private static class Node<K, V> implements Serializable {
-        private static final long serialVersionUID = 1L; // Add a serial version UID
+    private static class Node<K, V> {
 
         final K key;             // Key for the node
         V value;                 // Value associated with the key
@@ -169,6 +166,21 @@ public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V>, Serial
             current = current.next; // Move to the next node in the list
         }
         return null; // Return null if the key is not found
+    }
+    
+    @Override
+    public V[] values() {
+        // Create an array to hold the values
+        V[] valuesArray = (V[]) new Object[size];
+        Node<K, V> current = head; // Start from the head of the insertion order list
+
+        int index = 0;
+        while (current != null) {
+            valuesArray[index++] = current.value; // Add each value to the array
+            current = current.nextInOrder; // Move to the next node in the list
+        }
+
+        return valuesArray; // Return the array of values
     }
 
     // Method to replace the value associated with a key

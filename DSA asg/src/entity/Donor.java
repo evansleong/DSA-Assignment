@@ -1,9 +1,8 @@
 package entity;
 
 import adt.*;
-import java.io.Serializable;
 
-public class Donor implements Serializable {
+public class Donor {
 
     private String donorId;
     private String donorName;

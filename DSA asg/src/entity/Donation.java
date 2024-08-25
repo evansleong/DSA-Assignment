@@ -5,13 +5,12 @@
 package entity;
 
 import adt.*;
-import java.io.Serializable;
 
 /**
  *
  * @author Asus
  */
-public class Donation implements Serializable {
+public class Donation {
 
     private String donationId;
     private String donationDate;

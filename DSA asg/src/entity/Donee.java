@@ -5,26 +5,27 @@
 package entity;
 
 import adt.*;
-import java.io.Serializable;
 
 /**
  *
  * @author evansleong
  */
-public class Donee implements Serializable {
+public class Donee {
 
     private String doneeId;
     private String doneeName;
     private String doneeType;
     private String doneeContact;
-    private ListInterface<Donation> donations;
+    private LinkedHashMap<String, Donation> donations;
+    private Integer age;
 
-    public Donee(String doneeId, String doneeName, String doneeContact, String doneeType) {
+    public Donee(String doneeId, String doneeName, String doneeContact, String doneeType, Integer age) {
         this.doneeId = doneeId;
         this.doneeName = doneeName;
         this.doneeType = doneeType;
         this.doneeContact = doneeContact;
-        this.donations = new List<>();
+        this.donations = new LinkedHashMap<>();
+        this.age = age;
     }
 
     public void setDoneeId(String doneeId) {
@@ -43,8 +44,12 @@ public class Donee implements Serializable {
         this.doneeContact = doneeContact;
     }
 
-    public void setDonations(ListInterface<Donation> donations) {
+    public void setDonations(LinkedHashMap<String, Donation> donations) {
         this.donations = donations;
+    }
+    
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public String getDoneeId() {
@@ -63,13 +68,22 @@ public class Donee implements Serializable {
         return doneeContact;
     }
 
-    public ListInterface<Donation> getDonations() {
+    public LinkedHashMap<String, Donation> getDonations() {
         return donations;
     }
+    
+    public Integer getAge() {
+        return age;
+    }
+    
+    public void addDonation(String donationId, Donation donation) {
+        donations.put(donationId, donation); // Use put method of LinkedHashMap
+    }
+    
 
     @Override
     public String toString() {
-        return "Donee{" + "doneeId=" + doneeId + ", doneeName=" + doneeName + ", doneeType=" + doneeType + ", doneeContact=" + doneeContact + ", donations=" + donations + '}';
+        return "Donee{" + "doneeId=" + doneeId + ", doneeName=" + doneeName + ", doneeType=" + doneeType + ", doneeContact=" + doneeContact + ", donations=" + donations + ", age=" + age + '}';
     }
 
 }

@@ -26,6 +26,7 @@ public class DoneeManagementUI {
         System.out.println("\t7. Filter donee based on criteria");
         System.out.println("\t8. Sort donee by name");
         System.out.println("\t9. Generate summary reports");
+//        System.out.println("\t10. Add donations to donee");
         System.out.println("\t0. Back to main");
         System.out.printf("\nEnter choice > ");
         int choice = scanner.nextInt();
@@ -46,12 +47,51 @@ public class DoneeManagementUI {
         return doneeName.toUpperCase();
     }
 
+    public Integer inputAge() {
+        System.out.print("\nEnter donee age > ");
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid age input. Age must be a number.");
+            return null;
+        }
+    }
+
+    public int inputAgeGroup() {
+        int ageGroup = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            System.out.println("Select age group(individual donee only) to filter:");
+            System.out.println("1. Kid (1-20)");
+            System.out.println("2. Teenager (21-34)");
+            System.out.println("3. Adult (35-54)");
+            System.out.println("4. Senior Citizen (55+)");
+            System.out.print("Enter your choice (1-4): ");
+
+            try {
+                ageGroup = Integer.parseInt(scanner.nextLine());
+
+                if (ageGroup >= 1 && ageGroup <= 4) {
+                    validInput = true;
+                } else {
+                    System.out.println("Invalid input. Please enter a number between 1 and 4.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+
+        return ageGroup;
+    }
+
     public String inputDoneeType() {
         System.out.println("Select donee type:");
-        System.out.println("a. Individual");
-        System.out.println("b. Organization");
-        System.out.println("c. Family");
-        System.out.print("Enter your choice (a/b/c) > ");
+        System.out.println("------------------");
+        System.out.println("A. INDIVIDUAL");
+        System.out.println("B. ORGANIZATION");
+        System.out.println("C. FAMILY");
+        System.out.print("Enter your choice (A/B/C) > ");
         String choice = scanner.nextLine().toLowerCase();
 
         switch (choice) {
@@ -71,26 +111,29 @@ public class DoneeManagementUI {
         System.out.print("\nEnter donee contact information > ");
         return scanner.nextLine();
     }
-    
+
     public int getUpdateFieldChoice() {
         System.out.println("Select the field you want to update:");
-        System.out.println("1. Name");
-        System.out.println("2. Contact Info");
-        System.out.println("3. Type");
-        System.out.println("0. Exit");
+        System.out.println("------------------------------------");
+        System.out.println("1. NAME");
+        System.out.println("2. CONTACT NUMBER");
+        System.out.println("3. TYPE");
+        System.out.println("0. EXIT");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
-        scanner.nextLine(); 
+        scanner.nextLine();
         return choice;
     }
 
     public int inputFilterCriteria() {
         System.out.println("\nFilter donees by:");
-        System.out.println("1. Donee type");
-        System.out.println("2. Donee name");
+        System.out.println("-------------------");
+        System.out.println("1. DONEE TYPE");
+        System.out.println("2. DONEE NAME");
+        System.out.println("3. DONEE AGE (FOR INDIVIDUAL ONLY)");
         System.out.print("\nEnter choice > ");
         int choice = scanner.nextInt();
-        scanner.nextLine(); 
+        scanner.nextLine();
         return choice;
     }
 
@@ -126,6 +169,17 @@ public class DoneeManagementUI {
         }
     }
 
+    public String inputFirstLetterOfDoneeName() {
+        System.out.print("\nEnter the first letter of the donee's name: ");
+        String input = scanner.nextLine().trim();
+        // Ensure input is a single alphabetic character
+        if (input.length() != 1 || !Character.isLetter(input.charAt(0))) {
+            System.out.println("Invalid input. Please enter a single alphabetic character.");
+            return "";
+        }
+        return input.toUpperCase();
+    }
+
     public void displaySortedDoneeList(Donee[] donees) {
         System.out.println("Sorted Donee List:");
         displayDoneeList(donees);
@@ -138,4 +192,42 @@ public class DoneeManagementUI {
         System.out.println("Organization Donees: " + organizationCount);
         System.out.println("Family Donees: " + familyCount);
     }
+
+    public String inputDonationID() {
+        System.out.print("\nEnter donation ID > DON-");
+        String donationID = scanner.nextLine();
+        return donationID.toUpperCase();
+    }
+
+    public String inputDonationType() {
+        System.out.println("Select donation type:");
+        System.out.println("a. Food");
+        System.out.println("b. Clothing");
+        System.out.println("c. Monetary");
+        System.out.print("Enter your choice (a/b/c) > ");
+        String choice = scanner.nextLine().toLowerCase();
+
+        switch (choice) {
+            case "a":
+                return "Food";
+            case "b":
+                return "Clothing";
+            case "c":
+                return "Monetary";
+            default:
+                System.out.println("Invalid choice. Defaulting to 'Food'.");
+                return "Food"; // Default type if input is invalid
+        }
+    }
+
+    public String inputDonationDescription() {
+        System.out.print("\nEnter donation description > ");
+        return scanner.nextLine();
+    }
+
+    public String inputDonationDate() {
+        System.out.print("\nEnter donation date (YYYY-MM-DD) > ");
+        return scanner.nextLine();
+    }
+
 }

@@ -4,13 +4,12 @@
  */
 package entity;
 
-import java.io.Serializable;
 
 /**
  *
  * @author evansleong
  */
-public class DonationItem implements Serializable {
+public class DonationItem {
 
     private String itemId;
     private String donationId;
