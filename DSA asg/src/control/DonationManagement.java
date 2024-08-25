@@ -65,31 +65,47 @@ public class DonationManagement {
     }
 
     private void addDonation() {
-        String donorId = dmUI.inputDonorID();
-        String dmid = dmUI.mgnDonationIDnew();
-        String dmtype = dmUI.mgnDonationtypenew();
-        String dmdetails = dmUI.mgnDonationDetailsnew();
-        String dmdate = dmUI.mgnDonationDatenew();
+    String donorId = dmUI.inputDonorID();
+    String dmid = dmUI.mgnDonationIDnew();
+//    String dmtype = dmUI.mgnDonationtypenew();
+//    String dmdetails = dmUI.mgnDonationDetailsnew();
+    String dmdate = dmUI.mgnDonationDatenew();
 
-        Donation donation = new Donation(dmid, dmtype, dmdetails, dmdate, donorId);
-        dmMap.put(dmid, donation);
-        System.out.println("Donation successfully added.");
+    Donation donation = new Donation(dmid, dmdate, donorId);
+
+    boolean addingItems = true;
+    while (addingItems) {
+        String dmItemId = dmUI.mgnItemID();
+        String dmItemName = dmUI.mgnItemName();
+        String dmtype = dmUI.mgnDonationtypenew();
+        int dmquantity = dmUI.mgnQuantity();
+
+        // Create a DonationItem object
+        DonationItem item = new DonationItem(dmItemId, dmid, dmItemName, dmtype, dmquantity);
+        donation.addItem(item);
+
+        System.out.println("Item added successfully.");
+        addingItems = dmUI.askAddMoreItems(); // Method to ask if user wants to add more items
+    }
+
+    dmMap.put(dmid, donation);
+    System.out.println("Donation successfully added.");
 
     }
 
     private void removeDonation() {
-        String dmid = dmUI.mgnDonationID();
+        String dmid = dmUI.mgnDonationIDnew();
         if (dmMap.get(dmid) != null) {
             dmMap.remove(dmid);
             System.out.println("Donation succesfully removed");
         } else {
             System.out.println("Donation not found");
         }
-
+        
     }
 
     private void searchDonation() {
-        String id = dmUI.mgnDonationID();
+        String id = dmUI.mgnDonationIDnew();
         Donation donation = dmMap.get(id);
         if (donation != null) {
             System.out.println("Donation Details:");
@@ -104,7 +120,7 @@ public class DonationManagement {
     }
 
     private void amendDonation() {
-        String id = dmUI.mgnDonationID();
+        String id = dmUI.mgnDonationIDnew();
         Donation donation = dmMap.get(id);
         if (donation != null) {
             String dmtype = dmUI.mgnDonationtype();
@@ -123,7 +139,7 @@ public class DonationManagement {
     }
 
     private void trackDonation() {
-
+        
     }
 
     private void listByDonor() {
@@ -131,11 +147,12 @@ public class DonationManagement {
     }
 
     private void listAll() {
-
+        
+        
     }
 
     private void filterDonations() {
-
+        
     }
 
     private void generateDonationsSummary() {

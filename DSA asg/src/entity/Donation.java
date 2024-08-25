@@ -28,6 +28,23 @@ public class Donation {
         this.donorId = donorId;
     }
 
+    public Donation(String donationId, String donationDate, ListInterface<DonationItem> items, String donorId) {
+        this.donationId = donationId;
+        this.donationDate = donationDate;
+        this.items = items;
+        this.donorId = donorId;
+    }
+    
+    public Donation(String donationId, String donationDate, String donorId) {
+        this.donationId = donationId;
+//        this.donationType = donationType;
+//        this.donationDetails = donationDetails;
+        this.donationDate = donationDate;
+        this.items = new List<>();
+        this.donorId = donorId;
+    }
+    
+
     public void addItem(DonationItem item) {
         items.add(item);
     }

@@ -33,10 +33,23 @@ public class DonationManagementUI {
         return mgnChoice;
     }
 
-    public String mgnDonationID() {
+    public String mgnItemID() {
         System.out.print("\nEnter Donation ID > ");
-        String donationId = scan.nextLine();
-        return donationId.toUpperCase();
+        String itemId = scan.nextLine();
+        return itemId.toUpperCase();
+    }
+    
+    public String mgnItemName() {
+        System.out.print("\nEnter Item Name > ");
+        String itemId = scan.nextLine();
+        return itemId;
+    }
+    
+    public int mgnQuantity() {
+        System.out.print("\nEnter Quantity > ");
+        String mgnQuantity = scan.nextLine();
+        int quantity = Integer.parseInt(mgnQuantity);
+        return quantity;
     }
 
     public String mgnDonationIDnew() {
@@ -97,4 +110,13 @@ public class DonationManagementUI {
         scan.close();
     }
 
+    
+    public boolean askAddMoreItems() {
+        System.out.print("\nDo you want to add another item? (yes/no) > ");
+        String response = scan.nextLine();
+        return response.equalsIgnoreCase("yes");
+    }
+    
+    
+    
 }
