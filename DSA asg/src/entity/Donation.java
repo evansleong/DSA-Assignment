@@ -4,39 +4,34 @@
  */
 package entity;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import adt.*;
+import java.io.Serializable;
 
 /**
  *
  * @author Asus
  */
-public class Donation {
+public class Donation implements Serializable {
 
     private String donationId;
     private String donationDate;
     private String donationType;
     private String donationDetails;
-    private List<DonationItem> items;
+    private ListInterface<DonationItem> items;
+    private String donorId;
 
-
-
-    public Donation(String donationId, String donationType, String donationDetails, String donationDate) {
+    public Donation(String donationId, String donationType, String donationDetails, String donationDate, String donorId) {
         this.donationId = donationId;
         this.donationType = donationType;
         this.donationDetails = donationDetails;
         this.donationDate = donationDate;
-//        this.donationDate = formatDate(java.time.LocalDate.now());
+        this.items = new List<>();
+        this.donorId = donorId;
     }
 
     public void addItem(DonationItem item) {
         items.add(item);
     }
-//    private String formatDate(LocalDate date) {
-//        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-mm-yyyy");
-//        return date.format(f);
-//    }
 
     public String getDonationId() {
         return donationId;
@@ -70,8 +65,27 @@ public class Donation {
         this.donationDetails = donationDetails;
     }
 
-@Override
-    public String toString() {
-        return "Donor{" + "donationId=" + donationId + ", donationType=" + donationType + ", donationDetail=" + donationDetails + ", donationDate=" + donationDate + '}';
+    public String getDonorId() {
+        return donorId;
     }
+
+    public void setItems(ListInterface<DonationItem> items) {
+        this.items = items;
+    }
+
+    public void setDonorId(String donorId) {
+        this.donorId = donorId;
+    }
+
+    
+    
+    public ListInterface<DonationItem> getItems() {
+        return items;
+    }
+
+    @Override
+    public String toString() {
+        return "Donation{" + "donationId=" + donationId + ", donationDate=" + donationDate + ", donationType=" + donationType + ", donationDetails=" + donationDetails + ", items=" + items + '}';
+    }
+
 }

@@ -3,22 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package entity;
+
+import adt.*;
+import java.io.Serializable;
+
 /**
  *
  * @author evansleong
  */
-public class Donee {
+public class Donee implements Serializable {
 
     private String doneeId;
     private String doneeName;
     private String doneeType;
     private String doneeContact;
+    private ListInterface<Donation> donations;
 
     public Donee(String doneeId, String doneeName, String doneeContact, String doneeType) {
         this.doneeId = doneeId;
         this.doneeName = doneeName;
         this.doneeType = doneeType;
         this.doneeContact = doneeContact;
+        this.donations = new List<>();
     }
 
     public void setDoneeId(String doneeId) {
@@ -37,6 +43,10 @@ public class Donee {
         this.doneeContact = doneeContact;
     }
 
+    public void setDonations(ListInterface<Donation> donations) {
+        this.donations = donations;
+    }
+
     public String getDoneeId() {
         return doneeId;
     }
@@ -53,8 +63,13 @@ public class Donee {
         return doneeContact;
     }
 
+    public ListInterface<Donation> getDonations() {
+        return donations;
+    }
+
     @Override
     public String toString() {
-        return "Donee{" + "doneeId=" + doneeId + ", doneeName=" + doneeName + ", doneeType=" + doneeType + '}';
+        return "Donee{" + "doneeId=" + doneeId + ", doneeName=" + doneeName + ", doneeType=" + doneeType + ", doneeContact=" + doneeContact + ", donations=" + donations + '}';
     }
+
 }

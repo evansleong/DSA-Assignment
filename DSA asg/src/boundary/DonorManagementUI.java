@@ -29,7 +29,7 @@ public class DonorManagementUI {
         System.out.println("5. List Donors with Donations");
         System.out.println("6. Filter Donors");
         System.out.println("7. Generate Summary Reports");
-        System.out.println("0. Exit");
+        System.out.println("0. Back to main");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character

@@ -24,7 +24,7 @@ public class DonationManagementUI {
         System.out.println("\t7. List all donations");
         System.out.println("\t8. Filter donation based on criteria");
         System.out.println("\t9. Generate summary report");
-        System.out.println("\t0. Exit program");
+        System.out.println("\t0. Back to main");
         System.out.printf("\nEnter choice > ");
         int mgnChoice = scan.nextInt();
         scan.nextLine();
@@ -84,6 +84,13 @@ public class DonationManagementUI {
         System.out.print("\nEnter Donation Date > ");
         String donationDate = scan.nextLine();
         return donationDate;
+    }
+    
+    // New method for donor ID input
+    public String inputDonorID() {
+        System.out.print("\nEnter Donor ID > ");
+        String donorId = scan.nextLine();
+        return donorId.toUpperCase();
     }
     
     public void pausescan() {

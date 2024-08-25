@@ -4,6 +4,7 @@
  */
 package adt;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -12,8 +13,10 @@ import java.util.NoSuchElementException;
  *
  * @author evansleong
  */
-public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
+public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V>, Serializable {
 
+    private static final long serialVersionUID = 1L; // Add a serial version UID
+    
     // Threshold to trigger a resize operation when the load factor exceeds this value
     private static final float LOAD_FACTOR_THRESHOLD = 0.75f;
 
@@ -31,7 +34,8 @@ public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
     private int capacity;
 
     // Inner class representing a node in the hash table and the linked list
-    private static class Node<K, V> {
+    private static class Node<K, V> implements Serializable {
+        private static final long serialVersionUID = 1L; // Add a serial version UID
 
         final K key;             // Key for the node
         V value;                 // Value associated with the key

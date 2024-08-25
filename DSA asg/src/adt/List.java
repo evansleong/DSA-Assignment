@@ -4,6 +4,7 @@
  */
 package adt;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -11,9 +12,13 @@ import java.util.NoSuchElementException;
  *
  * @author evansleong
  */
-public class List<T> implements ListInterface<T> {
+public class List<T> implements ListInterface<T>, Serializable {
 
+    private static final long serialVersionUID = 1L; // Add a unique serialVersionUID
+    
     private static class Node<T> {
+        private static final long serialVersionUID = 1L; // Add a unique serialVersionUID
+        
         T data;
         Node<T> prev;
         Node<T> next;

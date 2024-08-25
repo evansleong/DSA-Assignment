@@ -8,7 +8,6 @@ import adt.*;
 import boundary.*;
 import entity.*;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  *
@@ -21,24 +20,6 @@ public class DonorManagement {
 
     public DonorManagement() {
         donorMap = new LinkedHashMap<>();
-        dummyData();
-    }
-
-    private void dummyData() {
-        String[] expList = new String[]{"Shirt", "Food", "Items"};
-        Donation donation1 = new Donation("DN-001", "Not cash", expList.toString(), "Deadpool", "20-8-2024");
-        Donation donation2 = new Donation("DN-002", "cash", "RM10000", "Wolverine", "21-8-2024");
-
-        donorMap.put("DNR-001", new Donor("DNR-001", "Deadpool", "government", "0123456789"));
-        donorMap.put("DNR-002", new Donor("DNR-002", "Wolverine", "private", "0123456789"));
-        donorMap.put("DNR-003", new Donor("DNR-003", "Johnny Flame", "public", "0123456789"));
-
-        Donor donor1 = donorMap.get("DNR-001");
-        donor1.addDonation(donation1);
-        donor1.addDonation(donation2);
-
-        Donor donor2 = donorMap.get("DNR-002");
-        donor2.addDonation(donation2);
     }
 
     public void runSystem() {
@@ -58,9 +39,9 @@ public class DonorManagement {
                 case 4:
                     searchDonor();
                     break;
-                case 5:
-                    listDonorsWithDonations();
-                    break;
+//                case 5:
+//                    listDonorsWithDonations();
+//                    break;
                 case 6:
                     filterDonors();
                     break;
@@ -74,7 +55,7 @@ public class DonorManagement {
                     ui.displayError("Invalid choice. Please try again.");
             }
         }
-        ui.close(); // Close the scanner resource when done
+
     }
 
     private void addDonor() {
@@ -126,37 +107,37 @@ public class DonorManagement {
         }
     }
 
-    private void listDonorsWithDonations() {
-        if (donorMap.isEmpty()) {
-            System.out.println("No existing donors");
-        } else {
-            System.out.println("Donor List: \n");
-            System.out.printf("%-15s %-20s \t%s\n", "ID", "Donor Name", "Donations");
-            System.out.println("------------------------------------------------------------");
-
-            Iterator<String> iterator = donorMap.iterator();
-            while (iterator.hasNext()) {
-                String dId = iterator.next();
-                Donor donor = donorMap.get(dId);
-                if (donor != null) {
-                    List<Donation> donation = donor.getDonation();
-                    String toString = "";
-                    if (!donation.isEmpty()) {
-                        Iterator<Donation> dIterator = donation.iterator();
-                        while (dIterator.hasNext()) {
-                            toString += dIterator.next().getDonationId() + " ";
-                        }
-                    }
-
-                    System.out.printf("%-15s %-20s \t%s\n",
-                            donor.getDonorId(),
-                            donor.getDonorName(),
-                            toString
-                    );
-                }
-            }
-        }
-    }
+//    private void listDonorsWithDonations() {
+//        if (donorMap.isEmpty()) {
+//            System.out.println("No existing donors");
+//        } else {
+//            System.out.println("Donor List: \n");
+//            System.out.printf("%-15s %-20s \t%s\n", "ID", "Donor Name", "Donations");
+//            System.out.println("------------------------------------------------------------");
+//
+//            Iterator<String> iterator = donorMap.iterator();
+//            while (iterator.hasNext()) {
+//                String dId = iterator.next();
+//                Donor donor = donorMap.get(dId);
+//                if (donor != null) {
+//                    List<Donation> donation = donor.getDonation();
+//                    String toString = "";
+//                    if (!donation.isEmpty()) {
+//                        Iterator<Donation> dIterator = donation.iterator();
+//                        while (dIterator.hasNext()) {
+//                            toString += dIterator.next().getDonationId() + " ";
+//                        }
+//                    }
+//
+//                    System.out.printf("%-15s %-20s \t%s\n",
+//                            donor.getDonorId(),
+//                            donor.getDonorName(),
+//                            toString
+//                    );
+//                }
+//            }
+//        }
+//    }
 
 //    private void sortDonorByDate(){
 //        Donor[] donorArray = new Donor[donorMap.size()];
