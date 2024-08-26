@@ -4,70 +4,58 @@
  */
 package entity;
 
-
 /**
  *
  * @author evansleong
  */
 public class DonationItem {
 
-    private String itemId;
-    private String donationId;
-    private String itemName;
-    private String category;
-    private int quantity;
+    private String itemID;
+    private String itemType; // "Cash" or "Kind"
+    private double amount; // for cash
+    private String description; // for kind
 
-    public DonationItem(String itemId, String donationId, String itemName, String category, int quantity) {
-        this.itemId = itemId;
-        this.donationId = donationId;
-        this.itemName = itemName;
-        this.category = category;
-        this.quantity = quantity;
+    public DonationItem(String itemID, String itemType, double amount, String description) {
+        this.itemID = itemID;
+        this.itemType = itemType;
+        this.amount = amount;
+        this.description = description;
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getItemID() {
+        return itemID;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public String getItemType() {
+        return itemType;
     }
 
-    public String getDonationId() {
-        return donationId;
+    public double getAmount() {
+        return amount;
     }
 
-    public String getCategory() {
-        return category;
+    public String getDescription() {
+        return description;
     }
 
-    public String getItemName() {
-        return itemName;
+    public void setItemID(String itemID) {
+        this.itemID = itemID;
     }
 
-    public void setDonationId(String donationId) {
-        this.donationId = donationId;
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public String toString() {
-        return "DonationItem{" + "itemId=" + itemId + ", donationId=" + donationId + ", itemName=" + itemName + ", category=" + category + ", quantity=" + quantity + '}';
+        return "ItemID: " + itemID + ", Type: " + itemType + ", Amount: " + amount + ", Description: " + description;
     }
-
 }

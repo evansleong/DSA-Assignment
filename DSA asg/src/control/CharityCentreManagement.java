@@ -7,6 +7,7 @@ package control;
 import adt.*;
 import boundary.*;
 import entity.*;
+import utility.*;
 
 /**
  *
@@ -15,24 +16,28 @@ import entity.*;
 public class CharityCentreManagement {
 
     CharityCentreManagementUI ui = new CharityCentreManagementUI();
+    DonorManagement donorManagement = new DonorManagement();
+    DoneeManagement doneeManagement = new DoneeManagement();
+    DonationManagement donationManagement = new DonationManagement(donorManagement);
 
-    public CharityCentreManagement() {
+    public CharityCentreManagement() {  
     }
     
     
     public void start(String[] args) {
+        ConsoleUtils.clearScreen();
         boolean running = true;
         while (running) {
             int choice = ui.getMenuChoice();
             switch (choice) {
                 case 1:
-                    DonorManagement.main(args);
+                    donorManagement.runSystem(); // Replace main(args) with instance method
                     break;
                 case 2:
-                    DoneeManagement.main(args);
+                    doneeManagement.start(); // Replace main(args) with instance method
                     break;
                 case 3:
-                    DonationManagement.main(args);
+                    donationManagement.dmstart(); // Replace main(args) with instance method
                     break;
                 case 0:
                     running = false;

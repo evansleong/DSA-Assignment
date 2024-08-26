@@ -62,11 +62,11 @@ public class DoneeManagementUI {
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.println("Select age group(individual donee only) to filter:");
-            System.out.println("1. Kid (1-20)");
-            System.out.println("2. Teenager (21-34)");
-            System.out.println("3. Adult (35-54)");
-            System.out.println("4. Senior Citizen (55+)");
+            System.out.println("Select age group to filter:");
+            System.out.println("1. KID (1-20)");
+            System.out.println("2. TEENAGER (21-34)");
+            System.out.println("3. ADULT (35-54)");
+            System.out.println("4. SENIOR CITIZEN (55+)\n");
             System.out.print("Enter your choice (1-4): ");
 
             try {

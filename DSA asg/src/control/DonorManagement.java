@@ -7,7 +7,6 @@ package control;
 import adt.*;
 import boundary.*;
 import entity.*;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Iterator;
 
@@ -26,13 +25,23 @@ public class DonorManagement {
     }
 
     private void dummyData() {
+        List<DonationItem> donationItems = new List<>();
 //        String[] expList = new String[]{"Shirt", "Food", "Items"};
-        Donation donation1 = new Donation("DON-001", "Clothing", "T-shirts", "Deadpool", "DNR-001");
-//        Donation donation2 = new Donation("DN-002", "cash", "RM10000", "Wolverine", "21-8-2024");
-        Donation donation2 = new Donation("DON-002", "Food", "Rice and beans", "2024-08-01", "DNR-001");
-        Donation donation3 = new Donation("DON-003", "Clothing", "Winter coats", "2024-08-05", "DNR-002");
-        Donation donation4 = new Donation("DON-004", "Monetary", "Cash donation", "2024-08-10", "DNR-003");
-        Donation donation5 = new Donation("DON-005", "Food", "Canned goods", "2024-08-15", "DNR-001");
+
+        // Create some DonationItem objects
+        DonationItem item1 = new DonationItem("ITEM-001", "Food", 10, "kfc");
+        DonationItem item2 = new DonationItem("ITEM-002", "Clothes", 5, "h&m shirt");
+        DonationItem item3 = new DonationItem("ITEM-003", "Books", 7, "harry porter");
+
+        // Add items to the list
+        donationItems.add(item1);
+        donationItems.add(item2);
+        donationItems.add(item3);
+        // Create donations
+        Donation donation1 = new Donation("DON-001", "DNR-001", donationItems);
+        Donation donation2 = new Donation("DON-002", "DNR-002", donationItems);
+        Donation donation3 = new Donation("DON-003", "DNR-003", donationItems);
+        Donation donation4 = new Donation("DON-004", "DNR-003", donationItems);
 
         Donor dp = new Donor("Deadpool", "government", "0123456789");
         Donor wv = new Donor("Wolverine", "private", "0123456789");
@@ -44,7 +53,6 @@ public class DonorManagement {
 
         dp.addDonation(donation1);
         dp.addDonation(donation2);
-        dp.addDonation(donation5);
         wv.addDonation(donation3);
         jf.addDonation(donation4);
     }
@@ -142,18 +150,18 @@ public class DonorManagement {
             System.out.printf("%-15s %-20s \t%s\n", "ID", "Donor Name", "Donations");
             System.out.println("------------------------------------------------------------");
             ListInterface<Donation> donation = donor.getDonation();
-                    String toString = "";
-                    if (!donation.isEmpty()) {
-                        Iterator<Donation> dIterator = donation.iterator();
-                        while (dIterator.hasNext()) {
-                            toString += dIterator.next().getDonationId() + " ";
-                        }
-                    }
+            String toString = "";
+            if (!donation.isEmpty()) {
+                Iterator<Donation> dIterator = donation.iterator();
+                while (dIterator.hasNext()) {
+                    toString += dIterator.next().getDonationID() + " ";
+                }
+            }
             System.out.printf("%-15s %-20s \t%s\n",
-                            donor.getDonorId(),
-                            donor.getDonorName(),
-                            toString
-                    );
+                    donor.getDonorId(),
+                    donor.getDonorName(),
+                    toString
+            );
         } else {
             ui.displayError("Donor not found.");
         }
@@ -177,7 +185,7 @@ public class DonorManagement {
                     if (!donation.isEmpty()) {
                         Iterator<Donation> dIterator = donation.iterator();
                         while (dIterator.hasNext()) {
-                            toString += dIterator.next().getDonationId() + " ";
+                            toString += dIterator.next().getDonationID() + " ";
                         }
                     }
 
@@ -247,7 +255,7 @@ public class DonorManagement {
             );
         }
     }
-    
+
     private void filterDonors() {
         int filterType = ui.inputFilterCriteria();
         switch (filterType) {
@@ -332,6 +340,20 @@ public class DonorManagement {
         System.out.println("Donor Name: " + donor.getDonorName());
         System.out.println("Donor Type: " + donor.getDonorType());
         System.out.println("Donor Contact No: " + donor.getDonorContact());
+    }
+
+    // Method to check if donor ID exists
+    public boolean donorIdExists(String donorId) {
+        return donorMap.get(donorId) != null;
+    }
+    
+    // Method to get donor name by donor ID
+    public String getDonorName(String donorId) {
+        Donor donor = donorMap.get(donorId);
+        if (donor != null) {
+            return donor.getDonorName(); 
+        }
+        return null; // Return null if donor ID is not found
     }
 
     public static void main(String[] args) {

@@ -5,6 +5,7 @@
 package entity;
 
 import adt.*;
+import java.util.Iterator;
 
 /**
  *
@@ -12,96 +13,64 @@ import adt.*;
  */
 public class Donation {
 
-    private String donationId;
-    private String donationDate;
-    private String donationType;
-    private String donationDetails;
-    private ListInterface<DonationItem> items;
-    private String donorId;
+    private String donationID;
+    private String donorID;
+    private List<DonationItem> items;
 
-    public Donation(String donationId, String donationType, String donationDetails, String donationDate, String donorId) {
-        this.donationId = donationId;
-        this.donationType = donationType;
-        this.donationDetails = donationDetails;
-        this.donationDate = donationDate;
-        this.items = new List<>();
-        this.donorId = donorId;
-    }
-
-    public Donation(String donationId, String donationDate, ListInterface<DonationItem> items, String donorId) {
-        this.donationId = donationId;
-        this.donationDate = donationDate;
+    public Donation(String donationID, String donorID, List<DonationItem> items) {
+        this.donationID = donationID;
+        this.donorID = donorID;
         this.items = items;
-        this.donorId = donorId;
     }
-    
-    public Donation(String donationId, String donationDate, String donorId) {
-        this.donationId = donationId;
-//        this.donationType = donationType;
-//        this.donationDetails = donationDetails;
-        this.donationDate = donationDate;
-        this.items = new List<>();
-        this.donorId = donorId;
-    }
-    
 
     public void addItem(DonationItem item) {
         items.add(item);
     }
 
-    public String getDonationId() {
-        return donationId;
+    public String displayItems() {
+        StringBuilder itemList = new StringBuilder();
+        Iterator<DonationItem> iterator = items.iterator();
+        while (iterator.hasNext()) {
+            DonationItem item = iterator.next();
+            itemList.append(item.toString()).append("\n");
+        }
+        return itemList.toString();
     }
 
-    public void setDonationId(String donationId) {
-        this.donationId = donationId;
+    // Other getters and setters as needed
+    public String getDonationID() {
+        return donationID;
     }
 
-    public String getDonationDate() {
-        return donationDate;
+    public String getdonorID() {
+        return donorID;
     }
 
-    public void setDonationDate(String donationDate) {
-        this.donationDate = donationDate;
-    }
-
-    public String getDonationType() {
-        return donationType;
-    }
-
-    public void setDonationType(String donationType) {
-        this.donationType = donationType;
-    }
-
-    public String getDonationDetails() {
-        return donationDetails;
-    }
-
-    public void setDonationDetails(String donationDetails) {
-        this.donationDetails = donationDetails;
-    }
-
-    public String getDonorId() {
-        return donorId;
-    }
-
-    public void setItems(ListInterface<DonationItem> items) {
-        this.items = items;
-    }
-
-    public void setDonorId(String donorId) {
-        this.donorId = donorId;
-    }
-
-    
-    
-    public ListInterface<DonationItem> getItems() {
+    public List<DonationItem> getItems() {
         return items;
     }
 
-    @Override
-    public String toString() {
-        return "Donation{" + "donationId=" + donationId + ", donationDate=" + donationDate + ", donationType=" + donationType + ", donationDetails=" + donationDetails + ", items=" + items + '}';
+    public void setDonationID(String donationID) {
+        this.donationID = donationID;
+    }
+
+    public void setdonorID(String donorID) {
+        this.donorID = donorID;
+    }
+
+    public void setItems(List<DonationItem> items) {
+        this.items = items;
+    }
+
+    public String getDonationType() {
+        String donationType = "";
+        Iterator<DonationItem> iterator = items.iterator();
+        while (iterator.hasNext()) {
+            DonationItem item = iterator.next();
+            donationType = item.getItemType();
+            // If mixed types, handle accordingly
+        }
+        return donationType;
     }
 
 }

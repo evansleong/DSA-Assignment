@@ -28,95 +28,78 @@ public class DonationManagementUI {
         System.out.println("\t0. Back to main");
         System.out.printf("\nEnter choice > ");
         int mgnChoice = scan.nextInt();
-        scan.nextLine();
+        scan.nextLine(); // Consume the newline
         System.out.println();
         return mgnChoice;
     }
 
-    public String mgnItemID() {
-        System.out.print("\nEnter Donation ID > ");
-        String itemId = scan.nextLine();
-        return itemId.toUpperCase();
-    }
-    
-    public String mgnItemName() {
-        System.out.print("\nEnter Item Name > ");
-        String itemId = scan.nextLine();
-        return itemId;
-    }
-    
-    public int mgnQuantity() {
-        System.out.print("\nEnter Quantity > ");
-        String mgnQuantity = scan.nextLine();
-        int quantity = Integer.parseInt(mgnQuantity);
-        return quantity;
+    public int selectDonationCategory() {
+        System.out.println("Select the category of donation:");
+        System.out.println("1. Food");
+        System.out.println("2. Daily Necessities");
+        System.out.println("3. Cash");
+        System.out.printf("Enter choice > ");
+        int categoryChoice = scan.nextInt();
+        scan.nextLine(); // Consume the newline
+        return categoryChoice;
     }
 
     public String mgnDonationIDnew() {
-        System.out.print("\nEnter Donation ID > ");
-        String donationId = scan.nextLine();
-        return donationId.toUpperCase();
+        System.out.print("Enter Donation ID > ");
+        return scan.nextLine();
     }
 
     public String mgnDonationtype() {
-        System.out.print("\nEnter Donation Type > ");
-        String donationType = scan.nextLine();
-        return donationType;
-    }
-
-    public String mgnDonationtypenew() {
-        System.out.print("\nEnter Donation Type > ");
-        String donationType = scan.nextLine();
-        return donationType;
+        System.out.print("Enter Donation Type > ");
+        return scan.nextLine();
     }
 
     public String mgnDonationDetails() {
-        System.out.print("\nEnter Donation Details > ");
-        String donationDetails = scan.nextLine();
-        return donationDetails;
+        System.out.print("Enter Donation Details > ");
+        return scan.nextLine();
     }
 
-    public String mgnDonationDetailsnew() {
-        System.out.print("\nEnter Donation Details > ");
-        String donationDetails = scan.nextLine();
-        return donationDetails;
-    }
-
-//    public String mgnDonorName() {
-//        System.out.print("\nEnter Donation ID > ");
-//        String donorName = scan.nextLine();
-//        return donorName;
-//    }
     public String mgnDonationDate() {
-        System.out.print("\nEnter Donation Date > ");
-        String donationDate = scan.nextLine();
-        return donationDate;
+        System.out.print("Enter Donation Date > ");
+        return scan.nextLine();
+    }
+
+    public String mgnItemName(String category) {
+        System.out.printf("Enter the name of the %s > ", category);
+        return scan.nextLine();
+    }
+
+    public int mgnQuantity(String category) {
+        System.out.printf("Enter the quantity of the %s > ", category);
+        int quantity = scan.nextInt();
+        scan.nextLine(); // Consume the newline
+        return quantity;
+    }
+
+    public double mgnCashAmount() {
+        System.out.print("Enter the cash donation amount in RM > ");
+        double amount = scan.nextDouble();
+        scan.nextLine(); // Consume the newline
+        return amount;
+    }
+
+    public String inputDonorID() {
+        System.out.print("Enter Donor ID > ");
+        return scan.nextLine().toUpperCase();
     }
 
     public String mgnDonationDatenew() {
-        System.out.print("\nEnter Donation Date > ");
-        String donationDate = scan.nextLine();
-        return donationDate;
+        System.out.print("Enter Donation Date > ");
+        return scan.nextLine();
     }
 
-    // New method for donor ID input
-    public String inputDonorID() {
-        System.out.print("\nEnter Donor ID > ");
-        String donorId = scan.nextLine();
-        return donorId.toUpperCase();
+    public boolean askAddMoreItems() {
+        System.out.print("Do you want to add more items? (yes/no): ");
+        String response = scan.nextLine().trim().toLowerCase();
+        return response.equals("y");
     }
 
     public void pausescan() {
         scan.close();
     }
-
-    
-    public boolean askAddMoreItems() {
-        System.out.print("\nDo you want to add another item? (yes/no) > ");
-        String response = scan.nextLine();
-        return response.equalsIgnoreCase("yes");
-    }
-    
-    
-    
 }

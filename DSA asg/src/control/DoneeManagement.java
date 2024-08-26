@@ -20,26 +20,26 @@ public class DoneeManagement {
     DoneeManagementUI ui = new DoneeManagementUI();
     LinkedHashMapInterface<String, Donee> doneeMap;
     private int doneeCounter = 1; // Counter for generating donee IDs
-//    DonationManagement donationManagement; // Reference to DonationManagement
 
     public DoneeManagement() {
         doneeMap = new LinkedHashMap<>();
-//        this.donationManagement = donationManagement; // Initialize the donation management reference
         seedData();
     }
 
     private void seedData() {
+
+        List<DonationItem> donationItems = new List<>();
         // Create donees
-        Donee johnDoe = new Donee("DNE-001", "John Doe", "555-1234", "Individual", 30); // Example age
-        Donee janeSmith = new Donee("DNE-002", "Jane Smith", "555-5678", "Individual", 25); // Example age
-        Donee charityOrgA = new Donee("DNE-003", "Charity Org A", "555-9876", "Organization", null);
-        Donee familyB = new Donee("DNE-004", "Family B", "555-4321", "Family", null);
-        Donee johnsBakery = new Donee("DNE-005", "John's Bakery", "555-7654", "Organization", null);
-        Donee doeFamily = new Donee("DNE-006", "Doe Family", "555-2468", "Family", null);
-        Donee helpingHands = new Donee("DNE-007", "Helping Hands", "555-1357", "Organization", null);
-        Donee mariaGreen = new Donee("DNE-008", "Maria Green", "555-2468", "Individual", 40); // Example age
-        Donee smithFamily = new Donee("DNE-009", "Smith Family", "555-3579", "Family", null);
-        Donee communityAid = new Donee("DNE-010", "Community Aid", "555-0987", "Organization", null);
+        Donee johnDoe = new Donee("DNE-001", "John Doe", "016-7618273", "Individual", 30); // Example age
+        Donee janeSmith = new Donee("DNE-002", "Jane Smith", "012-3456789", "Individual", 25); // Example age
+        Donee charityOrgA = new Donee("DNE-003", "Charity Org A", "019-2029122", "Organization", null);
+        Donee familyB = new Donee("DNE-004", "Family B", "03-29201991", "Family", null);
+        Donee johnsBakery = new Donee("DNE-005", "John's Bakery", "03-92003948", "Organization", null);
+        Donee doeFamily = new Donee("DNE-006", "Doe Family", "018-2920912", "Family", null);
+        Donee helpingHands = new Donee("DNE-007", "Helping Hands", "03-93139834", "Organization", null);
+        Donee mariaGreen = new Donee("DNE-008", "Maria Green", "019-93012921", "Individual", 40); // Example age
+        Donee smithFamily = new Donee("DNE-009", "Smith Family", "012-91210021", "Family", null);
+        Donee communityAid = new Donee("DNE-010", "Community Aid", "03-00990121", "Organization", null);
 
         // Add donees to the map
         doneeMap.put(johnDoe.getDoneeId(), johnDoe);
@@ -53,27 +53,47 @@ public class DoneeManagement {
         doneeMap.put(smithFamily.getDoneeId(), smithFamily);
         doneeMap.put(communityAid.getDoneeId(), communityAid);
 
-        // Create donations
-        Donation donation1 = new Donation("DON-001", "Food", "Rice and beans", "2024-08-01", "DON-002");
-        Donation donation2 = new Donation("DON-002", "Clothing", "Winter coats", "2024-08-05", "DON-003");
-        Donation donation3 = new Donation("DON-003", "Monetary", "Cash donation", "2024-08-10", "DON-004");
-        Donation donation4 = new Donation("DON-004", "Food", "Canned goods", "2024-08-15", "DON-001");
+        // Create some DonationItem objects
+        DonationItem item1 = new DonationItem("ITEM-001", "Food", 10, "kfc");
+        DonationItem item2 = new DonationItem("ITEM-002", "Clothes", 5, "h&m shirt");
+        DonationItem item3 = new DonationItem("ITEM-003", "Books", 7, "harry porter");
 
-        // Add donations to donees
-        johnDoe.addDonation(donation1.getDonationId(), donation1);
-        janeSmith.addDonation(donation2.getDonationId(), donation2);
-        janeSmith.addDonation(donation2.getDonationId(), donation4);
-        charityOrgA.addDonation(donation3.getDonationId(), donation3);
-        familyB.addDonation(donation4.getDonationId(), donation4);
-        johnsBakery.addDonation(donation1.getDonationId(), donation1);
-        doeFamily.addDonation(donation2.getDonationId(), donation2);
-        helpingHands.addDonation(donation3.getDonationId(), donation3);
-        mariaGreen.addDonation(donation4.getDonationId(), donation4);
-        smithFamily.addDonation(donation1.getDonationId(), donation1);
-        communityAid.addDonation(donation3.getDonationId(), donation3);
+        // Add items to the list
+        donationItems.add(item1);
+        donationItems.add(item2);
+        donationItems.add(item3);
+
+        // Create donations
+        Donation donation1 = new Donation("DON-001", "DNR-001", donationItems);
+        Donation donation2 = new Donation("DON-002", "DNR-002", donationItems);
+        Donation donation3 = new Donation("DON-003", "DNR-003", donationItems);
+        Donation donation4 = new Donation("DON-004", "DNR-003", donationItems);
+
+// Assuming you have Donor objects like johnDoe, janeSmith, etc.
+        johnDoe.addDonation(donation1.getDonationID(), donation1);  // John Doe donates donation1
+
+        janeSmith.addDonation(donation3.getDonationID(), donation3);  // Jane Smith donates donation3
+        janeSmith.addDonation(donation4.getDonationID(), donation4);  // Jane Smith donates donation4
+
+        charityOrgA.addDonation(donation3.getDonationID(), donation3);  // CharityOrgA donates donation3
+
+        familyB.addDonation(donation4.getDonationID(), donation4);  // FamilyB donates donation4
+
+        johnsBakery.addDonation(donation1.getDonationID(), donation1);  // JohnsBakery donates donation1
+
+        doeFamily.addDonation(donation2.getDonationID(), donation2);  // DoeFamily donates donation2
+
+        helpingHands.addDonation(donation3.getDonationID(), donation3);  // HelpingHands donates donation3
+
+        mariaGreen.addDonation(donation4.getDonationID(), donation4);  // MariaGreen donates donation4
+
+        smithFamily.addDonation(donation1.getDonationID(), donation1);  // SmithFamily donates donation1
+
+        communityAid.addDonation(donation3.getDonationID(), donation3);
     }
 
     public void start() {
+        ConsoleUtils.clearScreen();
         boolean running = true;
         while (running) {
             int choice = ui.getMenuChoice();
@@ -110,6 +130,7 @@ public class DoneeManagement {
 //                    break;
                 case 0:
                     running = false;
+                    ConsoleUtils.clearScreen();
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -178,6 +199,8 @@ public class DoneeManagement {
     }
 
     private void clearDonees() {
+        displayDoneeList();
+
         if (confirmAction()) {
             doneeMap.clear();
             System.out.println("All donees have been cleared.");
@@ -190,6 +213,8 @@ public class DoneeManagement {
     }
 
     private void updateDonee() {
+        displayDoneeList();
+
         String id = ui.inputDoneeID();
         String fullId = "DNE-" + id;
         Donee donee = doneeMap.get(fullId);
@@ -256,65 +281,62 @@ public class DoneeManagement {
             return;
         }
 
-        // Create an array to hold donees
-        Donee[] doneeArray = new Donee[doneeMap.size()];
-        Iterator<String> iterator = doneeMap.iterator();
-        int index = 0;
+        // Print the header for donee listing
+        System.out.println("Donees List with Donations:");
+        System.out.printf("%-15s %-20s %-25s %-15s\n", "DONEE ID", "DONEE NAME", "CONTACT INFO", "DONATIONS RECEIVED");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
 
-        // Populate the doneeArray with donees from doneeMap
-        while (iterator.hasNext()) {
-            String fullId = iterator.next();
-            Donee donee = doneeMap.get(fullId);
+        // Iterate through each donee in the map
+        Iterator<String> doneeIterator = doneeMap.iterator();
+        while (doneeIterator.hasNext()) {
+            String doneeId = doneeIterator.next();
+            Donee donee = doneeMap.get(doneeId);
+
             if (donee != null) {
-                doneeArray[index++] = donee;
-            }
-        }
+                // Initialize counters for each donation type
+                int foodCount = 0;
+                int clothesCount = 0;
+                int booksCount = 0;
+                int cashCount = 0;
 
-        // Display the donees with donation type summary
-        System.out.println("Donees List:");
-        System.out.printf("%-15s %-20s %-25s %-15s %-20s\n", "ID", "Name", "Contact Info", "Type", "Donation Type");
-        System.out.println("------------------------------------------------------------------------------------------------------");
-
-        for (Donee donee : doneeArray) {
-            if (donee != null) {
-                // Initialize a map to count donation types
-                LinkedHashMapInterface<String, Integer> donationTypeCount = new LinkedHashMap<>();
+                // Aggregate donation details
                 LinkedHashMapInterface<String, Donation> donations = donee.getDonations();
-
-                // Count donations by type
-                if (donations != null) {
+                if (donations != null && !donations.isEmpty()) {
                     Iterator<String> donationIterator = donations.iterator();
                     while (donationIterator.hasNext()) {
                         String donationId = donationIterator.next();
                         Donation donation = donations.get(donationId);
                         if (donation != null) {
-                            String type = donation.getDonationType();
-                            if (donationTypeCount.containsKey(type)) {
-                                // Increment the count
-                                int currentCount = donationTypeCount.get(type);
-                                donationTypeCount.put(type, currentCount + 1);
-                            } else {
-                                // Initialize the count
-                                donationTypeCount.put(type, 1);
+                            // Use iterator to loop through items
+                            Iterator<DonationItem> itemIterator = donation.getItems().iterator();
+                            while (itemIterator.hasNext()) {
+                                DonationItem item = itemIterator.next();
+                                switch (item.getItemType()) {
+                                    case "Food":
+                                        foodCount += item.getAmount();
+                                        break;
+                                    case "Clothes":
+                                        clothesCount += item.getAmount();
+                                        break;
+                                    case "Books":
+                                        booksCount += item.getAmount();
+                                        break;
+                                    case "Cash":
+                                        cashCount += item.getAmount();
+                                        break;
+                                }
                             }
                         }
                     }
                 }
 
-                // Print donee details
-                System.out.printf("%-15s %-20s %-25s %-15s\n", donee.getDoneeId(), donee.getDoneeName(), donee.getDoneeContact(), donee.getDoneeType());
-
-                // Print donation types
-                Iterator<String> typeIterator = donationTypeCount.iterator();
-                if (!typeIterator.hasNext()) {
-                    System.out.println("None");
-                } else {
-                    while (typeIterator.hasNext()) {
-                        String type = typeIterator.next();
-                        int count = donationTypeCount.get(type);
-                        System.out.printf("%-15s %-20s x%d\n", "", type, count);
-                    }
-                }
+                // Print donee details with aggregated donation summary
+                System.out.printf("%-15s %-20s %-25s %-15s\n",
+                        donee.getDoneeId(),
+                        donee.getDoneeName(),
+                        donee.getDoneeContact(),
+                        String.format("\tFood x %d\n \t\t\t\t\t\t\t\t\tClothes x %d\n \t\t\t\t\t\t\t\t\tBooks x %d\n \t\t\t\t\t\t\t\t\tCash x %d\n-------------------------------------------------------------------------------------------------------------------- ",
+                                foodCount, clothesCount, booksCount, cashCount));
             }
         }
 
@@ -536,6 +558,10 @@ public class DoneeManagement {
         System.out.println();
 
         System.out.println("************************************");
+
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
+
     }
 
     private boolean confirmAction() {
@@ -550,6 +576,31 @@ public class DoneeManagement {
         }
     };
 
+    private void displayDoneeList() {
+        if (doneeMap.isEmpty()) {
+            System.out.println("No donees available.");
+            return;
+        }
+
+        // Print the header for donee listing
+        System.out.printf("%-15s %-20s %-15s\n", "DONEE ID", "DONEE NAME", "CONTACT NO");
+        System.out.println("----------------------------------------------");
+
+        // Iterate through each donee in the map
+        Iterator<String> iterator = doneeMap.iterator();
+        while (iterator.hasNext()) {
+            String fullId = iterator.next();
+            Donee donee = doneeMap.get(fullId);
+
+            if (donee != null) {
+                // Print donee ID, name, and contact number
+                System.out.printf("%-15s %-20s %-15s\n",
+                        donee.getDoneeId(),
+                        donee.getDoneeName(),
+                        donee.getDoneeContact());
+            }
+        }
+    }
 //    private void addDonationToDonee() {
 //        String doneeId = ui.inputDoneeID();
 //        String fullId = "DNE-" + doneeId;
@@ -594,6 +645,7 @@ public class DoneeManagement {
 //        ConsoleUtils.systemPause();
 //        ConsoleUtils.clearScreen();
 //    }
+
     public static void main(String[] args) {
         DoneeManagement app = new DoneeManagement();
         app.start();
