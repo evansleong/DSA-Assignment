@@ -4,18 +4,23 @@ import adt.*;
 
 public class Donor {
 
+    private String idHead = "DNR-";
+    private static int idNo = 001;
+//    private String donorId = idHead + String.format("%03d", idNo);
     private String donorId;
     private String donorName;
     private String donorType;
     private String donorContact;
     private ListInterface<Donation> donations;
 
-    public Donor(String donorId, String donorName, String donorType, String donorContact) {
-        this.donorId = donorId;
+    public Donor(String donorName, String donorType, String donorContact) {
+//        this.donorId = donorId;
+        this.donorId = idHead + String.format("%03d", idNo++);
         this.donorName = donorName;
         this.donorType = donorType;
         this.donorContact = donorContact;
         this.donations = new List<>();
+//        idNo++;
     }
 
     public void setDonorId(String donorId) {
@@ -49,8 +54,8 @@ public class Donor {
     public String getDonorContact() {
         return donorContact;
     }
-    
-    public ListInterface<Donation> getDonation(){
+
+    public ListInterface<Donation> getDonation() {
         return donations;
     }
 
