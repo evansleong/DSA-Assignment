@@ -26,9 +26,13 @@ public class DonorManagement {
     }
 
     private void dummyData() {
-        String[] expList = new String[]{"Shirt", "Food", "Items"};
-        Donation donation1 = new Donation("DN-001", "Not cash", expList.toString(), "Deadpool", "DNR-001");
-        Donation donation2 = new Donation("DN-002", "cash", "RM10000", "Wolverine", "21-8-2024");
+//        String[] expList = new String[]{"Shirt", "Food", "Items"};
+        Donation donation1 = new Donation("DON-001", "Clothing", "T-shirts", "Deadpool", "DNR-001");
+//        Donation donation2 = new Donation("DN-002", "cash", "RM10000", "Wolverine", "21-8-2024");
+        Donation donation2 = new Donation("DON-002", "Food", "Rice and beans", "2024-08-01", "DNR-001");
+        Donation donation3 = new Donation("DON-003", "Clothing", "Winter coats", "2024-08-05", "DNR-002");
+        Donation donation4 = new Donation("DON-004", "Monetary", "Cash donation", "2024-08-10", "DNR-003");
+        Donation donation5 = new Donation("DON-005", "Food", "Canned goods", "2024-08-15", "DNR-001");
 
         Donor dp = new Donor("Deadpool", "government", "0123456789");
         Donor wv = new Donor("Wolverine", "private", "0123456789");
@@ -40,8 +44,9 @@ public class DonorManagement {
 
         dp.addDonation(donation1);
         dp.addDonation(donation2);
-        wv.addDonation(donation2);
-        jf.addDonation(donation2);
+        dp.addDonation(donation5);
+        wv.addDonation(donation3);
+        jf.addDonation(donation4);
     }
 
     public void runSystem() {
@@ -82,6 +87,7 @@ public class DonorManagement {
 
     private void addDonor() {
 //        String id = ui.inputDonorID();
+        System.out.println("");
         String name = ui.inputDonorName();
         String type = ui.inputDonorType();
         String contact = ui.inputDonorContact();
@@ -102,7 +108,7 @@ public class DonorManagement {
             if (confirm.equalsIgnoreCase("y")) {
                 donorMap.remove(id);
                 ui.displayMessage("Donor removed successfully.");
-            }else{
+            } else {
                 System.out.println("Donor not removed, thank you");
             }
         } else {
@@ -133,7 +139,21 @@ public class DonorManagement {
         String id = ui.searchDonorID();
         Donor donor = donorMap.get(id);
         if (donor != null) {
-            ui.displayMessage(donor.toString());
+            System.out.printf("%-15s %-20s \t%s\n", "ID", "Donor Name", "Donations");
+            System.out.println("------------------------------------------------------------");
+            ListInterface<Donation> donation = donor.getDonation();
+                    String toString = "";
+                    if (!donation.isEmpty()) {
+                        Iterator<Donation> dIterator = donation.iterator();
+                        while (dIterator.hasNext()) {
+                            toString += dIterator.next().getDonationId() + " ";
+                        }
+                    }
+            System.out.printf("%-15s %-20s \t%s\n",
+                            donor.getDonorId(),
+                            donor.getDonorName(),
+                            toString
+                    );
         } else {
             ui.displayError("Donor not found.");
         }
@@ -227,7 +247,7 @@ public class DonorManagement {
             );
         }
     }
-
+    
     private void filterDonors() {
         int filterType = ui.inputFilterCriteria();
         switch (filterType) {
@@ -260,6 +280,7 @@ public class DonorManagement {
                 break;
             case 3:
                 sortDonorsByNoOfDonation();
+                break;
         }
     }
 
@@ -274,7 +295,7 @@ public class DonorManagement {
     };
 
     private void generateSummaryReports() {
-        System.out.println("Summary Report:");
+        System.out.println("\nSummary Report:\n");
 
         int donorSum = donorMap.size();
         int governmentDonor = 0;
@@ -307,7 +328,7 @@ public class DonorManagement {
     }
 
     private void displayDonorDetail(Donor donor) {
-        System.out.println("Donor ID: " + donor.getDonorId());
+        System.out.println("\nDonor ID: " + donor.getDonorId());
         System.out.println("Donor Name: " + donor.getDonorName());
         System.out.println("Donor Type: " + donor.getDonorType());
         System.out.println("Donor Contact No: " + donor.getDonorContact());

@@ -38,7 +38,7 @@ public class DonorManagementUI {
 
     // Collect information to add a new donor
     public String inputDonorID() {
-        System.out.print("Enter Donor ID: ");
+        System.out.print("\nEnter Donor ID: ");
         return scanner.nextLine();
     }
 
@@ -59,7 +59,7 @@ public class DonorManagementUI {
 
     // Collect information to update a donor
     public String updateDonorID() {
-        System.out.print("Enter Donor ID to update: ");
+        System.out.print("\nEnter Donor ID to update: ");
         return scanner.nextLine();
     }
 
@@ -80,14 +80,14 @@ public class DonorManagementUI {
 
     // Collect information for searching a donor
     public String searchDonorID() {
-        System.out.print("Enter Donor ID to search: ");
+        System.out.print("\nEnter Donor ID to search: ");
 //        scanner.nextLine(); // Consume the newline
         return scanner.nextLine();
     }
 
     // Collect information for filtering donors
     public int inputFilterCriteria() {
-        System.out.println("Filter Donors by:");
+        System.out.println("\nFilter Donors by:");
         System.out.println("1. Donor Type");
         System.out.println("2. Donor Name");
         System.out.println("3. Number of Donations by Donors");
@@ -110,11 +110,11 @@ public class DonorManagementUI {
     }
 
     public void displayError(String error) {
-        System.err.println("Error: " + error);
+        System.err.println("\nError: " + error);
     }
 
     public void displayReport(String report) {
-        System.out.println("Report:");
+        System.out.println("\nReport:");
         System.out.println(report);
     }
 
