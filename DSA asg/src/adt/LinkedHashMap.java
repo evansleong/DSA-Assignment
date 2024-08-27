@@ -166,21 +166,6 @@ public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
         }
         return null; // Return null if the key is not found
     }
-    
-    @Override
-    public V[] values() {
-        // Create an array to hold the values
-        V[] valuesArray = (V[]) new Object[size];
-        Node<K, V> current = head; // Start from the head of the insertion order list
-
-        int index = 0;
-        while (current != null) {
-            valuesArray[index++] = current.value; // Add each value to the array
-            current = current.nextInOrder; // Move to the next node in the list
-        }
-
-        return valuesArray; // Return the array of values
-    }
 
     // Method to replace the value associated with a key
     @Override

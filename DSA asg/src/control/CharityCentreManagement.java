@@ -17,13 +17,12 @@ public class CharityCentreManagement {
 
     CharityCentreManagementUI ui = new CharityCentreManagementUI();
     DonorManagement donorManagement = new DonorManagement();
-    DoneeManagement doneeManagement = new DoneeManagement();
     DonationManagement donationManagement = new DonationManagement(donorManagement);
+    DoneeManagement doneeManagement = new DoneeManagement(donationManagement);
 
-    public CharityCentreManagement() {  
+    public CharityCentreManagement() {
     }
-    
-    
+
     public void start(String[] args) {
         ConsoleUtils.clearScreen();
         boolean running = true;

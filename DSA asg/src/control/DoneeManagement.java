@@ -18,11 +18,14 @@ import java.util.Iterator;
 public class DoneeManagement {
 
     DoneeManagementUI ui = new DoneeManagementUI();
+    DonationManagementUI dmUI = new DonationManagementUI();
     LinkedHashMapInterface<String, Donee> doneeMap;
     private int doneeCounter = 1; // Counter for generating donee IDs
+    private DonationManagement donationManagement;
 
-    public DoneeManagement() {
+    public DoneeManagement(DonationManagement donationManagement) {
         doneeMap = new LinkedHashMap<>();
+        this.donationManagement = donationManagement;
         seedData();
     }
 
@@ -125,9 +128,9 @@ public class DoneeManagement {
                 case 9:
                     generateReports();
                     break;
-//                case 10:
-//                    addDonationToDonee();
-//                    break;
+                case 10:
+                    addDonationToDonee();
+                    break;
                 case 0:
                     running = false;
                     ConsoleUtils.clearScreen();
@@ -172,9 +175,10 @@ public class DoneeManagement {
     private void removeDonee() {
         String id = ui.inputDoneeID();
         String fullId = "DNE-" + id;
-        Donee donee = doneeMap.get(fullId);
 
-        if (donee != null) {
+        if (doneeMap.containsKey(fullId)) {
+            Donee donee = doneeMap.get(fullId);
+
             // Display donee details to confirm
             System.out.println("Donee Details:");
             System.out.printf("%-15s: %s\n", "ID", donee.getDoneeId());
@@ -199,6 +203,10 @@ public class DoneeManagement {
     }
 
     private void clearDonees() {
+        if (checkDoneeIsEmpty()) {
+            return;
+        }
+
         displayDoneeList();
 
         if (confirmAction()) {
@@ -217,9 +225,10 @@ public class DoneeManagement {
 
         String id = ui.inputDoneeID();
         String fullId = "DNE-" + id;
-        Donee donee = doneeMap.get(fullId);
 
-        if (donee != null) {
+        if (doneeMap.containsKey(fullId)) {
+            Donee donee = doneeMap.get(fullId);
+
             boolean updating = true;
             while (updating) {
                 int updateChoice = ui.getUpdateFieldChoice();
@@ -227,16 +236,19 @@ public class DoneeManagement {
                     case 1:
                         String name = ui.inputDoneeName();
                         donee.setDoneeName(name);
+                        doneeMap.replace(fullId, donee); // Use replace method to update the map
                         System.out.println("Name updated successfully.");
                         break;
                     case 2:
                         String contactInfo = ui.inputContactInfo();
                         donee.setDoneeContact(contactInfo);
+                        doneeMap.replace(fullId, donee); // Use replace method to update the map
                         System.out.println("Contact info updated successfully.");
                         break;
                     case 3:
                         String type = ui.inputDoneeType();
                         donee.setDoneeType(type);
+                        doneeMap.replace(fullId, donee); // Use replace method to update the map
                         System.out.println("Type updated successfully.");
                         break;
                     case 0:
@@ -257,9 +269,9 @@ public class DoneeManagement {
     private void searchDonee() {
         String id = ui.inputDoneeID();
         String fullId = "DNE-" + id;
-        Donee donee = doneeMap.get(fullId);
 
-        if (donee != null) {
+        if (doneeMap.containsKey(fullId)) {
+            Donee donee = doneeMap.get(fullId);
             System.out.println("Donee Details:");
             // Print the details in a formatted way
             System.out.printf("%-15s: %s\n", "ID", donee.getDoneeId());
@@ -275,9 +287,8 @@ public class DoneeManagement {
         ConsoleUtils.clearScreen();
     }
 
-    private void listDonees() {
-        if (doneeMap.isEmpty()) {
-            System.out.println("No donees available.");
+    public void listDonees() {
+        if (checkDoneeIsEmpty()) {
             return;
         }
 
@@ -345,6 +356,10 @@ public class DoneeManagement {
     }
 
     private void sortDoneesByName() {
+        if (checkDoneeIsEmpty()) {
+            return;
+        }
+
         Donee[] doneeArray = new Donee[doneeMap.size()];
         Iterator<String> iterator = doneeMap.iterator();
         int index = 0;
@@ -363,6 +378,10 @@ public class DoneeManagement {
     }
 
     private void filterDonees() {
+        if (checkDoneeIsEmpty()) {
+            return;
+        }
+
         int filterType = ui.inputFilterCriteria();
         switch (filterType) {
             case 1:
@@ -414,7 +433,7 @@ public class DoneeManagement {
             case 3:
                 int ageGroup = ui.inputAgeGroup();
 
-                String ageGroupLabel = "";
+                String ageGroupLabel;
                 switch (ageGroup) {
                     case 1:
                         ageGroupLabel = "Kid";
@@ -483,6 +502,10 @@ public class DoneeManagement {
     }
 
     private void generateReports() {
+        if (checkDoneeIsEmpty()) {
+            return;
+        }
+
         int totalDonees = doneeMap.size();
         int individualCount = 0;
         int organizationCount = 0;
@@ -564,6 +587,16 @@ public class DoneeManagement {
 
     }
 
+    private boolean checkDoneeIsEmpty() {
+        if (doneeMap.isEmpty()) {
+            System.out.println("No donees available.");
+            ConsoleUtils.systemPause();
+            ConsoleUtils.clearScreen();
+            return true;
+        }
+        return false;
+    }
+
     private boolean confirmAction() {
         char confirmation = ui.confirmAction();
         return confirmation == 'Y';
@@ -601,53 +634,61 @@ public class DoneeManagement {
             }
         }
     }
-//    private void addDonationToDonee() {
+
+    private void addDonationToDonee() {
+        // Input donee ID
 //        String doneeId = ui.inputDoneeID();
-//        String fullId = "DNE-" + doneeId;
-//        Donee donee = doneeMap.get(fullId);
-//
-//        if (donee != null) {
-//            // Get available donation types from DonationManagement
-//            LinkedHashMapInterface<String, Donation> donationMap = donationManagement.getDonationMap();
-//
-//            // Check if donationMap is not empty
-//            if (donationMap.isEmpty()) {
-//                System.out.println("No donations available.");
-//                return;
-//            }
-//
-//            // Display available donations
-//            System.out.println("Available Donations:");
-//            Iterator<String> donationIterator = donationMap.iterator();
-//            while (donationIterator.hasNext()) {
-//                String donationId = donationIterator.next();
-//                Donation donation = donationMap.get(donationId);
-//                System.out.printf("ID: %s, Type: %s\n", donation.getDonationId(), donation.getDonationType());
-//            }
-//
-//            // Prompt user to select a donation ID
-//            String donationId = ui.inputDonationID(); // Ensure you have a method for this in DoneeManagementUI
-//            if (donationMap.get(donationId) != null) {
-//                Donation donation = donationMap.get(donationId);
-//                if (confirmAction()) {
-//                    donee.addDonation(donationId, donation);
-//                    System.out.println("Donation added successfully.");
-//                } else {
-//                    System.out.println("Action cancelled.");
-//                }
-//            } else {
-//                System.out.println("Selected donation ID not found.");
-//            }
-//        } else {
-//            System.out.println("Donee not found.");
-//        }
-//
-//        ConsoleUtils.systemPause();
-//        ConsoleUtils.clearScreen();
-//    }
+        String doneeId = ui.inputDoneeID();
+        String fullDoneeId = "DNE-" + doneeId;
+
+        // Check if the donee ID exists in the system
+        if (doneeMap.containsKey(fullDoneeId)) {
+            // Display available donations
+//            List<Donation> availableDonations = donationManagement.getAllDonations();
+            Donee donee = doneeMap.get(fullDoneeId);
+
+            // Display the donee's name
+            System.out.println("Donee Name: " + donee.getDoneeName());
+
+            // List available donations
+            List<Donation> availableDonations = donationManagement.getAllDonations();
+            if (availableDonations.isEmpty()) {
+                System.out.println("No available donations at the moment.");
+                return;
+            }
+
+            // Use Iterator to iterate through the donations
+            System.out.println("Available Donations:");
+            Iterator<Donation> iterator = availableDonations.iterator();
+            while (iterator.hasNext()) {
+                Donation donation = iterator.next();
+                System.out.println("Donation ID: " + donation.getDonationID() + " | Type: " + donation.getDonationType());
+            }
+
+            // Input donation ID
+            String donationID = dmUI.mgnDonationIDnew();
+            String fullDonationId = "DON-" + donationID;
+
+            // Check if the donation ID exists
+            if (donationManagement.donationIdExists(fullDonationId)) {
+                // Retrieve the donation
+                Donation donation = donationManagement.getDonation(fullDonationId);
+
+                donee.addDonation(fullDonationId, donation);
+
+                System.out.println("Donation successfully assigned to Donee.");
+            } else {
+                System.out.println("Donation ID not found. Please check the ID and try again.");
+            }
+        } else {
+            System.out.println("Donee ID not found in the system. Please check the ID and try again.");
+        }
+    }
 
     public static void main(String[] args) {
-        DoneeManagement app = new DoneeManagement();
-        app.start();
+        DonorManagement donorManagement = new DonorManagement(); // Create an instance of DonorManagement
+        DonationManagement donationManagement = new DonationManagement(donorManagement); // Pass it to DonationManagement
+        DoneeManagement app = new DoneeManagement(donationManagement); // Pass DonationManagement to DoneeManagement
+        app.start(); // Start the DoneeManagement application
     }
 }

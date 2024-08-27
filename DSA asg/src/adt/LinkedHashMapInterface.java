@@ -47,19 +47,6 @@ public interface LinkedHashMapInterface<K, V> {
     V get(K key);
 
     /**
-     * Returns an array of all values in the map.
-     *
-     * <p>
-     * ADT Spec: <br>
-     * pre-condition: The map may contain zero or more key-value pairs.<br>
-     * post-condition: The map remains unchanged. Returns an array of values
-     * present in the map, in the order of their insertion.
-     *
-     * @return an array of all values in the map
-     */
-    V[] values();
-
-    /**
      * Replaces the value associated with the specified key with the given
      * value.
      *
