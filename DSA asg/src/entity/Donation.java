@@ -73,4 +73,35 @@ public class Donation {
         return donationType;
     }
 
+    // Method to get an item by its ID
+    public DonationItem getItemById(String itemID) {
+    DonationItem foundItem = null;
+    Iterator<DonationItem> iterator = items.iterator();
+
+    while (iterator.hasNext()) {
+        DonationItem item = iterator.next();
+        if (item.getItemID().equals(itemID)) {
+            foundItem = item;
+            break; // Exit the loop once the item is found
+        }
+    }
+
+    return foundItem;
+}
+    
+    public boolean removeItemById(String itemID) {
+        Iterator<DonationItem> iterator = items.iterator();
+
+        while (iterator.hasNext()) {
+            DonationItem item = iterator.next();
+            if (item.getItemID().equals(itemID)) {
+                iterator.remove(); // Remove the item from the list
+                return true; // Return true indicating the item was found and removed
+            }
+        }
+
+        return false; // Return false if the item was not found
+    }
+    
+    
 }
