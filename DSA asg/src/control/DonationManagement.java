@@ -195,134 +195,10 @@ public class DonationManagement {
     }
 
     private void searchDonation() {
-        String dmid = dmUI.mgnDonationIDnew();
-        Donation donation = dmMap.get(dmid); 
-        
-        if(donation != null){
-            System.out.printf("%-15s %-15s \\n","Donation ID","Donor ID"); 
-            System.out.printf("%-15s %-15s \\n",donation.getDonationID(),donation.getdonorID()); 
-            System.out.println("----------------------------------------------------------------------------------------------------------------");
-            ListInterface<DonationItem> donationItem = donation.getItems();
-            if(!donationItem.isEmpty()){
-                Iterator<DonationItem> itemIterator = donationItem.iterator();
-                while(itemIterator.hasNext()){
-                     DonationItem item = itemIterator.next();
-                    System.out.printf("%-10s %-10s %-10.2f %-20s\n", 
-                                  item.getItemID(), 
-                                  item.getItemType(), 
-                                  item.getAmount(), 
-                                  item.getDescription());
-                }
-            }            
-        }else {
-             System.out.println("Error: Donation not found");
-        }
+
     }
 
     private void amendDonation() {
-        // Check if the donation ID exists in the map
-        String dmid = dmUI.mgnDonationIDnew();
-
-        if (dmMap.containsKey(dmid)) {
-            // Retrieve the donation object
-            Donation donation = dmMap.get(dmid);
-            System.out.println("Donation Found: " + dmid);
-
-            boolean amending = true;
-            while (amending) {
-                // Display current donation items
-                System.out.println("Current items in this donation:");
-                donation.displayItems(); // Assuming listItems() is a method in Donation to list all items
-
-                // Ask user what they want to do: Add, Update, or Remove items
-                int amendChoice = dmUI.amendMenu(); // Assume this method provides a menu for amend options
-
-                switch (amendChoice) {
-                    case 1: // Add a new item
-                        String itemID = generateItemID();
-                        int categoryChoice = dmUI.selectDonationCategory();
-                        String itemType = "";
-                        double amount = 0.0;
-                        String description = "";
-
-                        switch (categoryChoice) {
-                            case 1: // Food
-                                itemType = "Food";
-                                description = dmUI.mgnItemName("Food");
-                                amount = dmUI.mgnQuantity("Food");
-                                break;
-                            case 2: // Daily Necessities
-                                itemType = "Kind";
-                                description = dmUI.mgnItemName("Daily Necessities");
-                                amount = dmUI.mgnQuantity("Daily Necessities");
-                                break;
-                            case 3: // Cash
-                                itemType = "Cash";
-                                amount = dmUI.mgnCashAmount();
-                                description = "Cash Donation";
-                                break;
-                            default:
-                                System.out.println("Invalid category choice. Please try again.");
-                                continue;
-                        }
-
-                        DonationItem newItem = new DonationItem(itemID, itemType, amount, description);
-                        donation.addItem(newItem);
-                        System.out.println(itemType + " item added successfully.");
-                        break;
-
-                    case 2: // Update an existing item
-                        String updateItemID = dmUI.inputItemID(); // Assume this method asks the user to input an item ID
-                        DonationItem itemToUpdate = donation.getItemById(updateItemID); // Assume getItemById() fetches an item by its ID
-
-                        if (itemToUpdate != null) {
-                            int updateChoice = dmUI.updateItemMenu(); // Assume this method provides options to update item details
-
-                            switch (updateChoice) {
-                                case 1: // Update amount
-                                    double newAmount = dmUI.mgnQuantity(itemToUpdate.getItemType());
-                                    itemToUpdate.setAmount(newAmount);
-                                    System.out.println("Amount updated successfully.");
-                                    break;
-                                case 2: // Update description
-                                    String newDescription = dmUI.mgnItemName(itemToUpdate.getItemType());
-                                    itemToUpdate.setDescription(newDescription);
-                                    System.out.println("Description updated successfully.");
-                                    break;
-                                default:
-                                    System.out.println("Invalid update choice. Please try again.");
-                                    continue;
-                            }
-                        } else {
-                            System.out.println("Item ID not found. Please check the ID and try again.");
-                        }
-                        break;
-
-                    case 3: // Remove an existing item
-                        String removeItemID = dmUI.inputItemID();
-                        if (donation.removeItemById(removeItemID)) { // Assume removeItemById() removes an item by its ID
-                            System.out.println("Item removed successfully.");
-                        } else {
-                            System.out.println("Item ID not found. Please check the ID and try again.");
-                        }
-                        break;
-
-                    case 4: // Exit amend menu
-                        amending = false;
-                        break;
-
-                    default:
-                        System.out.println("Invalid choice. Please try again.");
-                        continue;
-                }
-            }
-
-        System.out.println("Donation amendment completed.");
-    } else {
-        System.out.println("Donation ID not found in the system. Please check the ID and try again.");
-        
-    }
-          
 //        String id = dmUI.mgnDonationIDnew();
 //        Donation donation = dmMap.get(id);
 //        if (donation != null) {
@@ -342,71 +218,9 @@ public class DonationManagement {
 
     private void trackDonation() {
         // Implement tracking logic here
-        
-        
     }
 
     private void listByDonor() {
-    
-        if (dmMap.isEmpty()) {
-            System.out.println("No existing donors");
-        } else {
-            System.out.println("Donor List: \n");
-            System.out.printf("%-15s %-20s \t%s\n", "ID", "Donor Name", "Donations");
-            System.out.println("---------------------------------------------------------------------------------------------------------");
-
-            Iterator<String> iterator = dmMap.iterator();
-            while (iterator.hasNext()) {
-                String dnrId = iterator.next();
-                Donation donation = dmMap.get(dnrId);
-                if (donation != null) {
-                    ListInterface<DonationItem> donationItems = donation.getItems();
-                    if (!donationItems.isEmpty()) {
-                        Iterator<DonationItem> itemIterator = donationItems.iterator();
-                        while (itemIterator.hasNext()) {
-                            DonationItem item = itemIterator.next();
-                            System.out.printf("%-15s %-20s \t%s\n",
-                                    donation.getdonorID(),
-                                    donation.getDonationID(),
-                                    item.toString()
-                            );
-                        }
-                    }
-                }
-            }
-        }
-        
-//        if (dmMap.isEmpty()) {
-//            System.out.println("No existing donors");
-//        } else {
-//            System.out.println("Donor List: \n");
-//            System.out.printf("%-15s %-20s \t%s\n", "ID", "Donor Name", "Donations");
-//            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-//
-//            Iterator<String> iterator = dmMap.iterator();
-//            while (iterator.hasNext()) {
-//                String dnrId = iterator.next();
-//                Donation donation = dmMap.get(dnrId);
-//                if (donation != null) {
-//                    ListInterface<DonationItem> donationItem = donation.getItems();
-//                    String toString = "";
-//                    if (!donationItem.isEmpty()) {
-//                        Iterator<DonationItem> itemIterator = donationItem.iterator();
-//                        while (itemIterator.hasNext()) {
-//                            toString += itemIterator.next().toString() + " ";
-//                        }
-//                    }
-//
-//                    System.out.printf("%-15s %-20s \t%s\n",
-//                            donation.getdonorID(),
-//                            donation.getDonationID(),
-//                            toString
-//                    );
-//                }
-//            }
-//        }
-        
-        
     }
 
     private void listAll() {
@@ -452,13 +266,10 @@ public class DonationManagement {
 
     private void filterDonations() {
         // Implement filtering logic here
-        
     }
 
     private void generateDonationsSummary() {
         // Implement summary generation logic here
-        
-        
     }
 
     // Method to check if donor ID exists

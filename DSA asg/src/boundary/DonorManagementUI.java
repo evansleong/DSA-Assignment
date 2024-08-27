@@ -20,7 +20,7 @@ public class DonorManagementUI {
 
     // Display menu options for donor management
     public int menuOpt() {
-        System.out.println("");
+        System.out.println("\n\n");
         System.out.println("Donor Management Menu:");
         System.out.println("1. Add Donor");
         System.out.println("2. Remove Donor");
@@ -28,8 +28,7 @@ public class DonorManagementUI {
         System.out.println("4. Search Donor Details");
         System.out.println("5. List Donors with Donations");
         System.out.println("6. Filter Donors");
-        System.out.println("7. Clear All Donors");
-        System.out.println("8. Generate Summary Reports");
+        System.out.println("7. Generate Summary Reports");
         System.out.println("0. Back to main");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
@@ -49,11 +48,7 @@ public class DonorManagementUI {
     }
 
     public String inputDonorType() {
-        System.out.println("Enter Donor Type");
-        System.out.println("a. Government");
-        System.out.println("b. Private");
-        System.out.println("c. Public");
-        System.out.print("Please select type (a, b, c): ");
+        System.out.print("Enter Donor Type (government/private/public): ");
         return scanner.nextLine();
     }
 
@@ -74,11 +69,7 @@ public class DonorManagementUI {
     }
 
     public String updateDonorType() {
-        System.out.println("Enter new Donor Type");
-        System.out.println("a. Government");
-        System.out.println("b. Private");
-        System.out.println("c. Public");
-        System.out.print("Please select type (a, b, c): ");
+        System.out.print("Enter new Donor Type (government/private/public): ");
         return scanner.nextLine();
     }
 
