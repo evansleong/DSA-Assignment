@@ -102,4 +102,31 @@ public class DonationManagementUI {
     public void pausescan() {
         scan.close();
     }
+    
+    public int amendMenu() {
+        System.out.println("\n\t\tDONATION MANAGEMENT SUBSYSTEM\n");
+        System.out.println("-------------AMEND MENU--------------");
+        System.out.println("\tChoose an operaton(1-3):");
+        System.out.println("\t1. Add a new item");
+        System.out.println("\t2. Update an existing item");
+        System.out.println("\t3. Remove an existing item");
+        System.out.printf("\nEnter choice > ");
+        int mgnAmendChoice = scan.nextInt();
+        scan.nextLine(); // Consume the newline
+        System.out.println();
+        return mgnAmendChoice;
+    }
+
+    public String inputItemID() {
+        System.out.print("Enter item ID > ");
+        return scan.nextLine();
+    }
+
+    public int updateItemMenu() {
+        System.out.println("\t-----Select the data field-----");
+        System.out.println("\t1.Update Amount");
+        System.out.println("\t2.Update Description");
+        System.out.println("\t");
+        return scan.nextInt();
+    }
 }
