@@ -6,6 +6,8 @@ package control;
 
 import adt.*;
 import boundary.*;
+import dao.DoneeDataSeeder;
+import dao.DonorDataSeeder;
 import entity.*;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -18,9 +20,13 @@ public class DonorManagement {
 
     DonorManagementUI ui = new DonorManagementUI();
     LinkedHashMapInterface<String, Donor> donorMap;
+    private final DonationManagement donationManagement;
+    private final DonorDataSeeder dataSeeder;
 
     public DonorManagement() {
         donorMap = new LinkedHashMap<>();
+        this.donationManagement = donationManagement;
+        dataSeeder = new DonorDataSeeder();
         dummyData();
     }
 
@@ -355,9 +361,15 @@ public class DonorManagement {
         }
         return null; // Return null if donor ID is not found
     }
+    
+    private void initializeDonorMap(){
+        this.donorMap = dataSeeder.getDonorMap();
+    }
 
     public static void main(String[] args) {
         DonorManagement dm = new DonorManagement();
+        DonationManagement donationManagement = new DonationManagement(dm);
+        DoneeManagement app = new DoneeManagement(donationManagement);
         dm.runSystem();
     }
 }
