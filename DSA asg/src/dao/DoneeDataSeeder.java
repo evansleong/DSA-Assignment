@@ -48,31 +48,35 @@ public class DoneeDataSeeder {
 
         // Create some DonationItem objects
         DonationItem item1 = new DonationItem("ITEM-001", "Food", 10, "kfc");
-        DonationItem item2 = new DonationItem("ITEM-002", "Clothes", 5, "h&m shirt");
-        DonationItem item3 = new DonationItem("ITEM-003", "Books", 7, "harry porter");
+        DonationItem item2 = new DonationItem("ITEM-002", "Daily Necessities", 5, "h&m shirt");
+        DonationItem item3 = new DonationItem("ITEM-003", "Daily Necessities", 7, "harry porter");
+        DonationItem item4 = new DonationItem("ITEM-004", "Cash", 554.55, "Cash");
 
         // Add items to the list
         donationItems.add(item1);
         donationItems.add(item2);
         donationItems.add(item3);
+        donationItems.add(item4);
 
         // Create donations
         Donation donation1 = new Donation("DON-001", "DNR-001", donationItems);
         Donation donation2 = new Donation("DON-002", "DNR-002", donationItems);
         Donation donation3 = new Donation("DON-003", "DNR-003", donationItems);
-        Donation donation4 = new Donation("DON-004", "DNR-003", donationItems);
+        Donation donation4 = new Donation("DON-004", "DNR-004", donationItems);
 
         // Assuming you have Donor objects like johnDoe, janeSmith, etc.
-        johnDoe.addDonation(donation1.getDonationID(), donation1);  // John Doe donates donation1
-        janeSmith.addDonation(donation3.getDonationID(), donation3);  // Jane Smith donates donation3
-        janeSmith.addDonation(donation4.getDonationID(), donation4);  // Jane Smith donates donation4
-        charityOrgA.addDonation(donation3.getDonationID(), donation3);  // CharityOrgA donates donation3
-        familyB.addDonation(donation4.getDonationID(), donation4);  // FamilyB donates donation4
-        johnsBakery.addDonation(donation1.getDonationID(), donation1);  // JohnsBakery donates donation1
-        doeFamily.addDonation(donation2.getDonationID(), donation2);  // DoeFamily donates donation2
-        helpingHands.addDonation(donation3.getDonationID(), donation3);  // HelpingHands donates donation3
-        mariaGreen.addDonation(donation4.getDonationID(), donation4);  // MariaGreen donates donation4
-        smithFamily.addDonation(donation1.getDonationID(), donation1);  // SmithFamily donates donation1
+        johnDoe.addDonation(donation1.getDonationID(), donation1);  
+        johnDoe.addDonation(donation1.getDonationID(), donation4); 
+        janeSmith.addDonation(donation3.getDonationID(), donation3);  
+        janeSmith.addDonation(donation4.getDonationID(), donation4);  
+        charityOrgA.addDonation(donation3.getDonationID(), donation3);  
+        charityOrgA.addDonation(donation3.getDonationID(), donation2);  
+        familyB.addDonation(donation4.getDonationID(), donation4);  
+        johnsBakery.addDonation(donation1.getDonationID(), donation1);  
+        doeFamily.addDonation(donation2.getDonationID(), donation2);  
+        helpingHands.addDonation(donation3.getDonationID(), donation3);  
+        mariaGreen.addDonation(donation4.getDonationID(), donation4);  
+        smithFamily.addDonation(donation1.getDonationID(), donation1);  
         communityAid.addDonation(donation3.getDonationID(), donation3);
     }
     

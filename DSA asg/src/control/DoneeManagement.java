@@ -76,9 +76,8 @@ public class DoneeManagement {
 
     private void addDonee() {
         String type = ui.inputDoneeType();
-        String fullId = generateDoneeId(); // Generate a new unique ID
+        String fullId = generateDoneeId();
 
-        // Display the generated ID
         System.out.println("Donee ID: " + fullId);
 
         String name = ui.inputDoneeName();
@@ -159,36 +158,81 @@ public class DoneeManagement {
         String fullId = "DNE-" + id;
 
         if (doneeMap.containsKey(fullId)) {
-            Donee donee = doneeMap.get(fullId);
+            Donee originalDonee = doneeMap.get(fullId);
+            Donee updatedDonee;
 
-            boolean updating = true;
-            while (updating) {
-                int updateChoice = ui.getUpdateFieldChoice();
-                switch (updateChoice) {
-                    case 1:
-                        String name = ui.inputDoneeName();
-                        donee.setDoneeName(name);
-                        doneeMap.replace(fullId, donee); // Use replace method to update the map
-                        System.out.println("Name updated successfully.");
-                        break;
-                    case 2:
-                        String contactInfo = ui.inputContactInfo();
-                        donee.setDoneeContact(contactInfo);
-                        doneeMap.replace(fullId, donee); // Use replace method to update the map
-                        System.out.println("Contact info updated successfully.");
-                        break;
-                    case 3:
-                        String type = ui.inputDoneeType();
-                        donee.setDoneeType(type);
-                        doneeMap.replace(fullId, donee); // Use replace method to update the map
-                        System.out.println("Type updated successfully.");
-                        break;
-                    case 0:
-                        updating = false;
-                        break;
-                    default:
-                        System.out.println("Invalid choice. Please try again.");
-                }
+            int choice = ui.promptModifyOneorModifyAll();
+
+            switch (choice) {
+                case 1:
+                    boolean updating = true;
+                    while (updating) {
+                        int updateChoice = ui.getUpdateFieldChoice();
+                        switch (updateChoice) {
+                            case 1:
+                                String name = ui.inputDoneeName();
+                                updatedDonee = new Donee(
+                                        originalDonee.getDoneeId(),
+                                        name,
+                                        originalDonee.getDoneeContact(),
+                                        originalDonee.getDoneeType(),
+                                        originalDonee.getAge()
+                                );
+                                doneeMap.replace(fullId, updatedDonee);
+                                System.out.println("Name updated successfully.");
+                                break;
+                            case 2:
+                                String contactInfo = ui.inputContactInfo();
+                                updatedDonee = new Donee(
+                                        originalDonee.getDoneeId(),
+                                        originalDonee.getDoneeName(),
+                                        contactInfo,
+                                        originalDonee.getDoneeType(),
+                                        originalDonee.getAge()
+                                );
+                                doneeMap.replace(fullId, updatedDonee);
+                                System.out.println("Contact info updated successfully.");
+                                break;
+                            case 3:
+                                String type = ui.inputDoneeType();
+                                Integer age = null;
+                                if (type.equalsIgnoreCase("individual")) {
+                                    age = ui.inputAge();
+                                }
+                                updatedDonee = new Donee(
+                                        originalDonee.getDoneeId(),
+                                        originalDonee.getDoneeName(),
+                                        originalDonee.getDoneeContact(),
+                                        type,
+                                        age
+                                );
+                                doneeMap.replace(fullId, updatedDonee);
+                                System.out.println("Type and age updated successfully.");
+                                break;
+                            case 0:
+                                updating = false;
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                        }
+                    }
+                    break;
+                case 2:
+                    String name = ui.inputDoneeName();
+                    String contactInfo = ui.inputContactInfo();
+                    String type = ui.inputDoneeType();
+                    Integer age = null;
+                    if (type.equalsIgnoreCase("individual")) {
+                        age = ui.inputAge();
+                    }
+                    updatedDonee = new Donee(fullId, name, contactInfo, type, age);
+                    updatedDonee.setDonations(originalDonee.getDonations());
+                    doneeMap.replace(fullId, updatedDonee);
+                    System.out.println("Donee updated successfully.");
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+                    break;
             }
         } else {
             System.out.println("Donee not found.");
@@ -206,6 +250,8 @@ public class DoneeManagement {
             Donee donee = doneeMap.get(fullId);
             // Use the UI method to display donee details
             ui.displayDoneeDetails(donee);
+        } else {
+            System.out.println("Donee not found.");
         }
 
         ConsoleUtils.systemPause();
@@ -227,7 +273,7 @@ public class DoneeManagement {
             if (donee != null) {
                 int foodCount = 0;
                 int dailyNecessitiesCount = 0;
-                int cashCount = 0;
+                double cashCount = 0;
 
                 LinkedHashMapInterface<String, Donation> donations = donee.getDonations();
                 if (donations != null && !donations.isEmpty()) {
@@ -387,9 +433,9 @@ public class DoneeManagement {
         int organizationCount = 0;
         int familyCount = 0;
 
-        int[] individualDonations = new int[3]; // [food, daily necessities, cash]
-        int[] organizationDonations = new int[3];
-        int[] familyDonations = new int[3];
+        double[] individualDonations = new double[3];
+        double[] organizationDonations = new double[3];
+        double[] familyDonations = new double[3];
 
         Iterator<String> doneeIterator = doneeMap.iterator();
         while (doneeIterator.hasNext()) {
@@ -398,7 +444,7 @@ public class DoneeManagement {
 
             if (donee != null) {
                 String type = donee.getDoneeType().toLowerCase();
-                int[] donationCounts = null;
+                double[] donationCounts = null;
 
                 switch (type) {
                     case "individual":
@@ -505,9 +551,11 @@ public class DoneeManagement {
                 return;
             }
 
-            System.out.printf("%-15s %-30s %-20s\n", "Donation ID", "Food", "Daily Necessities");
-            System.out.println("-----------------------------------------------------------");
+            // Print table header with adjusted column widths
+            System.out.printf("\n%-15s %-35s %-35s %-25s\n", "Donation ID", "Food Items(pcs/set)", "Daily Necessities(pcs/set)", "Cash Amount(RM)");
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
 
+            // Iterate over available donations
             Iterator<Donation> donationIterator = availableDonations.iterator();
             while (donationIterator.hasNext()) {
                 Donation donation = donationIterator.next();
@@ -515,7 +563,9 @@ public class DoneeManagement {
 
                 StringBuilder foodItems = new StringBuilder();
                 StringBuilder dailyNecessitiesItems = new StringBuilder();
+                double totalCashAmount = 0.0;
 
+                // Iterate over donation items
                 Iterator<DonationItem> itemIterator = donation.getItems().iterator();
                 while (itemIterator.hasNext()) {
                     DonationItem item = itemIterator.next();
@@ -535,16 +585,21 @@ public class DoneeManagement {
                             dailyNecessitiesItems.append(", ");
                         }
                         dailyNecessitiesItems.append(itemDescription);
+                    } else if ("Cash".equals(itemType)) {
+                        totalCashAmount += amount;
                     }
                 }
 
+                // Format strings for output
                 String foodItemsStr = foodItems.length() > 0 ? foodItems.toString() : "None";
                 String dailyNecessitiesItemsStr = dailyNecessitiesItems.length() > 0 ? dailyNecessitiesItems.toString() : "None";
+                String cashItemsStr = totalCashAmount > 0 ? String.format("%.2f", totalCashAmount) : "None";
 
-                System.out.printf("%-15s %-30s %-20s\n",
-                        donationID, foodItemsStr, dailyNecessitiesItemsStr);
+                // Print donation details with adjusted column widths
+                System.out.printf("%-15s %-35s %-35s %-25s\n", donationID, foodItemsStr, dailyNecessitiesItemsStr, cashItemsStr);
             }
 
+            // Input donation ID to add to donee
             String donationID = ui.inputDonationID();
             String fullDonationId = "DON-" + donationID;
 
@@ -557,6 +612,8 @@ public class DoneeManagement {
             } else {
                 System.out.println("Donation ID not found. Please check the ID and try again.");
             }
+            ConsoleUtils.systemPause();
+            ConsoleUtils.clearScreen();
         } else {
             System.out.println("Donee ID not found in the system. Please check the ID and try again.");
         }

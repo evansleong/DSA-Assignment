@@ -155,6 +155,32 @@ public class DoneeManagementUI {
         return Character.toUpperCase(choice.charAt(0));
     }
 
+    public int promptModifyOneorModifyAll() {
+        System.out.println("Choose an option:");
+        System.out.println("-----------------");
+        System.out.println("1. UPDATE A SPECIFIC FIELD");
+        System.out.println("2. UPDATE ALL THE FIELD AT ONCE");
+        System.out.print("\nEnter choice > ");
+
+        int choice = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+                if (choice == 1 || choice == 2) {
+                    validInput = true;
+                } else {
+                    System.out.println("Invalid choice. Please enter 1 or 2.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+
+        return choice;
+    }
+
     public int promptRemoveOrClearDonees() {
         System.out.println("Choose an option:");
         System.out.println("-----------------");
@@ -278,18 +304,19 @@ public class DoneeManagementUI {
     }
 
     public void displayDoneeListHeader() {
-        System.out.println("Donees List with Donations:");
-        System.out.printf("%-15s %-20s %-25s %-15s\n", "DONEE ID", "DONEE NAME", "CONTACT INFO", "DONATIONS RECEIVED");
+        System.out.println("Donees List with Donations:\n");
+        System.out.printf("%-15s %-20s %-20s %-20s %20s\n", "DONEE ID", "DONEE NAME", "DONEE TYPE", "CONTACT INFO", "DONATIONS RECEIVED (RM/PCS)");
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
     }
 
-    public void displayDoneeWithDonations(Donee donee, int foodCount, int dailyNecessitiesCount, int cashCount) {
-        System.out.printf("%-15s %-20s %-25s %-15s\n",
+    public void displayDoneeWithDonations(Donee donee, int foodCount, int dailyNecessitiesCount, double cashCount) {
+        System.out.printf("%-15s %-20s %-20s %-20s %-15s\n",
                 donee.getDoneeId(),
                 donee.getDoneeName(),
+                donee.getDoneeType(), // Include donee type
                 donee.getDoneeContact(),
-                String.format("\tFood x %d\n \t\t\t\t\t\t\t\t\tDaily Neccesities x %d\n \t\t\t\t\t\t\t\t\tCash x %d\n-------------------------------------------------------------------------------------------------------------------- ",
-                        foodCount, dailyNecessitiesCount, cashCount));
+                String.format("Food x %d\n\t\t\t\t\t\t\t\t\t         Daily Necessities x %d\n\t\t\t\t\t\t\t\t\t         Cash x %.2f", foodCount, dailyNecessitiesCount, cashCount));
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
     }
 
     public void displayFilteredDoneeHeader(String title, boolean includeAgeGroup, boolean extendedHeader) {
@@ -351,7 +378,7 @@ public class DoneeManagementUI {
     }
 
     public void displaySummaryReport(int individualCount, int organizationCount, int familyCount,
-            int[] individualDonations, int[] organizationDonations, int[] familyDonations,
+            double[] individualDonations, double[] organizationDonations, double[] familyDonations,
             int totalDonees) {
 
         System.out.println("********** Summary Report **********\n");
@@ -366,20 +393,20 @@ public class DoneeManagementUI {
 
         System.out.println("+--------------------------+--------+-----------------+--------------------------+--------------------------+--------------------------+\n");
 
-        int totalFood = individualDonations[0] + organizationDonations[0] + familyDonations[0];
-        int totalDailyNecessities = individualDonations[1] + organizationDonations[1] + familyDonations[1];
-        int totalCash = individualDonations[2] + organizationDonations[2] + familyDonations[2];
+        double totalFood = individualDonations[0] + organizationDonations[0] + familyDonations[0];
+        double totalDailyNecessities = individualDonations[1] + organizationDonations[1] + familyDonations[1];
+        double totalCash = individualDonations[2] + organizationDonations[2] + familyDonations[2];
 
-        System.out.printf("Total Food Donations: %d\n", totalFood);
-        System.out.printf("Total Daily Necessities Donations: %d\n", totalDailyNecessities);
-        System.out.printf("Total Cash Donations: %d\n", totalCash);
+        System.out.printf("Total Food Donations: %.0f\n", totalFood);
+        System.out.printf("Total Daily Necessities Donations: %.0f\n", totalDailyNecessities);
+        System.out.printf("Total Cash Donations: %.2f\n", totalCash);
 
         System.out.println("************************************");
     }
 
-    private void displayDoneeTypeSummary(String doneeType, int doneeCount, int[] donations, int totalDonees) {
+    private void displayDoneeTypeSummary(String doneeType, int doneeCount, double[] donations, int totalDonees) {
         double percentage = (doneeCount / (double) totalDonees) * 100;
-        System.out.printf("| %-24s | %6d | %14.2f%% | %24d | %24d | %24d |\n",
+        System.out.printf("| %-24s | %6d | %14.2f%% | %24.0f | %24.0f | %24.2f |\n",
                 doneeType, doneeCount, percentage,
                 donations[0], donations[1], donations[2]);
     }

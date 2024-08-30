@@ -36,7 +36,7 @@ public class DonationManagement {
 
         // Create DonationItems for donation1
         DonationItem item1 = new DonationItem("ITEM-001", "Food", 10, "Canned Beans");
-        DonationItem item2 = new DonationItem("ITEM-002", "Clothes", 5, "Winter Jackets");
+        DonationItem item2 = new DonationItem("ITEM-002", "Daily Necessities", 5, "Winter Jackets");
         donationItems1.add(item1);
         donationItems1.add(item2);
 
@@ -48,12 +48,12 @@ public class DonationManagement {
 
         // Create DonationItems for donation3
         DonationItem item5 = new DonationItem("ITEM-005", "Daily Necessities", 15, "Toothpaste");
-        DonationItem item6 = new DonationItem("ITEM-006", "Clothes", 10, "T-Shirts");
+        DonationItem item6 = new DonationItem("ITEM-006", "Daily Necessities", 10, "T-Shirts");
         donationItems3.add(item5);
         donationItems3.add(item6);
 
         // Create DonationItems for donation4
-        DonationItem item7 = new DonationItem("ITEM-007", "Cash", 1000, "Cash Donation");
+        DonationItem item7 = new DonationItem("ITEM-007", "Cash", 666.66, "Cash Donation");
         donationItems4.add(item7);
 
         // Create donations
