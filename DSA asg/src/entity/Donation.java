@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author Asus
+ * @author LEEYIHANG
  */
 public class Donation {
 
@@ -21,6 +21,7 @@ public class Donation {
         this.donationID = donationID;
         this.donorID = donorID;
         this.items = items;
+        
     }
 
     public void addItem(DonationItem item) {
@@ -35,7 +36,7 @@ public class Donation {
         StringBuilder itemList = new StringBuilder();
         
         while (iterator.hasNext()) {
-             DonationItem item = iterator.next();  // Correctly declare 'item'
+             DonationItem item = iterator.next();  
              itemList.append(String.format("%-15s %-25s %-20s %-10s %n",
                                   item.getItemID(),
                                   item.getItemType(),
@@ -50,7 +51,7 @@ public class Donation {
         }
     }
 
-    // Other getters and setters as needed
+   
     public String getDonationID() {
         return donationID;
     }
@@ -81,12 +82,11 @@ public class Donation {
         while (iterator.hasNext()) {
             DonationItem item = iterator.next();
             donationType = item.getItemType();
-            // If mixed types, handle accordingly
+            
         }
         return donationType;
     }
 
-    // Method to get an item by its ID
     public DonationItem getItemById(String itemID) {
         DonationItem foundItem = null;
         Iterator<DonationItem> iterator = items.iterator();
@@ -95,7 +95,7 @@ public class Donation {
             DonationItem item = iterator.next();
             if (item.getItemID().equals(itemID)) {
                 foundItem = item;
-                break; // Exit the loop once the item is found
+                break; 
             }
         }
 
@@ -108,12 +108,12 @@ public class Donation {
         while (iterator.hasNext()) {
             DonationItem item = iterator.next();
             if (item.getItemID().equals(itemID)) {
-                iterator.remove(); // Remove the item from the list
-                return true; // Return true indicating the item was found and removed
+                iterator.remove(); 
+                return true; 
             }
         }
 
-        return false; // Return false if the item was not found
+        return false; 
     }
 
 }

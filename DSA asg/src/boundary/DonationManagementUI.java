@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author ASUS
+ * @author LEEYIHANG
  */
 public class DonationManagementUI {
 
@@ -28,7 +28,7 @@ public class DonationManagementUI {
         System.out.println("\t0. Back to main");
         System.out.printf("\nEnter choice > ");
         int mgnChoice = scan.nextInt();
-        scan.nextLine(); // Consume the newline
+        scan.nextLine(); 
         System.out.println();
         return mgnChoice;
     }
@@ -36,11 +36,11 @@ public class DonationManagementUI {
     public int selectDonationCategory() {
         System.out.println("Select the category of donation:");
         System.out.println("1. Food");
-        System.out.println("2. Daily Necessities");
-        System.out.println("3. Cash");
+        System.out.println("2. Cash");
+        System.out.println("3. Daily Necessities");
         System.out.printf("Enter choice > ");
         int categoryChoice = scan.nextInt();
-        scan.nextLine(); // Consume the newline
+        scan.nextLine(); 
         return categoryChoice;
     }
 
@@ -68,14 +68,14 @@ public class DonationManagementUI {
     public int mgnQuantity(String category) {
         System.out.printf("Enter the quantity of the %s > ", category);
         int quantity = scan.nextInt();
-        scan.nextLine(); // Consume the newline
+        scan.nextLine();
         return quantity;
     }
 
     public double mgnCashAmount() {
         System.out.print("Enter the cash donation amount in RM > ");
         double amount = scan.nextDouble();
-        scan.nextLine(); // Consume the newline
+        scan.nextLine(); 
         return amount;
     }
 
@@ -105,11 +105,10 @@ public class DonationManagementUI {
         System.out.println("\tChoose an operaton(1-3):");
         System.out.println("\t1. Add a new item");
         System.out.println("\t2. Update an existing item");
-        System.out.println("\t3. Remove an existing item");
-        System.out.println("\t4. Exit Amend Menu");
+        System.out.println("\t3. Exit Amend Menu");
         System.out.printf("\nEnter choice > ");
         int mgnAmendChoice = scan.nextInt();
-        scan.nextLine(); // Consume the newline
+        scan.nextLine(); 
         System.out.println();
         return mgnAmendChoice;
     }
@@ -146,6 +145,11 @@ public int mgnFilter(){
         
     }
     
-    
+    public double getInputQuantity() {
+        System.out.print("Enter the donation amount/RM  > ");
+        double amount = scan.nextDouble();
+        scan.nextLine(); 
+        return amount;
+    }
     
 }

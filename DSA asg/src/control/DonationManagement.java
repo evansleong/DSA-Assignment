@@ -6,68 +6,37 @@ package control;
 
 import adt.*;
 import boundary.*;
+import dao.DonationDataSeeder;
+import dao.DoneeDataSeeder;
 import entity.*;
 import java.util.Iterator;
 import utility.ConsoleUtils;
 
 /**
  *
- * @author ASUS
+ * @author LEEYIHANG
  */
 public class DonationManagement {
 
     DonationManagementUI dmUI = new DonationManagementUI();
     LinkedHashMapInterface<String, Donation> dmMap;
-    private int donationCounter = 1; // Counter for generating unique IDs
+    private int donationCounter = 1; 
     private int itemCounter = 0;
-    private DonorManagement donorManagement;
+    private final DonorManagement donorManagement;
+    private final DonationDataSeeder dataSeeder;
 
     public DonationManagement(DonorManagement donorManagement) {
         dmMap = new LinkedHashMap<>();
         this.donorManagement = donorManagement;
-        seedData();
+        dataSeeder = new DonationDataSeeder();
+        initializeDonationMap();
+
     }
 
-    private void seedData() {
-        List<DonationItem> donationItems1 = new List<>();
-        List<DonationItem> donationItems2 = new List<>();
-        List<DonationItem> donationItems3 = new List<>();
-        List<DonationItem> donationItems4 = new List<>();
-
-        // Create DonationItems for donation1
-        DonationItem item1 = new DonationItem("ITEM-001", "Food", 10, "Canned Beans");
-        DonationItem item2 = new DonationItem("ITEM-002", "Daily Necessities", 5, "Winter Jackets");
-        donationItems1.add(item1);
-        donationItems1.add(item2);
-
-        // Create DonationItems for donation2
-        DonationItem item3 = new DonationItem("ITEM-003", "Daily Necessities", 7, "Children's Books");
-        DonationItem item4 = new DonationItem("ITEM-004", "Food", 20, "Rice Bags");
-        donationItems2.add(item3);
-        donationItems2.add(item4);
-
-        // Create DonationItems for donation3
-        DonationItem item5 = new DonationItem("ITEM-005", "Daily Necessities", 15, "Toothpaste");
-        DonationItem item6 = new DonationItem("ITEM-006", "Daily Necessities", 10, "T-Shirts");
-        donationItems3.add(item5);
-        donationItems3.add(item6);
-
-        // Create DonationItems for donation4
-        DonationItem item7 = new DonationItem("ITEM-007", "Cash", 666.66, "Cash Donation");
-        donationItems4.add(item7);
-
-        // Create donations
-        Donation donation1 = new Donation("DON-001", "DNR-001", donationItems1);
-        Donation donation2 = new Donation("DON-002", "DNR-002", donationItems2);
-        Donation donation3 = new Donation("DON-003", "DNR-003", donationItems3);
-        Donation donation4 = new Donation("DON-004", "DNR-004", donationItems4);
-
-        // Add donations to the map
-        dmMap.put(donation1.getDonationID(), donation1);
-        dmMap.put(donation2.getDonationID(), donation2);
-        dmMap.put(donation3.getDonationID(), donation3);
-        dmMap.put(donation4.getDonationID(), donation4);
+    private void initializeDonationMap() {
+        this.dmMap = dataSeeder.getDonationMap();
     }
+    
 
     public void dmstart() {
         boolean running = true;
@@ -111,7 +80,7 @@ public class DonationManagement {
     }
 
     private String generateDonationID() {
-        return "DON-" + String.format("%04d", donationCounter++); // e.g., DON0001, DON0002
+        return "DON-" + String.format("%04d", donationCounter++); 
     }
 
     private String generateItemID() {
@@ -119,65 +88,63 @@ public class DonationManagement {
     }
 
     private void addDonation() {
-        // Input donor ID
+
         String donorId = dmUI.inputDonorID();
 
-        // Check if the donor ID exists in the system
+       
         if (donorManagement.donorIdExists(donorId)) {
-            // Retrieve the donor's name
+            
             String donorName = donorManagement.getDonorName(donorId);
             System.out.println("Donor Found: " + donorName);
 
-            // Generate new donation ID
             String donationID = generateDonationID();
             System.out.println("Generated Donation ID: " + donationID);
 
-            // Create a new donation with the generated ID and donor ID
             Donation donation = new Donation(donationID, donorId, new List<DonationItem>());
 
             boolean addingItems = true;
             while (addingItems) {
-                // Select category and get item details
+              
                 int categoryChoice = dmUI.selectDonationCategory();
                 String itemType = "";
                 double amount = 0.0;
                 String description = "";
-                String itemID = generateItemID(); // Generate item ID
+                String itemID = generateItemID(); 
 
-                // Create a new DonationItem based on category choice
+          
                 switch (categoryChoice) {
-                    case 1: // Food
+                    case 1: 
                         itemType = "Food";
                         description = dmUI.mgnItemName("Food");
                         amount = dmUI.mgnQuantity("Food");
                         break;
-                    case 2: // Daily Necessities
+                    case 2: 
                         itemType = "Daily Necessities";
                         description = dmUI.mgnItemName("Daily Necessities");
                         amount = dmUI.mgnQuantity("Daily Necessities");
                         break;
-                    case 3: // Cash
+                    case 3: 
                         itemType = "Cash";
                         amount = dmUI.mgnCashAmount();
-                        description = "Cash Donation"; // Description for cash donation
+                        description = "Cash Donation"; 
                         break;
                     default:
                         System.out.println("Invalid category choice. Please try again.");
                         continue;
                 }
 
-                // Create the DonationItem
+                
                 DonationItem item = new DonationItem(itemID, itemType, amount, description);
 
-                // Add item to the donation
+                
                 donation.addItem(item);
                 System.out.println(itemType + " item added successfully.");
 
-                // Check if the user wants to add more items
+             
                 addingItems = dmUI.askAddMoreItems();
             }
 
-            // Put the donation into the map
+         
             dmMap.put(donationID, donation);
             System.out.println("Donation successfully added.");
         } else {
@@ -229,25 +196,25 @@ public class DonationManagement {
     }
 
     private void amendDonation() {
-        // Check if the donation ID exists in the map
+       
         String dmid = dmUI.mgnDonationIDnew();
 
         if (dmMap.containsKey(dmid)) {
-            // Retrieve the donation object
+           
             Donation donation = dmMap.get(dmid);
             System.out.println("Donation Found: " + dmid);
 
             boolean amending = true;
             while (amending) {
-                // Display current donation items
+                
                 System.out.println("Current items in this donation:");
-                // Assuming listItems() is a method in Donation to list all items
+                
                 System.out.println(donation.displayItems(donation));
-                // Ask user what they want to do: Add, Update, or Remove items
-                int amendChoice = dmUI.amendMenu(); // Assume this method provides a menu for amend options
+               
+                int amendChoice = dmUI.amendMenu(); 
 
                 switch (amendChoice) {
-                    case 1: // Add a new item
+                    case 1: 
                         String itemID = generateItemID();
                         int categoryChoice = dmUI.selectDonationCategory();
                         String itemType = "";
@@ -255,17 +222,17 @@ public class DonationManagement {
                         String description = "";
 
                         switch (categoryChoice) {
-                            case 1: // Food
+                            case 1: 
                                 itemType = "Food";
                                 description = dmUI.mgnItemName("Food");
                                 amount = dmUI.mgnQuantity("Food");
                                 break;
-                            case 2: // Daily Necessities
+                            case 2: 
                                 itemType = "Kind";
                                 description = dmUI.mgnItemName("Daily Necessities");
                                 amount = dmUI.mgnQuantity("Daily Necessities");
                                 break;
-                            case 3: // Cash
+                            case 3: 
                                 itemType = "Cash";
                                 amount = dmUI.mgnCashAmount();
                                 description = "Cash Donation";
@@ -280,20 +247,20 @@ public class DonationManagement {
                         System.out.println(itemType + " item added successfully.");
                         break;
 
-                    case 2: // Update an existing item
-                        String updateItemID = dmUI.inputItemID(); // Assume this method asks the user to input an item ID
-                        DonationItem itemToUpdate = donation.getItemById(updateItemID); // Assume getItemById() fetches an item by its ID
+                    case 2: 
+                        String updateItemID = dmUI.inputItemID(); 
+                        DonationItem itemToUpdate = donation.getItemById(updateItemID);
 
                         if (itemToUpdate != null) {
-                            int updateChoice = dmUI.updateItemMenu(); // Assume this method provides options to update item details
+                            int updateChoice = dmUI.updateItemMenu();
 
                             switch (updateChoice) {
-                                case 1: // Update amount
+                                case 1: 
                                     double newAmount = dmUI.mgnQuantity(itemToUpdate.getItemType());
                                     itemToUpdate.setAmount(newAmount);
                                     System.out.println("Amount updated successfully.");
                                     break;
-                                case 2: // Update description
+                                case 2: 
                                     String newDescription = dmUI.mgnItemName(itemToUpdate.getItemType());
                                     itemToUpdate.setDescription(newDescription);
                                     System.out.println("Description updated successfully.");
@@ -307,16 +274,8 @@ public class DonationManagement {
                         }
                         break;
 
-                    case 3: // Remove an existing item
-                        String removeItemID = dmUI.inputItemID();
-                        if (donation.removeItemById(removeItemID)) { // Assume removeItemById() removes an item by its ID
-                            System.out.println("Item removed successfully.");
-                        } else {
-                            System.out.println("Item ID not found. Please check the ID and try again.");
-                        }
-                        break;
 
-                    case 4: // Exit amend menu
+                    case 3: 
                         amending = false;
                         break;
 
@@ -336,10 +295,10 @@ public class DonationManagement {
     }
 
     private void trackDonation() {
-        // Implement tracking logic here
+      
         int choice = dmUI.selectDonationCategory();
 
-        // Determine the selected category
+       
         String selectedCategory = "";
         switch (choice) {
             case 1:
@@ -370,7 +329,7 @@ public class DonationManagement {
                     ListInterface<DonationItem> donationItems = donation.getItems();
 
                     if (!donationItems.isEmpty()) {
-                        // Display items only in the selected category
+                     
                         Iterator<DonationItem> itemIterator = donationItems.iterator();
                         boolean hasItemsInCategory = false;
                         while (itemIterator.hasNext()) {
@@ -436,14 +395,14 @@ public class DonationManagement {
             return;
         }
 
-        // Print the header
+      
         System.out.printf("%-15s %-25s %-20s %-10s %n", "DONATION ID", "DONOR NAME", "DONATION ITEMS", "AMOUNT");
         System.out.println("-------------------------------------------------------------------------");
 
-        // Create an iterator for the LinkedHashMap
+       
         Iterator<String> mapIterator = dmMap.iterator();
 
-        // Iterate through all entries in the LinkedHashMap
+       
         while (mapIterator.hasNext()) {
             String donationID = mapIterator.next();
             Donation donation = dmMap.get(donationID);
@@ -452,7 +411,7 @@ public class DonationManagement {
                 String donorID = donation.getdonorID();
                 String donorName = donorManagement.getDonorName(donorID);
 
-                // Build donation items string
+              
                 StringBuilder itemsBuilder = new StringBuilder();
                 Iterator<DonationItem> itemIterator = donation.getItems().iterator();
                 while (itemIterator.hasNext()) {
@@ -460,7 +419,7 @@ public class DonationManagement {
                     itemsBuilder.append(String.format("  %-20s x %.2f %n %-39s", item.getItemType(), item.getAmount(), ""));
                 }
 
-                // Print donation details
+               
                 System.out.printf("%-15s %-25s %s%n",
                         donation.getDonationID(),
                         donorName,
@@ -474,12 +433,72 @@ public class DonationManagement {
     }
 
     private void filterDonations() {
-        // Implement filtering logic here
+      
+    int choice = dmUI.selectDonationCategory();
+
+   
+    String selectedCategory = "";
+    switch (choice) {
+        case 1:
+            selectedCategory = "Food";
+            break;
+        case 2:
+            selectedCategory = "Cash";
+            break;
+        case 3:
+            selectedCategory = "Daily Necessities";
+            break;
+        default:
+            System.out.println("Invalid choice. Exiting...");
+            return;
+    }
+
+    if (dmMap.isEmpty()) {
+        System.out.println("No existing donors");
+    } else {
+        System.out.println("Enter the minimum quantity to display:");
+        double minQuantity = dmUI.getInputQuantity(); 
+
+        System.out.println("Donation List (Category: " + selectedCategory + "):\n");
+        System.out.println("---------------------------------------------------------------------------------------------------------");
+
+        Iterator<String> iterator = dmMap.iterator();
+        while (iterator.hasNext()) {
+            String dnrId = iterator.next();
+            Donation donation = dmMap.get(dnrId);
+            if (donation != null) {
+                ListInterface<DonationItem> donationItems = donation.getItems();
+
+                if (!donationItems.isEmpty()) {
+                  
+                    Iterator<DonationItem> itemIterator = donationItems.iterator();
+                    boolean hasItemsInCategory = false;
+                    while (itemIterator.hasNext()) {
+                        DonationItem item = itemIterator.next();
+                        if (item.getItemType().equals(selectedCategory) && item.getAmount() > minQuantity) {
+                            if (!hasItemsInCategory) {
+                                System.out.printf("Donor ID: %-15s Donor Name: %-20s %n", donation.getdonorID(), donation.getDonationID());
+                                System.out.println("---------------------------------------------------------------------------------------------------------");
+                                hasItemsInCategory = true;
+                            }
+                            System.out.printf("%-15s %-20s %-25s %-10.2f %n", item.getItemID(), item.getItemType(), item.getDescription(), item.getAmount());
+                        }
+                    }
+
+                    if (hasItemsInCategory) {
+                        System.out.println("---------------------------------------------------------------------------------------------------------\n\n");
+                        System.out.println("---------------------------------------------------------------------------------------------------------");
+                    }
+                }
+            }
+        }
+    }
+    ConsoleUtils.systemPause();
+    ConsoleUtils.clearScreen();
     }
 
     private void generateDonationsSummary() {
-        // Implement summary generation logic here
-        // Implement summary generation logic here
+      
         if (dmMap.isEmpty()) {
             System.out.println("No donations available to summarize.");
             return;
@@ -493,7 +512,7 @@ public class DonationManagement {
         double foodTotalAmount = 0.0;
         double dailyNecessitiesTotalAmount = 0.0;
 
-        // Iterate through all donations in the map
+     
         Iterator<String> mapIterator = dmMap.iterator();
         while (mapIterator.hasNext()) {
             String donationID = mapIterator.next();
@@ -521,7 +540,7 @@ public class DonationManagement {
             }
         }
 
-        // Print summary
+       
         System.out.println("------------------------------------------------------------");
         System.out.println("Donation Summary");
         System.out.println("------------------------------------------------------------");
@@ -538,20 +557,20 @@ public class DonationManagement {
         ConsoleUtils.clearScreen();
     }
 
-    // Method to check if donor ID exists
+
     public boolean donationIdExists(String donationId) {
         return dmMap.get(donationId) != null;
     }
 
     public Donation getDonation(String donationID) {
-        // Retrieve the donation from the map using the provided donation ID
+        
         return dmMap.get(donationID);
     }
 
     public List<Donation> getAllDonations() {
         List<Donation> donations = new List<>();
 
-        // Iterate through all entries in the LinkedHashMap
+       
         Iterator<String> iterator = dmMap.iterator();
         while (iterator.hasNext()) {
             String donationID = iterator.next();
@@ -582,8 +601,8 @@ public class DonationManagement {
     }
 
     public static void main(String[] args) {
-        DonorManagement donorManagement = new DonorManagement(); // Create an instance of DonorManagement
-        DonationManagement donationManagement = new DonationManagement(donorManagement); // Pass it to DonationManagement
+        DonorManagement donorManagement = new DonorManagement();
+        DonationManagement donationManagement = new DonationManagement(donorManagement); 
         donationManagement.dmstart();
     }
 }

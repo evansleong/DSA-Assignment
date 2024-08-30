@@ -11,9 +11,9 @@ package entity;
 public class DonationItem {
 
     private String itemID;
-    private String itemType; // "Cash" or "Kind"
-    private double amount; // for cash
-    private String description; // for kind
+    private String itemType; 
+    private double amount; 
+    private String description; 
 
     public DonationItem(String itemID, String itemType, double amount, String description) {
         this.itemID = itemID;
