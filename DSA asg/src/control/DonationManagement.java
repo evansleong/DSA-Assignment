@@ -479,6 +479,63 @@ public class DonationManagement {
 
     private void generateDonationsSummary() {
         // Implement summary generation logic here
+         // Implement summary generation logic here
+        if (dmMap.isEmpty()) {
+        System.out.println("No donations available to summarize.");
+        return;
+    }
+
+    int totalDonations = 0;
+    int totalItems = 0;
+    double totalCashAmount = 0.0;
+    int foodItemsCount = 0;
+    int dailyNecessitiesCount = 0;
+    double foodTotalAmount = 0.0;
+    double dailyNecessitiesTotalAmount = 0.0;
+
+    // Iterate through all donations in the map
+    Iterator<String> mapIterator = dmMap.iterator();
+    while (mapIterator.hasNext()) {
+        String donationID = mapIterator.next();
+        Donation donation = dmMap.get(donationID);
+
+        if (donation != null) {
+            totalDonations++;
+
+            ListInterface<DonationItem> items = donation.getItems();
+            Iterator<DonationItem> itemIterator = items.iterator();
+            while (itemIterator.hasNext()) {
+                DonationItem item = itemIterator.next();
+                totalItems++;
+                
+                if (item.getItemType().equals("Cash")) {
+                    totalCashAmount += item.getAmount();
+                } else if (item.getItemType().equals("Food")) {
+                    foodItemsCount++;
+                    foodTotalAmount += item.getAmount();
+                } else if (item.getItemType().equals("Daily Necessities")) {
+                    dailyNecessitiesCount++;
+                    dailyNecessitiesTotalAmount += item.getAmount();
+                }
+            }
+        }
+    }
+
+    // Print summary
+    System.out.println("------------------------------------------------------------");
+    System.out.println("Donation Summary");
+    System.out.println("------------------------------------------------------------");
+    System.out.println("Total Number of Donations: " + totalDonations);
+    System.out.println("Total Number of Items Donated: " + totalItems);
+    System.out.println("Total Cash Amount Donated: $" + String.format("%.2f", totalCashAmount));
+    System.out.println("------------------------------------------------------------");
+    System.out.println("Breakdown by Category:");
+    System.out.println("Food: " + foodItemsCount + " items, Total Quantity: " + String.format("%.2f", foodTotalAmount));
+    System.out.println("Daily Necessities: " + dailyNecessitiesCount + " items, Total Quantity: " + String.format("%.2f", dailyNecessitiesTotalAmount));
+    System.out.println("------------------------------------------------------------");
+
+    ConsoleUtils.systemPause();
+    ConsoleUtils.clearScreen();
     }
 
     // Method to check if donor ID exists
