@@ -64,8 +64,9 @@ public class DonorManagementUI {
 
     // Collect information to update a donor
     public String updateDonorID() {
-        System.out.print("\nEnter Donor ID to update: ");
-        return scanner.nextLine();
+        String idHead = "DNR-";
+        System.out.print("\nEnter Donor ID number to update: ");
+        return idHead + scanner.nextLine();
     }
 
     public String updateDonorName() {
@@ -89,9 +90,10 @@ public class DonorManagementUI {
 
     // Collect information for searching a donor
     public String searchDonorID() {
-        System.out.print("\nEnter Donor ID to search: ");
+        String idHead = "DNR-";
+        System.out.print("\nEnter Donor ID number to search: ");
 //        scanner.nextLine(); // Consume the newline
-        return scanner.nextLine();
+        return idHead + scanner.nextLine();
     }
 
     // Collect information for filtering donors
