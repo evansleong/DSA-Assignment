@@ -27,14 +27,27 @@ public class Donation {
         items.add(item);
     }
 
-    public String displayItems() {
+    public String displayItems(Donation donation) {
+        if(donation != null){
+        Iterator<DonationItem> iterator = items.iterator();  
+        System.out.printf("%-15s %-25s %-20s %-10s %n", "ITEM ID", "ITEM TYPE", "DONATION ITEMS","AMOUNT");
+        System.out.println("-------------------------------------------------------------------------");
         StringBuilder itemList = new StringBuilder();
-        Iterator<DonationItem> iterator = items.iterator();
+        
         while (iterator.hasNext()) {
-            DonationItem item = iterator.next();
-            itemList.append(item.toString()).append("\n");
+             DonationItem item = iterator.next();  // Correctly declare 'item'
+             itemList.append(String.format("%-15s %-25s %-20s %-10s %n",
+                                  item.getItemID(),
+                                  item.getItemType(),
+                                  item.getDescription(),
+                                  item.getAmount()));
+
         }
-        return itemList.toString();
+         return itemList.toString();
+
+        }else{
+            return "no item to be displayed";
+        }
     }
 
     // Other getters and setters as needed

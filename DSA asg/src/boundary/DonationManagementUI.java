@@ -59,10 +59,6 @@ public class DonationManagementUI {
         return scan.nextLine();
     }
 
-    public String mgnDonationDate() {
-        System.out.print("Enter Donation Date > ");
-        return scan.nextLine();
-    }
 
     public String mgnItemName(String category) {
         System.out.printf("Enter the name of the %s > ", category);
@@ -104,18 +100,20 @@ public class DonationManagementUI {
     }
     
     public int amendMenu() {
-        System.out.println("\n\t\tDONATION MANAGEMENT SUBSYSTEM\n");
+        System.out.println("\n\tDONATION MANAGEMENT SUBSYSTEM\n");
         System.out.println("-------------AMEND MENU--------------");
         System.out.println("\tChoose an operaton(1-3):");
         System.out.println("\t1. Add a new item");
         System.out.println("\t2. Update an existing item");
         System.out.println("\t3. Remove an existing item");
+        System.out.println("\t4. Exit Amend Menu");
         System.out.printf("\nEnter choice > ");
         int mgnAmendChoice = scan.nextInt();
         scan.nextLine(); // Consume the newline
         System.out.println();
         return mgnAmendChoice;
     }
+
 
     public String inputItemID() {
         System.out.print("Enter item ID > ");
@@ -129,4 +127,25 @@ public class DonationManagementUI {
         System.out.println("\t");
         return scan.nextInt();
     }
+    
+    public int mgnfilterMenu(){
+        System.out.println("\t-----Select the Filter-----");
+        System.out.println("\t 1.Filter by Donation ID");
+        System.out.println("\t 2.Filter by Item Amount");
+        System.out.println("\t 3.Filter by Description");
+        return scan.nextInt();
+        
+    }
+
+public int mgnFilter(){
+        System.out.println("\t-----Select filter criteria-----");
+        System.out.println("\t1.");
+        System.out.println("\t2.");
+        System.out.println("\t");
+        return scan.nextInt();
+        
+    }
+    
+    
+    
 }
