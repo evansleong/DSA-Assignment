@@ -5,6 +5,7 @@
 package entity;
 
 import adt.*;
+import java.util.Objects;
 
 /**
  *
@@ -47,7 +48,7 @@ public class Donee {
     public void setDonations(LinkedHashMap<String, Donation> donations) {
         this.donations = donations;
     }
-    
+
     public void setAge(Integer age) {
         this.age = age;
     }
@@ -71,15 +72,36 @@ public class Donee {
     public LinkedHashMap<String, Donation> getDonations() {
         return donations;
     }
-    
+
     public Integer getAge() {
         return age;
     }
-    
+
     public void addDonation(String donationId, Donation donation) {
         donations.put(donationId, donation); // Use put method of LinkedHashMap
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode(this.doneeId);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Donee other = (Donee) obj;
+        return Objects.equals(this.doneeId, other.doneeId);
+    }
 
     @Override
     public String toString() {

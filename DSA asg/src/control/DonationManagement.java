@@ -40,7 +40,7 @@ public class DonationManagement {
         donationItems1.add(item2);
 
         // Create DonationItems for donation2
-        DonationItem item3 = new DonationItem("ITEM-003", "Books", 7, "Children's Books");
+        DonationItem item3 = new DonationItem("ITEM-003", "Daily Necessities", 7, "Children's Books");
         DonationItem item4 = new DonationItem("ITEM-004", "Food", 20, "Rice Bags");
         donationItems2.add(item3);
         donationItems2.add(item4);
@@ -110,7 +110,7 @@ public class DonationManagement {
     }
 
     private String generateDonationID() {
-        return "DON" + String.format("%04d", donationCounter++); // e.g., DON0001, DON0002
+        return "DON-" + String.format("%04d", donationCounter++); // e.g., DON0001, DON0002
     }
 
     private String generateItemID() {
@@ -151,7 +151,7 @@ public class DonationManagement {
                         amount = dmUI.mgnQuantity("Food");
                         break;
                     case 2: // Daily Necessities
-                        itemType = "Kind";
+                        itemType = "Daily Necessities";
                         description = dmUI.mgnItemName("Daily Necessities");
                         amount = dmUI.mgnQuantity("Daily Necessities");
                         break;
