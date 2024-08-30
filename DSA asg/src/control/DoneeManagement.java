@@ -585,7 +585,7 @@ public class DoneeManagement {
     public static void main(String[] args) {
         DonorManagement donorManagement = new DonorManagement();
         DonationManagement donationManagement = new DonationManagement(donorManagement);
-        DoneeManagement app = new DoneeManagement(donationManagement);
-        app.start();
+        DoneeManagement doneeManagement = new DoneeManagement(donationManagement);
+        doneeManagement.start();
     }
 }

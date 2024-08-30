@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package control;
 
 import adt.*;
@@ -11,6 +12,7 @@ import dao.DonorDataSeeder;
 import entity.*;
 import java.util.Comparator;
 import java.util.Iterator;
+import utility.ConsoleUtils;
 
 /**
  *
@@ -87,10 +89,14 @@ public class DonorManagement {
                     filterDonors();
                     break;
                 case 7:
+                    clearDonor();
+                    break;
+                case 8:
                     generateSummaryReports();
                     break;
                 case 0:
                     running = false;
+                    ConsoleUtils.clearScreen();
                     break;
                 default:
                     ui.displayError("Invalid choice. Please try again.");
@@ -103,13 +109,19 @@ public class DonorManagement {
 //        String id = ui.inputDonorID();
         System.out.println("");
         String name = ui.inputDonorName();
-        String type = ui.inputDonorType();
+        String type = null;
+        while (type == null) {
+            type = typeAssign(ui.inputDonorType());
+        }
         String contact = ui.inputDonorContact();
 
         Donor donor = new Donor(name, type, contact);
         displayDonorDetail(donor);
         donorMap.put(donor.getDonorId(), donor);
         ui.displayMessage("Donor added successfully.");
+
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
     }
 
     private void removeDonor() {
@@ -128,6 +140,9 @@ public class DonorManagement {
         } else {
             ui.displayError("Donor not found.");
         }
+
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
     }
 
     private void updateDonor() {
@@ -135,7 +150,10 @@ public class DonorManagement {
         Donor donor = donorMap.get(id);
         if (donor != null) {
             String name = ui.updateDonorName();
-            String type = ui.updateDonorType();
+            String type = null;
+            while (type == null) {
+                type = typeAssign(ui.inputDonorType());
+            }
             String contact = ui.updateDonorContact();
 
             donor.setDonorName(name);
@@ -147,13 +165,16 @@ public class DonorManagement {
         } else {
             ui.displayError("Donor not found.");
         }
+
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
     }
 
     private void searchDonor() {
         String id = ui.searchDonorID();
         Donor donor = donorMap.get(id);
         if (donor != null) {
-            System.out.printf("%-15s %-20s \t%s\n", "ID", "Donor Name", "Donations");
+            System.out.printf("\n%-15s %-20s \t%s\n", "ID", "Donor Name", "Donations");
             System.out.println("------------------------------------------------------------");
             ListInterface<Donation> donation = donor.getDonation();
             String toString = "";
@@ -171,6 +192,43 @@ public class DonorManagement {
         } else {
             ui.displayError("Donor not found.");
         }
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
+    }
+
+    private void clearDonor() {
+        if (donorMap.isEmpty()) {
+            System.out.println("No existing donors");
+        } else {
+            System.out.println("Donor List: \n");
+            System.out.printf("\n%-15s %-20s %-15s %12s\n", "ID", "Donor Name", "Type", "Contact No.");
+            System.out.println("-------------------------------------------------------------------------------------------");
+
+            Iterator<String> iterator = donorMap.iterator();
+            while (iterator.hasNext()) {
+                String dId = iterator.next();
+                Donor donor = donorMap.get(dId);
+                if (donor != null) {
+
+                    System.out.printf("%-15s %-20s %-15s %-12s\n",
+                            donor.getDonorId(),
+                            donor.getDonorName(),
+                            donor.getDonorType(),
+                            donor.getDonorContact()
+                    );
+                }
+            }
+        }
+
+        String confirm = ui.confirmation();
+        if (confirm.equalsIgnoreCase("y")) {
+            donorMap.clear();
+            System.out.println("All donor details cleared.");
+        } else {
+            System.out.println("Donor details not cleared, thank you.");
+        }
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
     }
 
     private void listDonorsWithDonations() {
@@ -178,7 +236,7 @@ public class DonorManagement {
             System.out.println("No existing donors");
         } else {
             System.out.println("Donor List: \n");
-            System.out.printf("%-15s %-20s \t%s\n", "ID", "Donor Name", "Donations");
+            System.out.printf("\n%-15s %-20s \t%s\n", "ID", "Donor Name", "Donations");
             System.out.println("------------------------------------------------------------");
 
             Iterator<String> iterator = donorMap.iterator();
@@ -203,6 +261,8 @@ public class DonorManagement {
                 }
             }
         }
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
     }
 
     private void sortDonorByName() {
@@ -221,7 +281,7 @@ public class DonorManagement {
         LinkedHashMap<String, Donor> map = new LinkedHashMap<>();
         map.mergeSort(donorArray, donorComparator);
 
-        System.out.printf("%-15s %-20s %-15s %12s\n", "ID", "Donor Name", "Type", "Contact No.");
+        System.out.printf("\n%-15s %-20s %-15s %12s\n", "ID", "Donor Name", "Type", "Contact No.");
         System.out.println("-------------------------------------------------------------------------------------------");
         for (Donor donor : donorArray) {
             System.out.printf("%-15s %-20s %-15s %-12s\n",
@@ -231,6 +291,9 @@ public class DonorManagement {
                     donor.getDonorContact()
             );
         }
+
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
 
     }
 
@@ -260,34 +323,42 @@ public class DonorManagement {
                     donor.getDonation().size()
             );
         }
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
+    }
+
+    private void sortDonorByType() {
+        String type = null;
+        while (type == null) {
+            type = typeAssign(ui.inputDonorType());
+        }
+        System.out.println("Donor type: " + type);
+        Iterator<String> iterator = donorMap.iterator();
+        while (iterator.hasNext()) {
+            String dId = iterator.next();
+            Donor donor = donorMap.get(dId);
+            String dType = donor.getDonorType();
+            if (donor != null) {
+                if (dType.equals(type)) {
+                    System.out.printf("%-15s %-20s \t%s\n",
+                            donor.getDonorId(),
+                            donor.getDonorName(),
+                            donor.getDonorType()
+                    );
+                }
+            } else {
+                System.out.println("No Donors exist");
+            }
+        }
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
     }
 
     private void filterDonors() {
         int filterType = ui.inputFilterCriteria();
         switch (filterType) {
             case 1:
-                String type = ui.inputDonorType();
-//                switch{
-//                    
-//                }
-                System.out.println("Donor type: " + type);
-                Iterator<String> iterator = donorMap.iterator();
-                while (iterator.hasNext()) {
-                    String dId = iterator.next();
-                    Donor donor = donorMap.get(dId);
-                    String dType = donor.getDonorType();
-                    if (donor != null) {
-                        if (dType.equals(type)) {
-                            System.out.printf("%-15s %-20s \t%s\n",
-                                    donor.getDonorId(),
-                                    donor.getDonorName(),
-                                    donor.getDonorType()
-                            );
-                        }
-                    } else {
-                        System.out.println("No Donors exist");
-                    }
-                }
+                sortDonorByType();
                 break;
             case 2:
                 sortDonorByName();
@@ -316,7 +387,7 @@ public class DonorManagement {
         int privateDonor = 0;
         int publicDonor = 0;
 
-        System.out.println("Total number of donors: " + donorSum);
+        System.out.println("\nTotal number of donors: " + donorSum);
 
         Iterator<String> iterator = donorMap.iterator();
         while (iterator.hasNext()) {
@@ -339,6 +410,9 @@ public class DonorManagement {
         System.out.println("Number of Government Donors: " + governmentDonor);
         System.out.println("Number of Private Donors: " + privateDonor);
         System.out.println("Number of Public Donors: " + publicDonor);
+
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
     }
 
     private void displayDonorDetail(Donor donor) {
@@ -352,18 +426,32 @@ public class DonorManagement {
     public boolean donorIdExists(String donorId) {
         return donorMap.get(donorId) != null;
     }
-    
+
     // Method to get donor name by donor ID
     public String getDonorName(String donorId) {
         Donor donor = donorMap.get(donorId);
         if (donor != null) {
-            return donor.getDonorName(); 
+            return donor.getDonorName();
         }
         return null; // Return null if donor ID is not found
     }
     
     private void initializeDonorMap(){
         this.donorMap = dataSeeder.getDonorMap();
+    }
+
+    private String typeAssign(String type) {
+        switch (type.toLowerCase()) {
+            case "a":
+                return "government";
+            case "b":
+                return "private";
+            case "c":
+                return "public";
+            default:
+                System.out.println("not an option");
+                return null;
+        }
     }
 
     public static void main(String[] args) {

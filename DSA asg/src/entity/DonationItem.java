@@ -58,4 +58,6 @@ public class DonationItem {
     public String toString() {
         return "ItemID: " + itemID + ", Type: " + itemType + ", Amount: " + amount + ", Description: " + description;
     }
+    
+    
 }
