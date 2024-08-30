@@ -39,30 +39,46 @@ public class DoneeManagement {
             switch (choice) {
                 case 1:
                     addDonee();
+                    ConsoleUtils.systemPause();
+                    ConsoleUtils.clearScreen();
                     break;
                 case 2:
                     manageDonees();
                     break;
                 case 3:
                     updateDonee();
+                    ConsoleUtils.systemPause();
+                    ConsoleUtils.clearScreen();
                     break;
                 case 4:
                     searchDonee();
+                    ConsoleUtils.systemPause();
+                    ConsoleUtils.clearScreen();
                     break;
                 case 5:
                     listDonees();
+                    ConsoleUtils.systemPause();
+                    ConsoleUtils.clearScreen();
                     break;
                 case 6:
                     filterDonees();
+                    ConsoleUtils.systemPause();
+                    ConsoleUtils.clearScreen();
                     break;
                 case 7:
                     sortDoneesByName();
+                    ConsoleUtils.systemPause();
+                    ConsoleUtils.clearScreen();
                     break;
                 case 8:
                     generateReports();
+                    ConsoleUtils.systemPause();
+                    ConsoleUtils.clearScreen();
                     break;
                 case 9:
                     addDonationToDonee();
+                    ConsoleUtils.systemPause();
+                    ConsoleUtils.clearScreen();
                     break;
                 case 0:
                     running = false;
@@ -96,8 +112,6 @@ public class DoneeManagement {
             System.out.println("Action cancelled.");
         }
 
-        ConsoleUtils.systemPause();
-        ConsoleUtils.clearScreen();
     }
 
     private void manageDonees() {
@@ -128,7 +142,6 @@ public class DoneeManagement {
         } else {
             System.out.println("Donee not found.");
         }
-
         ConsoleUtils.systemPause();
         ConsoleUtils.clearScreen();
     }
@@ -146,7 +159,6 @@ public class DoneeManagement {
         } else {
             System.out.println("Action cancelled.");
         }
-
         ConsoleUtils.systemPause();
         ConsoleUtils.clearScreen();
     }
@@ -238,8 +250,6 @@ public class DoneeManagement {
             System.out.println("Donee not found.");
         }
 
-        ConsoleUtils.systemPause();
-        ConsoleUtils.clearScreen();
     }
 
     private void searchDonee() {
@@ -254,8 +264,6 @@ public class DoneeManagement {
             System.out.println("Donee not found.");
         }
 
-        ConsoleUtils.systemPause();
-        ConsoleUtils.clearScreen();
     }
 
     public void listDonees() {
@@ -304,9 +312,6 @@ public class DoneeManagement {
                 ui.displayDoneeWithDonations(donee, foodCount, dailyNecessitiesCount, cashCount);
             }
         }
-
-        ConsoleUtils.systemPause();
-        ConsoleUtils.clearScreen();
     }
 
     private void sortDoneesByName() {
@@ -345,8 +350,6 @@ public class DoneeManagement {
 
         ui.displaySortedDoneeList(doneeArray);
 
-        ConsoleUtils.systemPause();
-        ConsoleUtils.clearScreen();
     }
 
     private void filterDonees() {
@@ -420,8 +423,6 @@ public class DoneeManagement {
                 System.out.println("Invalid filter type. Please try again.");
         }
 
-        ConsoleUtils.systemPause();
-        ConsoleUtils.clearScreen();
     }
 
     private void generateReports() {
@@ -499,8 +500,6 @@ public class DoneeManagement {
                 totalDonees
         );
 
-        ConsoleUtils.systemPause();
-        ConsoleUtils.clearScreen();
     }
 
     private boolean checkDoneeIsEmpty() {
@@ -537,6 +536,9 @@ public class DoneeManagement {
     }
 
     private void addDonationToDonee() {
+
+        listDonees();
+
         String doneeId = ui.inputDoneeID();
         String fullDoneeId = "DNE-" + doneeId;
 
@@ -607,8 +609,6 @@ public class DoneeManagement {
             } else {
                 System.out.println("Donation ID not found. Please check the ID and try again.");
             }
-            ConsoleUtils.systemPause();
-            ConsoleUtils.clearScreen();
         } else {
             System.out.println("Donee ID not found in the system. Please check the ID and try again.");
         }

@@ -21,63 +21,17 @@ public class DoneeDataSeeder {
     }
 
     public void seedData() {
-        List<DonationItem> donationItems = new List<>();
-        // Create donees
-        Donee johnDoe = new Donee("DNE-001", "John Doe", "016-7618273", "Individual", 30); // Example age
-        Donee janeSmith = new Donee("DNE-002", "Jane Smith", "012-3456789", "Individual", 25); // Example age
-        Donee charityOrgA = new Donee("DNE-003", "Charity Org A", "019-2029122", "Organization", null);
-        Donee familyB = new Donee("DNE-004", "Family B", "03-29201991", "Family", null);
-        Donee johnsBakery = new Donee("DNE-005", "John's Bakery", "03-92003948", "Organization", null);
-        Donee doeFamily = new Donee("DNE-006", "Doe Family", "018-2920912", "Family", null);
-        Donee helpingHands = new Donee("DNE-007", "Helping Hands", "03-93139834", "Organization", null);
-        Donee mariaGreen = new Donee("DNE-008", "Maria Green", "019-93012921", "Individual", 40); // Example age
-        Donee smithFamily = new Donee("DNE-009", "Smith Family", "012-91210021", "Family", null);
-        Donee communityAid = new Donee("DNE-010", "Community Aid", "03-00990121", "Organization", null);
 
-        // Add donees to the map
-        doneeMap.put(johnDoe.getDoneeId(), johnDoe);
-        doneeMap.put(janeSmith.getDoneeId(), janeSmith);
-        doneeMap.put(charityOrgA.getDoneeId(), charityOrgA);
-        doneeMap.put(familyB.getDoneeId(), familyB);
-        doneeMap.put(johnsBakery.getDoneeId(), johnsBakery);
-        doneeMap.put(doeFamily.getDoneeId(), doeFamily);
-        doneeMap.put(helpingHands.getDoneeId(), helpingHands);
-        doneeMap.put(mariaGreen.getDoneeId(), mariaGreen);
-        doneeMap.put(smithFamily.getDoneeId(), smithFamily);
-        doneeMap.put(communityAid.getDoneeId(), communityAid);
-
-        // Create some DonationItem objects
-        DonationItem item1 = new DonationItem("ITEM-001", "Food", 10, "kfc");
-        DonationItem item2 = new DonationItem("ITEM-002", "Daily Necessities", 5, "h&m shirt");
-        DonationItem item3 = new DonationItem("ITEM-003", "Daily Necessities", 7, "harry porter");
-        DonationItem item4 = new DonationItem("ITEM-004", "Cash", 554.55, "Cash");
-
-        // Add items to the list
-        donationItems.add(item1);
-        donationItems.add(item2);
-        donationItems.add(item3);
-        donationItems.add(item4);
-
-        // Create donations
-        Donation donation1 = new Donation("DON-001", "DNR-001", donationItems);
-        Donation donation2 = new Donation("DON-002", "DNR-002", donationItems);
-        Donation donation3 = new Donation("DON-003", "DNR-003", donationItems);
-        Donation donation4 = new Donation("DON-004", "DNR-004", donationItems);
-
-        // Assuming you have Donor objects like johnDoe, janeSmith, etc.
-        johnDoe.addDonation(donation1.getDonationID(), donation1);
-        johnDoe.addDonation(donation1.getDonationID(), donation4);
-        janeSmith.addDonation(donation3.getDonationID(), donation3);
-        janeSmith.addDonation(donation4.getDonationID(), donation4);
-        charityOrgA.addDonation(donation3.getDonationID(), donation3);
-        charityOrgA.addDonation(donation3.getDonationID(), donation2);
-        familyB.addDonation(donation4.getDonationID(), donation4);
-        johnsBakery.addDonation(donation1.getDonationID(), donation1);
-        doeFamily.addDonation(donation2.getDonationID(), donation2);
-        helpingHands.addDonation(donation3.getDonationID(), donation3);
-        mariaGreen.addDonation(donation4.getDonationID(), donation4);
-        smithFamily.addDonation(donation1.getDonationID(), donation1);
-        communityAid.addDonation(donation3.getDonationID(), donation3);
+        doneeMap.put("DNE-001", new Donee("DNE-001", "John Doe", "016-7618273", "Individual", 30));
+        doneeMap.put("DNE-002", new Donee("DNE-002", "Jane Smith", "012-3456789", "Individual", 25));
+        doneeMap.put("DNE-003", new Donee("DNE-003", "Charity Org A", "019-2029122", "Organization", null));
+        doneeMap.put("DNE-004", new Donee("DNE-004", "Family B", "03-29201991", "Family", null));
+        doneeMap.put("DNE-005", new Donee("DNE-005", "John's Bakery", "03-92003948", "Organization", null));
+        doneeMap.put("DNE-006", new Donee("DNE-006", "Doe Family", "018-2920912", "Family", null));
+        doneeMap.put("DNE-007", new Donee("DNE-007", "Helping Hands", "03-93139834", "Organization", null));
+        doneeMap.put("DNE-008", new Donee("DNE-008", "Maria Green", "019-93012921", "Individual", 40));
+        doneeMap.put("DNE-009", new Donee("DNE-009", "Smith Family", "012-91210021", "Family", null));
+        doneeMap.put("DNE-010", new Donee("DNE-010", "Community Aid", "03-00990121", "Organization", null));
     }
 
     public LinkedHashMap<String, Donee> getDoneeMap() {
