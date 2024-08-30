@@ -183,7 +183,7 @@ public class DonationManagement {
         } else {
             System.out.println("Donor ID not found in the system. Please check the ID and try again.");
         }
-        
+
         ConsoleUtils.systemPause();
         ConsoleUtils.clearScreen();
     }
@@ -207,7 +207,7 @@ public class DonationManagement {
             System.out.printf("%-15s %-15s \n", "Donation ID", "Donor ID");
             System.out.printf("%-15s %-15s \n", donation.getDonationID(), donation.getdonorID());
             System.out.println("--------------------------------------------------------------------");
-            System.out.printf("%-10s %-20s %-10s %-20s\n","Item ID","TYPE","AMOUNT","DESC");
+            System.out.printf("%-10s %-20s %-10s %-20s\n", "Item ID", "TYPE", "AMOUNT", "DESC");
             System.out.println("--------------------------------------------------------------------");
             ListInterface<DonationItem> donationItem = donation.getItems();
             if (!donationItem.isEmpty()) {
@@ -241,7 +241,7 @@ public class DonationManagement {
             while (amending) {
                 // Display current donation items
                 System.out.println("Current items in this donation:");
-                 // Assuming listItems() is a method in Donation to list all items
+                // Assuming listItems() is a method in Donation to list all items
                 System.out.println(donation.displayItems(donation));
                 // Ask user what they want to do: Add, Update, or Remove items
                 int amendChoice = dmUI.amendMenu(); // Assume this method provides a menu for amend options
@@ -309,7 +309,7 @@ public class DonationManagement {
 
                     case 3: // Remove an existing item
                         String removeItemID = dmUI.inputItemID();
-                        if (donation .removeItemById(removeItemID)) { // Assume removeItemById() removes an item by its ID
+                        if (donation.removeItemById(removeItemID)) { // Assume removeItemById() removes an item by its ID
                             System.out.println("Item removed successfully.");
                         } else {
                             System.out.println("Item ID not found. Please check the ID and try again.");
@@ -381,10 +381,10 @@ public class DonationManagement {
                                     System.out.println("---------------------------------------------------------------------------------------------------------");
                                     hasItemsInCategory = true;
                                 }
-                                System.out.printf("%-15s %-20s %-25s %-10.2f %n", item.getItemID(),item.getItemType(),item.getDescription(),item.getAmount());
+                                System.out.printf("%-15s %-20s %-25s %-10.2f %n", item.getItemID(), item.getItemType(), item.getDescription(), item.getAmount());
                             }
                         }
-                        
+
                         if (hasItemsInCategory) {
                             System.out.println("---------------------------------------------------------------------------------------------------------\n\n");
                             System.out.println("---------------------------------------------------------------------------------------------------------");
@@ -403,7 +403,7 @@ public class DonationManagement {
             System.out.println("No existing donors");
         } else {
             System.out.println("Donor List: \n");
-            System.out.printf("%-15s %-15s %-15s %-20s %-25s %10s %n", "Donor ID", "Donation ID", "ItemID","Item TYPE", "Description", "AMOUNT");
+            System.out.printf("%-15s %-15s %-15s %-20s %-25s %10s %n", "Donor ID", "Donation ID", "ItemID", "Item TYPE", "Description", "AMOUNT");
             System.out.println("---------------------------------------------------------------------------------------------------------");
 
             Iterator<String> iterator = dmMap.iterator();
@@ -419,7 +419,7 @@ public class DonationManagement {
                             System.out.printf("%-15s %-15s %-15s %-20s %-25s %10.2f %n",
                                     donation.getdonorID(),
                                     donation.getDonationID(),
-                                    item.getItemID(),item.getItemType(),item.getDescription(),item.getAmount()
+                                    item.getItemID(), item.getItemType(), item.getDescription(), item.getAmount()
                             );
                         }
                     }
@@ -435,14 +435,14 @@ public class DonationManagement {
             System.out.println("No donations available.");
             return;
         }
-        
+
         // Print the header
-        System.out.printf("%-15s %-25s %-20s %-10s %n", "DONATION ID", "DONOR NAME", "DONATION ITEMS","AMOUNT");
+        System.out.printf("%-15s %-25s %-20s %-10s %n", "DONATION ID", "DONOR NAME", "DONATION ITEMS", "AMOUNT");
         System.out.println("-------------------------------------------------------------------------");
-        
+
         // Create an iterator for the LinkedHashMap
         Iterator<String> mapIterator = dmMap.iterator();
-        
+
         // Iterate through all entries in the LinkedHashMap
         while (mapIterator.hasNext()) {
             String donationID = mapIterator.next();
@@ -457,7 +457,7 @@ public class DonationManagement {
                 Iterator<DonationItem> itemIterator = donation.getItems().iterator();
                 while (itemIterator.hasNext()) {
                     DonationItem item = itemIterator.next();
-                    itemsBuilder.append(String.format("  %-20s x %.2f %n %-39s", item.getItemType(), item.getAmount(),""));
+                    itemsBuilder.append(String.format("  %-20s x %.2f %n %-39s", item.getItemType(), item.getAmount(), ""));
                 }
 
                 // Print donation details
@@ -479,63 +479,63 @@ public class DonationManagement {
 
     private void generateDonationsSummary() {
         // Implement summary generation logic here
-         // Implement summary generation logic here
+        // Implement summary generation logic here
         if (dmMap.isEmpty()) {
-        System.out.println("No donations available to summarize.");
-        return;
-    }
+            System.out.println("No donations available to summarize.");
+            return;
+        }
 
-    int totalDonations = 0;
-    int totalItems = 0;
-    double totalCashAmount = 0.0;
-    int foodItemsCount = 0;
-    int dailyNecessitiesCount = 0;
-    double foodTotalAmount = 0.0;
-    double dailyNecessitiesTotalAmount = 0.0;
+        int totalDonations = 0;
+        int totalItems = 0;
+        double totalCashAmount = 0.0;
+        int foodItemsCount = 0;
+        int dailyNecessitiesCount = 0;
+        double foodTotalAmount = 0.0;
+        double dailyNecessitiesTotalAmount = 0.0;
 
-    // Iterate through all donations in the map
-    Iterator<String> mapIterator = dmMap.iterator();
-    while (mapIterator.hasNext()) {
-        String donationID = mapIterator.next();
-        Donation donation = dmMap.get(donationID);
+        // Iterate through all donations in the map
+        Iterator<String> mapIterator = dmMap.iterator();
+        while (mapIterator.hasNext()) {
+            String donationID = mapIterator.next();
+            Donation donation = dmMap.get(donationID);
 
-        if (donation != null) {
-            totalDonations++;
+            if (donation != null) {
+                totalDonations++;
 
-            ListInterface<DonationItem> items = donation.getItems();
-            Iterator<DonationItem> itemIterator = items.iterator();
-            while (itemIterator.hasNext()) {
-                DonationItem item = itemIterator.next();
-                totalItems++;
-                
-                if (item.getItemType().equals("Cash")) {
-                    totalCashAmount += item.getAmount();
-                } else if (item.getItemType().equals("Food")) {
-                    foodItemsCount++;
-                    foodTotalAmount += item.getAmount();
-                } else if (item.getItemType().equals("Daily Necessities")) {
-                    dailyNecessitiesCount++;
-                    dailyNecessitiesTotalAmount += item.getAmount();
+                ListInterface<DonationItem> items = donation.getItems();
+                Iterator<DonationItem> itemIterator = items.iterator();
+                while (itemIterator.hasNext()) {
+                    DonationItem item = itemIterator.next();
+                    totalItems++;
+
+                    if (item.getItemType().equals("Cash")) {
+                        totalCashAmount += item.getAmount();
+                    } else if (item.getItemType().equals("Food")) {
+                        foodItemsCount++;
+                        foodTotalAmount += item.getAmount();
+                    } else if (item.getItemType().equals("Daily Necessities")) {
+                        dailyNecessitiesCount++;
+                        dailyNecessitiesTotalAmount += item.getAmount();
+                    }
                 }
             }
         }
-    }
 
-    // Print summary
-    System.out.println("------------------------------------------------------------");
-    System.out.println("Donation Summary");
-    System.out.println("------------------------------------------------------------");
-    System.out.println("Total Number of Donations: " + totalDonations);
-    System.out.println("Total Number of Items Donated: " + totalItems);
-    System.out.println("Total Cash Amount Donated: $" + String.format("%.2f", totalCashAmount));
-    System.out.println("------------------------------------------------------------");
-    System.out.println("Breakdown by Category:");
-    System.out.println("Food: " + foodItemsCount + " items, Total Quantity: " + String.format("%.2f", foodTotalAmount));
-    System.out.println("Daily Necessities: " + dailyNecessitiesCount + " items, Total Quantity: " + String.format("%.2f", dailyNecessitiesTotalAmount));
-    System.out.println("------------------------------------------------------------");
+        // Print summary
+        System.out.println("------------------------------------------------------------");
+        System.out.println("Donation Summary");
+        System.out.println("------------------------------------------------------------");
+        System.out.println("Total Number of Donations: " + totalDonations);
+        System.out.println("Total Number of Items Donated: " + totalItems);
+        System.out.println("Total Cash Amount Donated: $" + String.format("%.2f", totalCashAmount));
+        System.out.println("------------------------------------------------------------");
+        System.out.println("Breakdown by Category:");
+        System.out.println("Food: " + foodItemsCount + " items, Total Quantity: " + String.format("%.2f", foodTotalAmount));
+        System.out.println("Daily Necessities: " + dailyNecessitiesCount + " items, Total Quantity: " + String.format("%.2f", dailyNecessitiesTotalAmount));
+        System.out.println("------------------------------------------------------------");
 
-    ConsoleUtils.systemPause();
-    ConsoleUtils.clearScreen();
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
     }
 
     // Method to check if donor ID exists
@@ -564,17 +564,23 @@ public class DonationManagement {
         return donations;
     }
 
-    public int getNumOfDonation(){
-       int  donateNum = 0;
-       List<Donation> donation = new List<>();
-       Iterator<String> iterator = dmMap.iterator();
-       while(iterator.hasNext()){
-           donateNum++;
-       }
-        
-       return donateNum;
+    public int getNumOfDonation() {
+        int donateNum = 0;
+        List<Donation> donation = new List<>();
+        Iterator<String> iterator = dmMap.iterator();
+        while (iterator.hasNext()) {
+            donateNum++;
+        }
+
+        return donateNum;
     }
-    
+
+    public void removeSelectedDonation(String selectedDonationId) {
+        if (dmMap.get(selectedDonationId) != null) {
+            dmMap.remove(selectedDonationId);
+        }
+    }
+
     public static void main(String[] args) {
         DonorManagement donorManagement = new DonorManagement(); // Create an instance of DonorManagement
         DonationManagement donationManagement = new DonationManagement(donorManagement); // Pass it to DonationManagement

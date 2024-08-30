@@ -65,21 +65,21 @@ public class DoneeDataSeeder {
         Donation donation4 = new Donation("DON-004", "DNR-004", donationItems);
 
         // Assuming you have Donor objects like johnDoe, janeSmith, etc.
-        johnDoe.addDonation(donation1.getDonationID(), donation1);  
-        johnDoe.addDonation(donation1.getDonationID(), donation4); 
-        janeSmith.addDonation(donation3.getDonationID(), donation3);  
-        janeSmith.addDonation(donation4.getDonationID(), donation4);  
-        charityOrgA.addDonation(donation3.getDonationID(), donation3);  
-        charityOrgA.addDonation(donation3.getDonationID(), donation2);  
-        familyB.addDonation(donation4.getDonationID(), donation4);  
-        johnsBakery.addDonation(donation1.getDonationID(), donation1);  
-        doeFamily.addDonation(donation2.getDonationID(), donation2);  
-        helpingHands.addDonation(donation3.getDonationID(), donation3);  
-        mariaGreen.addDonation(donation4.getDonationID(), donation4);  
-        smithFamily.addDonation(donation1.getDonationID(), donation1);  
+        johnDoe.addDonation(donation1.getDonationID(), donation1);
+        johnDoe.addDonation(donation1.getDonationID(), donation4);
+        janeSmith.addDonation(donation3.getDonationID(), donation3);
+        janeSmith.addDonation(donation4.getDonationID(), donation4);
+        charityOrgA.addDonation(donation3.getDonationID(), donation3);
+        charityOrgA.addDonation(donation3.getDonationID(), donation2);
+        familyB.addDonation(donation4.getDonationID(), donation4);
+        johnsBakery.addDonation(donation1.getDonationID(), donation1);
+        doeFamily.addDonation(donation2.getDonationID(), donation2);
+        helpingHands.addDonation(donation3.getDonationID(), donation3);
+        mariaGreen.addDonation(donation4.getDonationID(), donation4);
+        smithFamily.addDonation(donation1.getDonationID(), donation1);
         communityAid.addDonation(donation3.getDonationID(), donation3);
     }
-    
+
     public LinkedHashMap<String, Donee> getDoneeMap() {
         return doneeMap;
     }

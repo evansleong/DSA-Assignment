@@ -551,11 +551,9 @@ public class DoneeManagement {
                 return;
             }
 
-            // Print table header with adjusted column widths
             System.out.printf("\n%-15s %-35s %-35s %-25s\n", "Donation ID", "Food Items(pcs/set)", "Daily Necessities(pcs/set)", "Cash Amount(RM)");
             System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
 
-            // Iterate over available donations
             Iterator<Donation> donationIterator = availableDonations.iterator();
             while (donationIterator.hasNext()) {
                 Donation donation = donationIterator.next();
@@ -565,7 +563,6 @@ public class DoneeManagement {
                 StringBuilder dailyNecessitiesItems = new StringBuilder();
                 double totalCashAmount = 0.0;
 
-                // Iterate over donation items
                 Iterator<DonationItem> itemIterator = donation.getItems().iterator();
                 while (itemIterator.hasNext()) {
                     DonationItem item = itemIterator.next();
@@ -590,16 +587,13 @@ public class DoneeManagement {
                     }
                 }
 
-                // Format strings for output
                 String foodItemsStr = foodItems.length() > 0 ? foodItems.toString() : "None";
                 String dailyNecessitiesItemsStr = dailyNecessitiesItems.length() > 0 ? dailyNecessitiesItems.toString() : "None";
                 String cashItemsStr = totalCashAmount > 0 ? String.format("%.2f", totalCashAmount) : "None";
 
-                // Print donation details with adjusted column widths
                 System.out.printf("%-15s %-35s %-35s %-25s\n", donationID, foodItemsStr, dailyNecessitiesItemsStr, cashItemsStr);
             }
 
-            // Input donation ID to add to donee
             String donationID = ui.inputDonationID();
             String fullDonationId = "DON-" + donationID;
 
@@ -607,6 +601,7 @@ public class DoneeManagement {
                 Donation donation = donationManagement.getDonation(fullDonationId);
 
                 donee.addDonation(fullDonationId, donation);
+                donationManagement.removeSelectedDonation(fullDonationId);
 
                 System.out.println("Donation successfully assigned to Donee.");
             } else {

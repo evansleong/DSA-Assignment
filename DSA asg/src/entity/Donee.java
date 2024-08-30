@@ -78,7 +78,7 @@ public class Donee {
     }
 
     public void addDonation(String donationId, Donation donation) {
-        donations.put(donationId, donation); // Use put method of LinkedHashMap
+        donations.put(donationId, donation); 
     }
 
     @Override
