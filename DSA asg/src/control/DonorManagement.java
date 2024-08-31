@@ -29,6 +29,7 @@ public class DonorManagement {
         donorMap = new LinkedHashMap<>();
 //        this.donationManagement = donationManagement;
         dataSeeder = new DonorDataSeeder();
+        initializeDonorMap();
 //        dummyData();
     }
 
@@ -252,7 +253,7 @@ public class DonorManagement {
                             toString += dIterator.next().getDonationID() + " ";
                         }
                     }
-
+                                               
                     System.out.printf("%-15s %-20s \t%s\n",
                             donor.getDonorId(),
                             donor.getDonorName(),

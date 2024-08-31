@@ -17,7 +17,7 @@ import entity.Donor;
  */
 public class DonorDataSeeder {
 
-    LinkedHashMap<String, Donor> donorMap;
+    private LinkedHashMap<String, Donor> donorMap;
 
     public DonorDataSeeder() {
         donorMap = new LinkedHashMap<>();
