@@ -124,7 +124,6 @@ public class DonationManagementUI {
         System.out.println("\t1.Update Amount");
         System.out.println("\t2.Update Description");
         System.out.printf("\nEnter choice > ");
-        System.out.println("\t");
         return scan.nextInt();
     }
     
