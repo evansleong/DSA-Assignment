@@ -6,7 +6,7 @@ package entity;
 
 /**
  *
- * @author evansleong
+ * @author LEEYIHANG
  */
 public class DonationItem {
 
