@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author evansleong
+ * @author laixianyu
  */
 public class DonorManagementUI {
 
@@ -18,7 +18,6 @@ public class DonorManagementUI {
         scanner = new Scanner(System.in);
     }
 
-    // Display menu options for donor management
     public int menuOpt() {
         System.out.println("");
         System.out.println("Donor Management Menu:");
@@ -33,14 +32,14 @@ public class DonorManagementUI {
         System.out.println("0. Back to main");
         System.out.print("Enter your choice: ");
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
-        return choice; 
+        scanner.nextLine();
+        return choice;
     }
 
-    // Collect information to add a new donor
     public String inputDonorID() {
-        System.out.print("\nEnter Donor ID: ");
-        return scanner.nextLine();
+        String idHead = "DNR-";
+        System.out.print("\nEnter Donor ID number: ");
+        return idHead + scanner.nextLine();
     }
 
     public String inputDonorName() {
@@ -62,7 +61,6 @@ public class DonorManagementUI {
         return scanner.nextLine();
     }
 
-    // Collect information to update a donor
     public String updateDonorID() {
         String idHead = "DNR-";
         System.out.print("\nEnter Donor ID number to update: ");
@@ -88,15 +86,12 @@ public class DonorManagementUI {
         return scanner.nextLine();
     }
 
-    // Collect information for searching a donor
     public String searchDonorID() {
         String idHead = "DNR-";
         System.out.print("\nEnter Donor ID number to search: ");
-//        scanner.nextLine(); // Consume the newline
         return idHead + scanner.nextLine();
     }
 
-    // Collect information for filtering donors
     public int inputFilterCriteria() {
         System.out.println("\nFilter Donors by:");
         System.out.println("1. Donor Type");
@@ -107,15 +102,14 @@ public class DonorManagementUI {
         scanner.nextLine();
         return choice;
     }
-    
-    public String confirmation(){
+
+    public String confirmation() {
         String confirm = "n";
         System.out.print("confirm with y: ");
-            confirm = scanner.nextLine();
-            return confirm;
+        confirm = scanner.nextLine();
+        return confirm;
     }
 
-    // Method to display messages
     public void displayMessage(String message) {
         System.out.println(message);
     }
@@ -129,7 +123,6 @@ public class DonorManagementUI {
         System.out.println(report);
     }
 
-    // Close the scanner resource
     public void close() {
         scanner.close();
     }
