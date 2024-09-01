@@ -46,11 +46,14 @@ public class DonorDataSeeder {
         Donor dp = new Donor("Deadpool", "government", "0123456789");
         Donor wv = new Donor("Wolverine", "private", "0123456789");
         Donor jf = new Donor("Johnny Flame", "public", "0123456789");
+        Donor hm = new Donor("Hamyu","public","01612453728");
 
         donorMap.put(dp.getDonorId(), dp);
         donorMap.put(wv.getDonorId(), wv);
         donorMap.put(jf.getDonorId(), jf);
+        donorMap.put(hm.getDonorId(),hm);
 
+        
         dp.addDonation(donation1);
         dp.addDonation(donation2);
         wv.addDonation(donation3);
