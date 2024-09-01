@@ -97,7 +97,7 @@ public class DoneeManagement {
 
         Donee donee = new Donee(fullId, name, contactInfo, type, age);
         if (confirmAction()) {
-            doneeMap.put(null, donee);
+            doneeMap.put(fullId, donee);
             System.out.println("Donee added successfully.");
         } else {
             System.out.println("Action cancelled.");
@@ -345,7 +345,7 @@ public class DoneeManagement {
             }
         }
 
-        doneeMap.mergeSort(null, null);
+        doneeMap.mergeSort(doneeArray, comparator);
 
         ui.displaySortedDoneeList(doneeArray);
 
