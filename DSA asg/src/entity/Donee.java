@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /**
  *
- * @author evansleong
+ * @author Leong Gao Chong
  */
 public class Donee {
 
@@ -17,7 +17,7 @@ public class Donee {
     private String doneeName;
     private String doneeType;
     private String doneeContact;
-    private LinkedHashMap<String, Donation> donations;
+    private LinkedHashMapInterface<String, Donation> donations = new LinkedHashMap<>();
     private Integer age;
 
     public Donee(String doneeId, String doneeName, String doneeContact, String doneeType, Integer age) {
@@ -45,7 +45,7 @@ public class Donee {
         this.doneeContact = doneeContact;
     }
 
-    public void setDonations(LinkedHashMap<String, Donation> donations) {
+    public void setDonations(LinkedHashMapInterface<String, Donation> donations) {
         this.donations = donations;
     }
 
@@ -69,7 +69,7 @@ public class Donee {
         return doneeContact;
     }
 
-    public LinkedHashMap<String, Donation> getDonations() {
+    public LinkedHashMapInterface<String, Donation> getDonations() {
         return donations;
     }
 

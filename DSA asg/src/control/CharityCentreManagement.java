@@ -11,7 +11,7 @@ import utility.*;
 
 /**
  *
- * @author evansleong
+ * @author Leong Gao Chong
  */
 public class CharityCentreManagement {
 

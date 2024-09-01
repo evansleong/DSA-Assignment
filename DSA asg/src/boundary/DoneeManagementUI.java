@@ -4,26 +4,19 @@
  */
 package boundary;
 
-import adt.*;
 import entity.*;
-import java.util.Iterator;
 import java.util.Scanner;
 
 /**
  *
- * @author evansleong
+ * @author Leong Gao Chong
  */
 public class DoneeManagementUI {
 
     Scanner scanner = new Scanner(System.in);
-    LinkedHashMapInterface<String, Donee> doneeMap;
 
     public DoneeManagementUI() {
-        doneeMap = new LinkedHashMap<>();
-    }
 
-    public DoneeManagementUI(LinkedHashMapInterface<String, Donee> doneeMap) {
-        this.doneeMap = doneeMap;
     }
 
     public int getMenuChoice() {
@@ -79,7 +72,7 @@ public class DoneeManagementUI {
             System.out.println("2. TEENAGER (21-34)");
             System.out.println("3. ADULT (35-54)");
             System.out.println("4. SENIOR CITIZEN (55+)\n");
-            System.out.print("Enter your choice (1-4): ");
+            System.out.print("\nEnter choice (1-4): ");
 
             try {
                 ageGroup = Integer.parseInt(scanner.nextLine());
@@ -103,7 +96,7 @@ public class DoneeManagementUI {
         System.out.println("A. INDIVIDUAL");
         System.out.println("B. ORGANIZATION");
         System.out.println("C. FAMILY");
-        System.out.print("Enter your choice (A/B/C) > ");
+        System.out.print("\nEnter choice (A/B/C) > ");
         String choice = scanner.nextLine().toLowerCase();
 
         switch (choice) {
@@ -131,7 +124,7 @@ public class DoneeManagementUI {
         System.out.println("2. CONTACT NUMBER");
         System.out.println("3. TYPE");
         System.out.println("0. EXIT");
-        System.out.print("Enter your choice: ");
+        System.out.print("\nEnter choice: ");
         int choice = scanner.nextInt();
         scanner.nextLine();
         return choice;
@@ -159,7 +152,7 @@ public class DoneeManagementUI {
         System.out.println("Choose an option:");
         System.out.println("-----------------");
         System.out.println("1. UPDATE A SPECIFIC FIELD");
-        System.out.println("2. UPDATE ALL THE FIELD AT ONCE");
+        System.out.println("2. UPDATE ALL THE FIELDS AT ONCE");
         System.out.print("\nEnter choice > ");
 
         int choice = 0;
@@ -233,13 +226,23 @@ public class DoneeManagementUI {
         return choice;
     }
 
+    public int chooseReportType() {
+        System.out.println("Choose Report Type:");
+        System.out.println("-------------------");
+        System.out.println("1. TOTAL DONATIONS MADE TO DONEE BY CATEGORY");
+        System.out.println("2. TOP 3 DONEES BY DONATION CATEGORY");
+        System.out.print("\nEnter choice > ");
+
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextInt();
+    }
+
     public void displayDoneeList(Donee[] donees) {
         System.out.println("Donee List:");
         // Print table header
         System.out.printf("%-15s %-20s %-25s %-15s\n", "ID", "Name", "Contact Info", "Type");
         System.out.println("-----------------------------------------------------------------------------------");
 
-        // Print each donee's details in a formatted way
         for (Donee donee : donees) {
             System.out.printf("%-15s %-20s %-25s %-15s\n",
                     donee.getDoneeId(),
@@ -280,32 +283,9 @@ public class DoneeManagementUI {
         displayDoneeList(donees);
     }
 
-    public void displayDoneeList() {
-        if (doneeMap.isEmpty()) {
-            System.out.println("No donees available.");
-            return;
-        }
-
-        System.out.printf("%-15s %-20s %-15s\n", "DONEE ID", "DONEE NAME", "CONTACT NO");
-        System.out.println("----------------------------------------------");
-
-        Iterator<String> iterator = doneeMap.iterator();
-        while (iterator.hasNext()) {
-            String fullId = iterator.next();
-            Donee donee = doneeMap.get(fullId);
-
-            if (donee != null) {
-                System.out.printf("%-15s %-20s %-15s\n",
-                        donee.getDoneeId(),
-                        donee.getDoneeName(),
-                        donee.getDoneeContact());
-            }
-        }
-    }
-
     public void displayDoneeListHeader() {
         System.out.println("Donees List with Donations:\n");
-        System.out.printf("%-15s %-20s %-20s %-20s %20s\n", "DONEE ID", "DONEE NAME", "DONEE TYPE", "CONTACT INFO", "DONATIONS RECEIVED (RM/PCS)");
+        System.out.printf("%-15s %-20s %-20s %-20s %20s\n", "DONEE ID", "DONEE NAME", "DONEE TYPE", "CONTACT INFO", "DONATIONS RECEIVED (RM/PCS/SET)");
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
     }
 
@@ -315,7 +295,7 @@ public class DoneeManagementUI {
                 donee.getDoneeName(),
                 donee.getDoneeType(), // Include donee type
                 donee.getDoneeContact(),
-                String.format("Food x %d\n\t\t\t\t\t\t\t\t\t         Daily Necessities x %d\n\t\t\t\t\t\t\t\t\t         Cash x %.2f", foodCount, dailyNecessitiesCount, cashCount));
+                String.format("Food x %d pcs/set\n\t\t\t\t\t\t\t\t\t         Daily Necessities x %d pcs/set\n\t\t\t\t\t\t\t\t\t         Cash x RM %.2f", foodCount, dailyNecessitiesCount, cashCount));
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
     }
 
@@ -377,14 +357,13 @@ public class DoneeManagementUI {
         return false;
     }
 
-    public void displaySummaryReport(int individualCount, int organizationCount, int familyCount,
-            double[] individualDonations, double[] organizationDonations, double[] familyDonations,
-            int totalDonees) {
+    public void displaySummaryReport(int individualCount, int organizationCount, int familyCount, double[] individualDonations, double[] organizationDonations, double[] familyDonations, int totalDonees) {
 
-        System.out.println("********** Summary Report **********\n");
+        System.out.println("\n\t\t\t\t\t********** TOTAL DONATION MADE TO DONEE BY CATEGORY **********");
+        System.out.println("\t\t\t\t\t************************SUMMARY REPORT************************\n");
 
         System.out.println("+--------------------------+--------+-----------------+--------------------------+--------------------------+--------------------------+");
-        System.out.printf("| %-24s | %-6s | %-15s | %-24s | %-24s | %-24s |\n", "Donee Type", "Number", "Percentage (%)", "Food Donations", "Daily Necessities", "Cash Donations");
+        System.out.printf("| %-24s | %-6s | %-15s | %-24s | %-24s | %-24s |\n", "Donee Type", "Number", "Percentage (%)", "Food Donations", "Daily Necessities", "Cash Donations(RM)");
         System.out.println("+--------------------------+--------+-----------------+--------------------------+--------------------------+--------------------------+");
 
         displayDoneeTypeSummary("Individual Donees", individualCount, individualDonations, totalDonees);
@@ -397,18 +376,54 @@ public class DoneeManagementUI {
         double totalDailyNecessities = individualDonations[1] + organizationDonations[1] + familyDonations[1];
         double totalCash = individualDonations[2] + organizationDonations[2] + familyDonations[2];
 
-        System.out.printf("Total Food Donations: %.0f\n", totalFood);
-        System.out.printf("Total Daily Necessities Donations: %.0f\n", totalDailyNecessities);
-        System.out.printf("Total Cash Donations: %.2f\n", totalCash);
+        System.out.printf("TOTAL FOOD DONATIONS\t\t\t: %.0f pcs/set\n", totalFood);
+        System.out.printf("TOTAL DAILT NECESSITIES DONATIONS\t: %.0f pcs/set\n", totalDailyNecessities);
+        System.out.printf("TOTAL CASH DONATIONS\t\t\t: RM %.2f\n", totalCash);
 
-        System.out.println("************************************");
+        System.out.println("****************************************************************************************************************************************");
+    }
+
+    public void displayTop3DoneesByCategoryReport(
+            String[] topFoodDoneeIds, double[] topFoodAmounts,
+            String[] topDailyNecessitiesDoneeIds, double[] topDailyNecessitiesAmounts,
+            String[] topCashDoneeIds, double[] topCashAmounts) {
+
+        System.out.println("\n\t\t\t********** TOP 3 DONEES BY DONATION CATEGORY **********");
+        System.out.println("\t\t\t*******************SUMMARY REPORT**********************\n");
+
+        System.out.println("+-------+-------------------------------+-------------------------------+-------------------------------+");
+        System.out.printf("| %-5s | %-29s | %-29s | %-29s |\n", "Rank", "Food Category", "Daily Necessities", "Cash Category");
+        System.out.println("+-------+-------------------------------+-------------------------------+-------------------------------+");
+
+        for (int i = 0; i < 3; i++) {
+            System.out.printf("| %-5d | %-29s | %-29s | %-29s |\n",
+                    (i + 1),
+                    formatDoneeInfo(topFoodDoneeIds[i], topFoodAmounts[i], true),
+                    formatDoneeInfo(topDailyNecessitiesDoneeIds[i], topDailyNecessitiesAmounts[i], true),
+                    formatDoneeInfo(topCashDoneeIds[i], topCashAmounts[i], false)
+            );
+        }
+
+        System.out.println("+-------+-------------------------------+-------------------------------+-------------------------------+\n");
+
+        System.out.println("*********************************************************************************************************");
+    }
+
+// Helper method to format donee info
+    private String formatDoneeInfo(String doneeId, double amount, boolean isInteger) {
+        if (doneeId == null) {
+            return "N/A";
+        }
+        if (isInteger) {
+            return doneeId + " x " + String.format("%d", (int) amount) + "pcs/set";
+        } else {
+            return doneeId + " x RM " + String.format("%.2f", amount);
+        }
     }
 
     private void displayDoneeTypeSummary(String doneeType, int doneeCount, double[] donations, int totalDonees) {
         double percentage = (doneeCount / (double) totalDonees) * 100;
-        System.out.printf("| %-24s | %6d | %14.2f%% | %24.0f | %24.0f | %24.2f |\n",
-                doneeType, doneeCount, percentage,
-                donations[0], donations[1], donations[2]);
+        System.out.printf("| %-24s | %6d | %14.2f%% | %24.0f | %24.0f | RM %21.2f |\n", doneeType, doneeCount, percentage, donations[0], donations[1], donations[2]);
     }
 
     public String inputDonationID() {

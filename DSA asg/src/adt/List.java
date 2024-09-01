@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 
 /**
  *
- * @author evansleong
+ * @author Leong Gao Chong
  */
 public class List<T> implements ListInterface<T>, Serializable {
 

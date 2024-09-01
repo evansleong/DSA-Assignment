@@ -14,18 +14,17 @@ import java.util.Iterator;
 
 /**
  *
- * @author evansleong
+ * @author Leong Gao Chong
  */
 public class DoneeManagement {
 
     DoneeManagementUI ui = new DoneeManagementUI();
-    LinkedHashMapInterface<String, Donee> doneeMap;
+    LinkedHashMapInterface<String, Donee> doneeMap = new LinkedHashMap<>();
     private int doneeCounter = 11;
     private final DonationManagement donationManagement;
     private final DoneeDataSeeder dataSeeder;
 
     public DoneeManagement(DonationManagement donationManagement) {
-        doneeMap = new LinkedHashMap<>();
         this.donationManagement = donationManagement;
         dataSeeder = new DoneeDataSeeder();
         initializeDoneeMap();
@@ -39,46 +38,38 @@ public class DoneeManagement {
             switch (choice) {
                 case 1:
                     addDonee();
-                    ConsoleUtils.systemPause();
-                    ConsoleUtils.clearScreen();
+                    consoleUtilise();
                     break;
                 case 2:
                     manageDonees();
+                    consoleUtilise();
                     break;
                 case 3:
                     updateDonee();
-                    ConsoleUtils.systemPause();
-                    ConsoleUtils.clearScreen();
+                    consoleUtilise();
                     break;
                 case 4:
                     searchDonee();
-                    ConsoleUtils.systemPause();
-                    ConsoleUtils.clearScreen();
                     break;
                 case 5:
                     listDonees();
-                    ConsoleUtils.systemPause();
-                    ConsoleUtils.clearScreen();
+                    consoleUtilise();
                     break;
                 case 6:
                     filterDonees();
-                    ConsoleUtils.systemPause();
-                    ConsoleUtils.clearScreen();
+                    consoleUtilise();
                     break;
                 case 7:
                     sortDoneesByName();
-                    ConsoleUtils.systemPause();
-                    ConsoleUtils.clearScreen();
+                    consoleUtilise();
                     break;
                 case 8:
                     generateReports();
-                    ConsoleUtils.systemPause();
-                    ConsoleUtils.clearScreen();
+                    consoleUtilise();
                     break;
                 case 9:
                     addDonationToDonee();
-                    ConsoleUtils.systemPause();
-                    ConsoleUtils.clearScreen();
+                    consoleUtilise();
                     break;
                 case 0:
                     running = false;
@@ -125,6 +116,10 @@ public class DoneeManagement {
     }
 
     private void removeDonee() {
+        if (checkDoneeIsEmpty()) {
+            return;
+        }
+
         String id = ui.inputDoneeID();
         String fullId = "DNE-" + id;
 
@@ -142,8 +137,7 @@ public class DoneeManagement {
         } else {
             System.out.println("Donee not found.");
         }
-        ConsoleUtils.systemPause();
-        ConsoleUtils.clearScreen();
+        consoleUtilise();
     }
 
     private void clearDonees() {
@@ -159,11 +153,14 @@ public class DoneeManagement {
         } else {
             System.out.println("Action cancelled.");
         }
-        ConsoleUtils.systemPause();
-        ConsoleUtils.clearScreen();
+        consoleUtilise();
     }
 
     private void updateDonee() {
+        if (checkDoneeIsEmpty()) {
+            return;
+        }
+
         displayDoneeList();
 
         String id = ui.inputDoneeID();
@@ -253,17 +250,20 @@ public class DoneeManagement {
     }
 
     private void searchDonee() {
+        if (checkDoneeIsEmpty()) {
+            return;
+        }
+
         String id = ui.inputDoneeID();
         String fullId = "DNE-" + id;
 
         if (doneeMap.containsKey(fullId)) {
             Donee donee = doneeMap.get(fullId);
-            // Use the UI method to display donee details
             ui.displayDoneeDetails(donee);
         } else {
             System.out.println("Donee not found.");
         }
-
+        consoleUtilise();
     }
 
     public void listDonees() {
@@ -324,10 +324,10 @@ public class DoneeManagement {
         Comparator<Donee> comparator;
         switch (choice) {
             case 1:
-                comparator = doneeNameComparator; // Ascending order
+                comparator = doneeNameComparator;
                 break;
             case 2:
-                comparator = doneeNameComparator.reversed(); // Descending order
+                comparator = doneeNameComparator.reversed();
                 break;
             default:
                 System.out.println("Invalid choice. Defaulting to ascending order.");
@@ -430,6 +430,22 @@ public class DoneeManagement {
             return;
         }
 
+        int reportType = ui.chooseReportType();
+
+        switch (reportType) {
+            case 1:
+                generateTotalDonationReport();
+                break;
+            case 2:
+                generateTopReports();
+                break;
+            default:
+                System.out.println("Invalid choice. Please enter 1 or 2.");
+                break;
+        }
+    }
+
+    private void generateTotalDonationReport() {
         int individualCount = 0;
         int organizationCount = 0;
         int familyCount = 0;
@@ -499,43 +515,92 @@ public class DoneeManagement {
                 individualDonations, organizationDonations, familyDonations,
                 totalDonees
         );
-
     }
 
-    private boolean checkDoneeIsEmpty() {
-        if (doneeMap.isEmpty()) {
-            System.out.println("No donees available.");
-            ConsoleUtils.systemPause();
-            ConsoleUtils.clearScreen();
-            return true;
-        }
-        return false;
-    }
-
-    private void displayDoneeList() {
-        if (doneeMap.isEmpty()) {
-            System.out.println("No donees available.");
+    private void generateTopReports() {
+        if (checkDoneeIsEmpty()) {
             return;
         }
 
-        System.out.printf("%-15s %-20s %-15s\n", "DONEE ID", "DONEE NAME", "CONTACT NO");
-        System.out.println("----------------------------------------------");
+        double[] individualDonations = new double[3];
+        double[] organizationDonations = new double[3];
+        double[] familyDonations = new double[3];
 
-        Iterator<String> iterator = doneeMap.iterator();
-        while (iterator.hasNext()) {
-            String fullId = iterator.next();
-            Donee donee = doneeMap.get(fullId);
+        String[] topFoodDoneeIds = new String[3];
+        double[] topFoodAmounts = new double[3];
+
+        String[] topDailyNecessitiesDoneeIds = new String[3];
+        double[] topDailyNecessitiesAmounts = new double[3];
+
+        String[] topCashDoneeIds = new String[3];
+        double[] topCashAmounts = new double[3];
+
+        Iterator<String> doneeIterator = doneeMap.iterator();
+        while (doneeIterator.hasNext()) {
+            String doneeId = doneeIterator.next();
+            Donee donee = doneeMap.get(doneeId);
 
             if (donee != null) {
-                System.out.printf("%-15s %-20s %-15s\n",
-                        donee.getDoneeId(),
-                        donee.getDoneeName(),
-                        donee.getDoneeContact());
+                String type = donee.getDoneeType().toLowerCase();
+                double[] donationCounts = null;
+
+                switch (type) {
+                    case "individual":
+                        donationCounts = individualDonations;
+                        break;
+                    case "organization":
+                        donationCounts = organizationDonations;
+                        break;
+                    case "family":
+                        donationCounts = familyDonations;
+                        break;
+                    default:
+                        continue;
+                }
+
+                LinkedHashMapInterface<String, Donation> donations = donee.getDonations();
+                if (donations != null && !donations.isEmpty()) {
+                    Iterator<String> donationIterator = donations.iterator();
+                    while (donationIterator.hasNext()) {
+                        String donationId = donationIterator.next();
+                        Donation donation = donations.get(donationId);
+                        if (donation != null) {
+                            Iterator<DonationItem> itemIterator = donation.getItems().iterator();
+                            while (itemIterator.hasNext()) {
+                                DonationItem item = itemIterator.next();
+                                double amount = item.getAmount();
+                                switch (item.getItemType()) {
+                                    case "Food":
+                                        donationCounts[0] += amount;
+                                        updateTop3Donees(topFoodDoneeIds, topFoodAmounts, doneeId, amount);
+                                        break;
+                                    case "Daily Necessities":
+                                        donationCounts[1] += amount;
+                                        updateTop3Donees(topDailyNecessitiesDoneeIds, topDailyNecessitiesAmounts, doneeId, amount);
+                                        break;
+                                    case "Cash":
+                                        donationCounts[2] += amount;
+                                        updateTop3Donees(topCashDoneeIds, topCashAmounts, doneeId, amount);
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
+
+        ui.displayTop3DoneesByCategoryReport(
+                topFoodDoneeIds, topFoodAmounts,
+                topDailyNecessitiesDoneeIds, topDailyNecessitiesAmounts,
+                topCashDoneeIds, topCashAmounts
+        );
     }
 
     private void addDonationToDonee() {
+        if (checkDoneeIsEmpty()) {
+            return;
+        }
 
         listDonees();
 
@@ -547,7 +612,7 @@ public class DoneeManagement {
 
             System.out.println("Donee Name: " + donee.getDoneeName());
 
-            List<Donation> availableDonations = donationManagement.getAllDonations();
+            ListInterface<Donation> availableDonations = donationManagement.getAllDonations();
             if (availableDonations.isEmpty()) {
                 System.out.println("No available donations at the moment.");
                 return;
@@ -589,9 +654,9 @@ public class DoneeManagement {
                     }
                 }
 
-                String foodItemsStr = foodItems.length() > 0 ? foodItems.toString() : "None";
-                String dailyNecessitiesItemsStr = dailyNecessitiesItems.length() > 0 ? dailyNecessitiesItems.toString() : "None";
-                String cashItemsStr = totalCashAmount > 0 ? String.format("%.2f", totalCashAmount) : "None";
+                String foodItemsStr = foodItems.length() > 0 ? foodItems.toString() : "N/A";
+                String dailyNecessitiesItemsStr = dailyNecessitiesItems.length() > 0 ? dailyNecessitiesItems.toString() : "N/A";
+                String cashItemsStr = totalCashAmount > 0 ? String.format("RM %.2f", totalCashAmount) : "N/A";
 
                 System.out.printf("%-15s %-35s %-35s %-25s\n", donationID, foodItemsStr, dailyNecessitiesItemsStr, cashItemsStr);
             }
@@ -618,6 +683,52 @@ public class DoneeManagement {
         return String.format("DNE-%03d", doneeCounter++); // Format ID as "DNE-001", "DNE-002", etc.
     }
 
+    private boolean checkDoneeIsEmpty() {
+        if (doneeMap.isEmpty()) {
+            System.out.println("No donees available.");
+            consoleUtilise();
+            return true;
+        }
+        return false;
+    }
+
+    private void displayDoneeList() {
+        if (doneeMap.isEmpty()) {
+            System.out.println("No donees available.");
+            return;
+        }
+
+        System.out.printf("%-15s %-20s %-15s\n", "DONEE ID", "DONEE NAME", "CONTACT NO");
+        System.out.println("----------------------------------------------");
+
+        Iterator<String> iterator = doneeMap.iterator();
+        while (iterator.hasNext()) {
+            String fullId = iterator.next();
+            Donee donee = doneeMap.get(fullId);
+
+            if (donee != null) {
+                System.out.printf("%-15s %-20s %-15s\n",
+                        donee.getDoneeId(),
+                        donee.getDoneeName(),
+                        donee.getDoneeContact());
+            }
+        }
+    }
+
+    private void updateTop3Donees(String[] topDoneeIds, double[] topAmounts, String doneeId, double amount) {
+        for (int i = 0; i < 3; i++) {
+            if (amount > topAmounts[i]) {
+                for (int j = 2; j > i; j--) {
+                    topAmounts[j] = topAmounts[j - 1];
+                    topDoneeIds[j] = topDoneeIds[j - 1];
+                }
+                topAmounts[i] = amount;
+                topDoneeIds[i] = doneeId;
+                break;
+            }
+        }
+    }
+
     private boolean confirmAction() {
         char confirmation = ui.confirmAction();
         return confirmation == 'Y';
@@ -632,6 +743,11 @@ public class DoneeManagement {
 
     private void initializeDoneeMap() {
         this.doneeMap = dataSeeder.getDoneeMap();
+    }
+
+    private void consoleUtilise() {
+        ConsoleUtils.systemPause();
+        ConsoleUtils.clearScreen();
     }
 
     public static void main(String[] args) {

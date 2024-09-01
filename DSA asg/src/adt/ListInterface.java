@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author evansleong
+ * @author Leong Gao Chong
  */
 public interface ListInterface<T> {
     void add(T element);
