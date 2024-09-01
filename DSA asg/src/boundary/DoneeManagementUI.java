@@ -108,7 +108,7 @@ public class DoneeManagementUI {
                 return "Family";
             default:
                 System.out.println("Invalid choice. Defaulting to 'Individual'.");
-                return "Individual"; // Default type if input is invalid
+                return "Individual";
         }
     }
 
@@ -239,7 +239,6 @@ public class DoneeManagementUI {
 
     public void displayDoneeList(Donee[] donees) {
         System.out.println("Donee List:");
-        // Print table header
         System.out.printf("%-15s %-20s %-25s %-15s\n", "ID", "Name", "Contact Info", "Type");
         System.out.println("-----------------------------------------------------------------------------------");
 
@@ -270,7 +269,6 @@ public class DoneeManagementUI {
     public String inputFirstLetterOfDoneeName() {
         System.out.print("\nEnter the first letter of the donee's name: ");
         String input = scanner.nextLine().trim();
-        // Ensure input is a single alphabetic character
         if (input.length() != 1 || !Character.isLetter(input.charAt(0))) {
             System.out.println("Invalid input. Please enter a single alphabetic character.");
             return "";
@@ -293,7 +291,7 @@ public class DoneeManagementUI {
         System.out.printf("%-15s %-20s %-20s %-20s %-15s\n",
                 donee.getDoneeId(),
                 donee.getDoneeName(),
-                donee.getDoneeType(), // Include donee type
+                donee.getDoneeType(),
                 donee.getDoneeContact(),
                 String.format("Food x %d pcs/set\n\t\t\t\t\t\t\t\t\t         Daily Necessities x %d pcs/set\n\t\t\t\t\t\t\t\t\t         Cash x RM %.2f", foodCount, dailyNecessitiesCount, cashCount));
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
@@ -409,7 +407,6 @@ public class DoneeManagementUI {
         System.out.println("*********************************************************************************************************");
     }
 
-// Helper method to format donee info
     private String formatDoneeInfo(String doneeId, double amount, boolean isInteger) {
         if (doneeId == null) {
             return "N/A";

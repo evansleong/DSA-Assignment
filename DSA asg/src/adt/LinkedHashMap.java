@@ -251,7 +251,10 @@ public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
 
     @Override
     public <T> void mergeSort(T[] array, Comparator<T> comparator) {
-        if (array == null || array.length == 0) {
+        if (comparator == null || array == null) {
+            throw new IllegalArgumentException("Comparator or array cannot be null");
+        }
+        if (array.length == 0) {
             return;
         }
         @SuppressWarnings("unchecked")
@@ -259,8 +262,7 @@ public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
         mergeSort(array, tempArray, 0, array.length - 1, comparator);
     }
 
-    private <T> void mergeSort(T[] array, T[] tempArray, int left, int right,
-            Comparator<T> comparator) {
+    private <T> void mergeSort(T[] array, T[] tempArray, int left, int right, Comparator<T> comparator) {
 
         if (left < right) {
             int mid = (left + right) / 2;
@@ -270,8 +272,7 @@ public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
         }
     }
 
-    private <T> void merge(T[] array, T[] tempArray, int left, int mid, int right,
-            Comparator<T> comparator) {
+    private <T> void merge(T[] array, T[] tempArray, int left, int mid, int right, Comparator<T> comparator) {
 
         for (int i = left; i <= right; i++) {
             tempArray[i] = array[i];
@@ -316,4 +317,5 @@ public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
             throw new IllegalArgumentException("Value cannot be null");
         }
     }
+
 }
