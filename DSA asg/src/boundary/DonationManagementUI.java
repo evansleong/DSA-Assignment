@@ -123,6 +123,7 @@ public class DonationManagementUI {
         System.out.println("\t-----Select the data field-----");
         System.out.println("\t1.Update Amount");
         System.out.println("\t2.Update Description");
+        System.out.printf("\nEnter choice > ");
         System.out.println("\t");
         return scan.nextInt();
     }
@@ -132,18 +133,11 @@ public class DonationManagementUI {
         System.out.println("\t 1.Filter by Donation ID");
         System.out.println("\t 2.Filter by Item Amount");
         System.out.println("\t 3.Filter by Description");
+        System.out.printf("\nEnter choice > ");
         return scan.nextInt();
         
     }
 
-public int mgnFilter(){
-        System.out.println("\t-----Select filter criteria-----");
-        System.out.println("\t1.");
-        System.out.println("\t2.");
-        System.out.println("\t");
-        return scan.nextInt();
-        
-    }
     
     public double getInputQuantity() {
         System.out.print("Enter the donation amount/RM  > ");
