@@ -521,10 +521,6 @@ public class DoneeManagement {
             return;
         }
 
-        double[] individualDonations = new double[3];
-        double[] organizationDonations = new double[3];
-        double[] familyDonations = new double[3];
-
         String[] topFoodDoneeIds = new String[3];
         double[] topFoodAmounts = new double[3];
 
@@ -540,22 +536,7 @@ public class DoneeManagement {
             Donee donee = doneeMap.get(doneeId);
 
             if (donee != null) {
-                String type = donee.getDoneeType().toLowerCase();
-                double[] donationCounts = null;
-
-                switch (type) {
-                    case "individual":
-                        donationCounts = individualDonations;
-                        break;
-                    case "organization":
-                        donationCounts = organizationDonations;
-                        break;
-                    case "family":
-                        donationCounts = familyDonations;
-                        break;
-                    default:
-                        continue;
-                }
+                double[] donationTotals = new double[3];
 
                 MapInterface<String, Donation> donations = donee.getDonations();
                 if (donations != null && !donations.isEmpty()) {
@@ -570,22 +551,23 @@ public class DoneeManagement {
                                 double amount = item.getAmount();
                                 switch (item.getItemType()) {
                                     case "Food":
-                                        donationCounts[0] += amount;
-                                        updateTop3Donees(topFoodDoneeIds, topFoodAmounts, doneeId, amount);
+                                        donationTotals[0] += amount;
                                         break;
                                     case "Daily Necessities":
-                                        donationCounts[1] += amount;
-                                        updateTop3Donees(topDailyNecessitiesDoneeIds, topDailyNecessitiesAmounts, doneeId, amount);
+                                        donationTotals[1] += amount;
                                         break;
                                     case "Cash":
-                                        donationCounts[2] += amount;
-                                        updateTop3Donees(topCashDoneeIds, topCashAmounts, doneeId, amount);
+                                        donationTotals[2] += amount;
                                         break;
                                 }
                             }
                         }
                     }
                 }
+
+                updateTop3Donees(topFoodDoneeIds, topFoodAmounts, doneeId, donationTotals[0]);
+                updateTop3Donees(topDailyNecessitiesDoneeIds, topDailyNecessitiesAmounts, doneeId, donationTotals[1]);
+                updateTop3Donees(topCashDoneeIds, topCashAmounts, doneeId, donationTotals[2]);
             }
         }
 
