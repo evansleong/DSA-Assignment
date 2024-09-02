@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
 import adt.LinkedHashMap;
@@ -26,18 +22,14 @@ public class DonorDataSeeder {
 
     private void dummyData() {
         List<DonationItem> donationItems = new List<>();
-//        String[] expList = new String[]{"Shirt", "Food", "Items"};
-
-        // Create some DonationItem objects
         DonationItem item1 = new DonationItem("ITEM-001", "Food", 10, "kfc");
         DonationItem item2 = new DonationItem("ITEM-002", "Clothes", 5, "h&m shirt");
         DonationItem item3 = new DonationItem("ITEM-003", "Books", 7, "harry porter");
 
-        // Add items to the list
         donationItems.add(item1);
         donationItems.add(item2);
         donationItems.add(item3);
-        // Create donations
+
         Donation donation1 = new Donation("DON-001", "DNR-001", donationItems);
         Donation donation2 = new Donation("DON-002", "DNR-002", donationItems);
         Donation donation3 = new Donation("DON-003", "DNR-003", donationItems);
