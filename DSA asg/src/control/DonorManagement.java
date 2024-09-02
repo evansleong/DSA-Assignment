@@ -343,42 +343,6 @@ public class DonorManagement {
             return Integer.compare(d2.getDonation().size(), d1.getDonation().size());
         }
     };
-
-//    private void generateSummaryReports() {
-//        System.out.println("\nSummary Report:\n");
-//
-//        int donorSum = donorMap.size();
-//        int governmentDonor = 0;
-//        int privateDonor = 0;
-//        int publicDonor = 0;
-//
-//        System.out.println("\nTotal number of donors: " + donorSum);
-//
-//        Iterator<String> iterator = donorMap.iterator();
-//        while (iterator.hasNext()) {
-//            String id = iterator.next();
-//            Donor donor = donorMap.get(id);
-//            if (donor != null) {
-//                switch (donor.getDonorType().toLowerCase()) {
-//                    case "government":
-//                        governmentDonor++;
-//                        break;
-//                    case "private":
-//                        privateDonor++;
-//                        break;
-//                    case "public":
-//                        publicDonor++;
-//                        break;
-//                }
-//            }
-//        }
-//        System.out.println("Number of Government Donors: " + governmentDonor);
-//        System.out.println("Number of Private Donors: " + privateDonor);
-//        System.out.println("Number of Public Donors: " + publicDonor);
-//
-//        ConsoleUtils.systemPause();
-//        ConsoleUtils.clearScreen();
-//    }
     
     private void generateSummaryReports() {
     System.out.println("\n===== Summary Report =====\n");
@@ -390,7 +354,6 @@ public class DonorManagement {
     int totalDonations = 0;
     int totalDonationAmount = 0;
 
-    // Calculate the breakdown of donor types and aggregate donation data
     Iterator<String> iterator = donorMap.iterator();
         while (iterator.hasNext()) {
             String id = iterator.next();
@@ -411,14 +374,12 @@ public class DonorManagement {
         totalDonations += donor.getDonation().size();
     }
 
-    // Display Donor Type Summary
     System.out.println("----- Donor Type Summary -----");
     System.out.printf("%-20s: %d\n", "Total Donors", totalDonors);
     System.out.printf("%-20s: %d\n", "Government Donors", governmentDonors);
     System.out.printf("%-20s: %d\n", "Private Donors", privateDonors);
     System.out.printf("%-20s: %d\n", "Public Donors", publicDonors);
 
-    // Display Donation Summary
     System.out.println("\n----- Donation Summary -----");
     System.out.printf("%-20s: %d\n", "Total Donations", totalDonations);
     System.out.printf("%-20s: %.2f\n", "Average Donations per Donor", totalDonations / (double) totalDonors);
