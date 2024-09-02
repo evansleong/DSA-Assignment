@@ -17,7 +17,7 @@ public class Donee {
     private String doneeName;
     private String doneeType;
     private String doneeContact;
-    private LinkedHashMapInterface<String, Donation> donations = new LinkedHashMap<>();
+    private MapInterface<String, Donation> donations = new LinkedHashMap<>();
     private Integer age;
 
     public Donee(String doneeId, String doneeName, String doneeContact, String doneeType, Integer age) {
@@ -45,7 +45,7 @@ public class Donee {
         this.doneeContact = doneeContact;
     }
 
-    public void setDonations(LinkedHashMapInterface<String, Donation> donations) {
+    public void setDonations(MapInterface<String, Donation> donations) {
         this.donations = donations;
     }
 
@@ -69,7 +69,7 @@ public class Donee {
         return doneeContact;
     }
 
-    public LinkedHashMapInterface<String, Donation> getDonations() {
+    public MapInterface<String, Donation> getDonations() {
         return donations;
     }
 

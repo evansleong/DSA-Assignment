@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
  *
  * @author Leong Gao Chong
  */
-public class LinkedHashMap<K, V> implements LinkedHashMapInterface<K, V> {
+public class LinkedHashMap<K, V> implements MapInterface<K, V> {
 
     private static final float LOAD_FACTOR_THRESHOLD = 0.75f;
 

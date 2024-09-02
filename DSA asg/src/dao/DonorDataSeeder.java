@@ -5,11 +5,11 @@
 package dao;
 
 import adt.LinkedHashMap;
-import adt.LinkedHashMapInterface;
 import adt.List;
 import entity.Donation;
 import entity.DonationItem;
 import entity.Donor;
+import adt.MapInterface;
 
 /**
  *

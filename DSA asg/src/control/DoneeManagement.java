@@ -19,7 +19,7 @@ import java.util.Iterator;
 public class DoneeManagement {
 
     DoneeManagementUI ui = new DoneeManagementUI();
-    LinkedHashMapInterface<String, Donee> doneeMap = new LinkedHashMap<>();
+    MapInterface<String, Donee> doneeMap = new LinkedHashMap<>();
     private int doneeCounter = 11;
     private final DonationManagement donationManagement;
     private final DoneeDataSeeder dataSeeder;
@@ -282,7 +282,7 @@ public class DoneeManagement {
                 int dailyNecessitiesCount = 0;
                 double cashCount = 0;
 
-                LinkedHashMapInterface<String, Donation> donations = donee.getDonations();
+                MapInterface<String, Donation> donations = donee.getDonations();
                 if (donations != null && !donations.isEmpty()) {
                     Iterator<String> donationIterator = donations.iterator();
                     while (donationIterator.hasNext()) {
@@ -479,7 +479,7 @@ public class DoneeManagement {
                         continue;
                 }
 
-                LinkedHashMapInterface<String, Donation> donations = donee.getDonations();
+                MapInterface<String, Donation> donations = donee.getDonations();
                 if (donations != null && !donations.isEmpty()) {
                     Iterator<String> donationIterator = donations.iterator();
                     while (donationIterator.hasNext()) {
@@ -557,7 +557,7 @@ public class DoneeManagement {
                         continue;
                 }
 
-                LinkedHashMapInterface<String, Donation> donations = donee.getDonations();
+                MapInterface<String, Donation> donations = donee.getDonations();
                 if (donations != null && !donations.isEmpty()) {
                     Iterator<String> donationIterator = donations.iterator();
                     while (donationIterator.hasNext()) {

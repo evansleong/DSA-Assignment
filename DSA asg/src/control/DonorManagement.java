@@ -20,7 +20,7 @@ import utility.ConsoleUtils;
 public class DonorManagement {
 
     DonorManagementUI ui = new DonorManagementUI();
-    LinkedHashMapInterface<String, Donor> donorMap;
+    MapInterface<String, Donor> donorMap;
     private final DonorDataSeeder dataSeeder;
 
     public DonorManagement() {

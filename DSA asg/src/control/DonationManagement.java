@@ -19,7 +19,7 @@ import utility.ConsoleUtils;
 public class DonationManagement {
 
     DonationManagementUI dmUI = new DonationManagementUI();
-    LinkedHashMapInterface<String, Donation> dmMap;
+    MapInterface<String, Donation> dmMap;
     private int donationCounter = 1; 
     private int itemCounter = 0;
     private final DonorManagement donorManagement;

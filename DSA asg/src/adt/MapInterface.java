@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author Leong Gao Chong
  */
-public interface LinkedHashMapInterface<K, V> {
+public interface MapInterface<K, V> {
 
     void put(K key, V value);
 
