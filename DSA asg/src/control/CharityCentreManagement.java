@@ -4,15 +4,13 @@
  */
 package control;
 
-import adt.*;
 import boundary.*;
-import entity.*;
 import utility.*;
 
 /**
  *
  * @author Leong Gao Chong
- */
+ */ 
 public class CharityCentreManagement {
 
     CharityCentreManagementUI ui = new CharityCentreManagementUI();
