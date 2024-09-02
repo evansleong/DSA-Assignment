@@ -2,6 +2,10 @@ package entity;
 
 import adt.*;
 
+/**
+ *
+ * @author laixianyu
+ */
 public class Donor {
 
     private String idHead = "DNR-";

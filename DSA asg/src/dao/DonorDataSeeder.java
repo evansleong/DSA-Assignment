@@ -13,7 +13,7 @@ import adt.MapInterface;
 
 /**
  *
- * @author Asus
+ * @author laixianyu
  */
 public class DonorDataSeeder {
 
