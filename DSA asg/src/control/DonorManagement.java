@@ -276,7 +276,7 @@ public class DonorManagement {
         LinkedHashMap<String, Donor> map = new LinkedHashMap<>();
         map.mergeSort(donorArray, donationCountComparator);
         System.out.printf("%-15s %-20s %-15s %12s %-16s\n", "ID", "Donor Name", "Type", "Contact No.", "No. of Donations");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------");
         for (Donor donor : donorArray) {
             System.out.printf("%-15s %-20s %-15s %-12s %-16d\n",
                     donor.getDonorId(),
@@ -344,41 +344,89 @@ public class DonorManagement {
         }
     };
 
+//    private void generateSummaryReports() {
+//        System.out.println("\nSummary Report:\n");
+//
+//        int donorSum = donorMap.size();
+//        int governmentDonor = 0;
+//        int privateDonor = 0;
+//        int publicDonor = 0;
+//
+//        System.out.println("\nTotal number of donors: " + donorSum);
+//
+//        Iterator<String> iterator = donorMap.iterator();
+//        while (iterator.hasNext()) {
+//            String id = iterator.next();
+//            Donor donor = donorMap.get(id);
+//            if (donor != null) {
+//                switch (donor.getDonorType().toLowerCase()) {
+//                    case "government":
+//                        governmentDonor++;
+//                        break;
+//                    case "private":
+//                        privateDonor++;
+//                        break;
+//                    case "public":
+//                        publicDonor++;
+//                        break;
+//                }
+//            }
+//        }
+//        System.out.println("Number of Government Donors: " + governmentDonor);
+//        System.out.println("Number of Private Donors: " + privateDonor);
+//        System.out.println("Number of Public Donors: " + publicDonor);
+//
+//        ConsoleUtils.systemPause();
+//        ConsoleUtils.clearScreen();
+//    }
+    
     private void generateSummaryReports() {
-        System.out.println("\nSummary Report:\n");
+    System.out.println("\n===== Summary Report =====\n");
 
-        int donorSum = donorMap.size();
-        int governmentDonor = 0;
-        int privateDonor = 0;
-        int publicDonor = 0;
+    int totalDonors = donorMap.size();
+    int governmentDonors = 0;
+    int privateDonors = 0;
+    int publicDonors = 0;
+    int totalDonations = 0;
+    int totalDonationAmount = 0;
 
-        System.out.println("\nTotal number of donors: " + donorSum);
-
-        Iterator<String> iterator = donorMap.iterator();
+    // Calculate the breakdown of donor types and aggregate donation data
+    Iterator<String> iterator = donorMap.iterator();
         while (iterator.hasNext()) {
             String id = iterator.next();
             Donor donor = donorMap.get(id);
             if (donor != null) {
                 switch (donor.getDonorType().toLowerCase()) {
                     case "government":
-                        governmentDonor++;
+                        governmentDonors++;
                         break;
                     case "private":
-                        privateDonor++;
+                        privateDonors++;
                         break;
                     case "public":
-                        publicDonor++;
+                        publicDonors++;
                         break;
                 }
             }
-        }
-        System.out.println("Number of Government Donors: " + governmentDonor);
-        System.out.println("Number of Private Donors: " + privateDonor);
-        System.out.println("Number of Public Donors: " + publicDonor);
-
-        ConsoleUtils.systemPause();
-        ConsoleUtils.clearScreen();
+        totalDonations += donor.getDonation().size();
     }
+
+    // Display Donor Type Summary
+    System.out.println("----- Donor Type Summary -----");
+    System.out.printf("%-20s: %d\n", "Total Donors", totalDonors);
+    System.out.printf("%-20s: %d\n", "Government Donors", governmentDonors);
+    System.out.printf("%-20s: %d\n", "Private Donors", privateDonors);
+    System.out.printf("%-20s: %d\n", "Public Donors", publicDonors);
+
+    // Display Donation Summary
+    System.out.println("\n----- Donation Summary -----");
+    System.out.printf("%-20s: %d\n", "Total Donations", totalDonations);
+    System.out.printf("%-20s: %.2f\n", "Average Donations per Donor", totalDonations / (double) totalDonors);
+
+
+    ConsoleUtils.systemPause();
+    ConsoleUtils.clearScreen();
+}
 
     private void displayDonorDetail(Donor donor) {
         System.out.println("\nDonor ID: " + donor.getDonorId());
