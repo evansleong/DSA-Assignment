@@ -78,7 +78,7 @@ public class Donee {
     }
 
     public void addDonation(String donationId, Donation donation) {
-        donations.put(donationId, donation); 
+        donations.put(donationId, donation);
     }
 
     @Override

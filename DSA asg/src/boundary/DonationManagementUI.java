@@ -28,7 +28,7 @@ public class DonationManagementUI {
         System.out.println("\t0. Back to main");
         System.out.printf("\nEnter choice > ");
         int mgnChoice = scan.nextInt();
-        scan.nextLine(); 
+        scan.nextLine();
         System.out.println();
         return mgnChoice;
     }
@@ -40,7 +40,7 @@ public class DonationManagementUI {
         System.out.println("3. Daily Necessities");
         System.out.printf("Enter choice > ");
         int categoryChoice = scan.nextInt();
-        scan.nextLine(); 
+        scan.nextLine();
         return categoryChoice;
     }
 
@@ -59,7 +59,6 @@ public class DonationManagementUI {
         return scan.nextLine();
     }
 
-
     public String mgnItemName(String category) {
         System.out.printf("Enter the name of the %s > ", category);
         return scan.nextLine();
@@ -75,7 +74,7 @@ public class DonationManagementUI {
     public double mgnCashAmount() {
         System.out.print("Enter the cash donation amount in RM > ");
         double amount = scan.nextDouble();
-        scan.nextLine(); 
+        scan.nextLine();
         return amount;
     }
 
@@ -98,7 +97,7 @@ public class DonationManagementUI {
     public void pausescan() {
         scan.close();
     }
-    
+
     public int amendMenu() {
         System.out.println("\n\tDONATION MANAGEMENT SUBSYSTEM\n");
         System.out.println("-------------AMEND MENU--------------");
@@ -108,11 +107,10 @@ public class DonationManagementUI {
         System.out.println("\t3. Exit Amend Menu");
         System.out.printf("\nEnter choice > ");
         int mgnAmendChoice = scan.nextInt();
-        scan.nextLine(); 
+        scan.nextLine();
         System.out.println();
         return mgnAmendChoice;
     }
-
 
     public String inputItemID() {
         System.out.print("Enter item ID > ");
@@ -126,23 +124,22 @@ public class DonationManagementUI {
         System.out.printf("\nEnter choice > ");
         return scan.nextInt();
     }
-    
-    public int mgnfilterMenu(){
+
+    public int mgnfilterMenu() {
         System.out.println("\t-----Select the Filter-----");
         System.out.println("\t 1.Filter by Donation ID");
         System.out.println("\t 2.Filter by Item Amount");
         System.out.println("\t 3.Filter by Description");
         System.out.printf("\nEnter choice > ");
         return scan.nextInt();
-        
+
     }
 
-    
     public double getInputQuantity() {
         System.out.print("Enter the donation amount/RM  > ");
         double amount = scan.nextDouble();
-        scan.nextLine(); 
+        scan.nextLine();
         return amount;
     }
-    
+
 }

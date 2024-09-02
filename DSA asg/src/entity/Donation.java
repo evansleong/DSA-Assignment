@@ -21,7 +21,7 @@ public class Donation {
         this.donationID = donationID;
         this.donorID = donorID;
         this.items = items;
-        
+
     }
 
     public void addItem(DonationItem item) {
@@ -29,29 +29,28 @@ public class Donation {
     }
 
     public String displayItems(Donation donation) {
-        if(donation != null){
-        Iterator<DonationItem> iterator = items.iterator();  
-        System.out.printf("%-15s %-25s %-20s %-10s %n", "ITEM ID", "ITEM TYPE", "DONATION ITEMS","AMOUNT");
-        System.out.println("-------------------------------------------------------------------------");
-        StringBuilder itemList = new StringBuilder();
-        
-        while (iterator.hasNext()) {
-             DonationItem item = iterator.next();  
-             itemList.append(String.format("%-15s %-25s %-20s %-10s %n",
-                                  item.getItemID(),
-                                  item.getItemType(),
-                                  item.getDescription(),
-                                  item.getAmount()));
+        if (donation != null) {
+            Iterator<DonationItem> iterator = items.iterator();
+            System.out.printf("%-15s %-25s %-20s %-10s %n", "ITEM ID", "ITEM TYPE", "DONATION ITEMS", "AMOUNT");
+            System.out.println("-------------------------------------------------------------------------");
+            StringBuilder itemList = new StringBuilder();
 
-        }
-         return itemList.toString();
+            while (iterator.hasNext()) {
+                DonationItem item = iterator.next();
+                itemList.append(String.format("%-15s %-25s %-20s %-10s %n",
+                        item.getItemID(),
+                        item.getItemType(),
+                        item.getDescription(),
+                        item.getAmount()));
 
-        }else{
+            }
+            return itemList.toString();
+
+        } else {
             return "no item to be displayed";
         }
     }
 
-   
     public String getDonationID() {
         return donationID;
     }
@@ -82,7 +81,7 @@ public class Donation {
         while (iterator.hasNext()) {
             DonationItem item = iterator.next();
             donationType = item.getItemType();
-            
+
         }
         return donationType;
     }
@@ -95,7 +94,7 @@ public class Donation {
             DonationItem item = iterator.next();
             if (item.getItemID().equals(itemID)) {
                 foundItem = item;
-                break; 
+                break;
             }
         }
 
@@ -108,12 +107,12 @@ public class Donation {
         while (iterator.hasNext()) {
             DonationItem item = iterator.next();
             if (item.getItemID().equals(itemID)) {
-                iterator.remove(); 
-                return true; 
+                iterator.remove();
+                return true;
             }
         }
 
-        return false; 
+        return false;
     }
 
 }

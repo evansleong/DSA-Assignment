@@ -11,9 +11,9 @@ package entity;
 public class DonationItem {
 
     private String itemID;
-    private String itemType; 
-    private double amount; 
-    private String description; 
+    private String itemType;
+    private double amount;
+    private String description;
 
     public DonationItem(String itemID, String itemType, double amount, String description) {
         this.itemID = itemID;
@@ -58,6 +58,5 @@ public class DonationItem {
     public String toString() {
         return "ItemID: " + itemID + ", Type: " + itemType + ", Amount: " + amount + ", Description: " + description;
     }
-    
-    
+
 }
